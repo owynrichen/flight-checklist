@@ -1,0 +1,117 @@
+% LaTeX A5 (half-letter) two-column checklist template
+\documentclass[10pt]{article}
+\usepackage[paperwidth=5.5in,paperheight=8.5in,margin=0.25in]{geometry}
+\usepackage{multicol}
+\usepackage{fontspec}
+% Prefer a widely-available sans font on Linux; fall back will be handled by fontspec
+\setmainfont{DejaVu Sans}
+% Attempt to provide an emoji-capable font for emoji glyphs used in the
+% document. Try common candidates and fall back to the main font.
+\IfFontExistsTF{Noto Color Emoji}
+  {\newfontfamily\Emoji{Noto Color Emoji}}
+  {\IfFontExistsTF{Symbola}
+    {\newfontfamily\Emoji{Symbola}}
+    {\IfFontExistsTF{Apple Color Emoji}
+      {\newfontfamily\Emoji{Apple Color Emoji}}
+      {\newfontfamily\Emoji{DejaVu Sans}}}
+
+\DeclareRobustCommand{\emoji}[1]{{\Emoji #1}}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{parskip}
+\setlist[itemize]{left=0pt, nosep, itemsep=0pt, topsep=1pt}
+\pagestyle{empty}
+\setlength{\columnsep}{5pt}
+\setlength{\parindent}{0pt}
+
+% Kneeboard: slightly smaller type for denser card layout
+\AtBeginDocument{\fontsize{9}{11}\selectfont}
+
+% Simple checkbox box
+\newcommand{\checkbox}{\raisebox{0.0ex}{\fbox{\rule{0pt}{1.25ex}\rule{1.25ex}{0pt}}}\,}
+
+% Colored section header similar to example (subtle band)
+\newtcolorbox{sectbox}[2][]{
+  colback=#2!12,
+  colframe=#2!45,
+  boxrule=0pt,
+  arc=1.5mm,
+  left=3pt,
+  right=3pt,
+  top=1pt,
+  bottom=1pt,
+  boxsep=1pt,
+  fontupper=\small\bfseries,
+  before skip=2pt,
+  after skip=2pt,
+  #1
+}
+
+\begin{document}
+\begin{multicols}{2}
+\raggedright
+
+\vspace*{-3mm}
+\begin{sectbox}
+  {\small\textbf{CHECKLIST — Front / Side A}}
+\end{sectbox}
+
+\vspace{1mm}
+
+% --- Preflight section ---
+\begin{sectbox}
+  {\scriptsize\textbf{Preflight}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item \checkbox {\scriptsize Master switch --- OFF}
+  \item \checkbox {\scriptsize Documents --- Aboard}
+  \item \checkbox {\scriptsize Fuel --- Quantity/Selector}
+  \item \checkbox {\scriptsize Hobbs / Tach --- Recorded}
+  \item \checkbox {\scriptsize Control Lock --- Removed}
+\end{itemize}
+
+\vspace{1mm}
+\begin{sectbox}
+  {\scriptsize\textbf{Passenger Briefing}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item \checkbox {\scriptsize Seats / Belts --- Secure}
+  \item \checkbox {\scriptsize Doors / Exits --- Closed}
+  \item \checkbox {\scriptsize Fire Extinguisher --- Location}
+\end{itemize}
+
+\columnbreak
+
+\begin{sectbox}
+  {\small\textbf{CHECKLIST — Back / Side B}}
+\end{sectbox}
+
+\vspace{1mm}
+\begin{sectbox}
+  {\scriptsize\textbf{Approach / Landing}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item \checkbox {\scriptsize Seats / Belts --- Secure}
+  \item \checkbox {\scriptsize Fuel Pump --- ON}
+  \item \checkbox {\scriptsize Mixture --- Set}
+  \item \checkbox {\scriptsize Landing Light --- ON (if required)}
+\end{itemize}
+
+\vspace{1mm}
+\begin{sectbox}
+  {\scriptsize\textbf{Short Field / Takeoff}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item \checkbox {\scriptsize Flaps --- Set}
+  \item \checkbox {\scriptsize Brakes --- Hold}
+  \item \checkbox {\scriptsize Takeoff Power --- Set}
+\end{itemize}
+
+\vfill
+\end{multicols}
+\end{document}

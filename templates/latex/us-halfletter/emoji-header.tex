@@ -1,0 +1,16 @@
+% Emoji/font header for pandoc LaTeX builds
+\usepackage{fontspec}
+% Prefer a widely-available sans font on Linux; fall back will be handled by fontspec
+\setmainfont{DejaVu Sans}
+% Attempt to provide an emoji-capable font for emoji glyphs used in the
+% document. Try common candidates and fall back to the main font.
+\IfFontExistsTF{Noto Color Emoji}{\newfontfamily\Emoji{Noto Color Emoji}}{\IfFontExistsTF{Symbola}{\newfontfamily\Emoji{Symbola}}{\IfFontExistsTF{Apple Color Emoji}{\newfontfamily\Emoji{Apple Color Emoji}}{\newfontfamily\Emoji{DejaVu Sans}}}}
+
+\DeclareRobustCommand{\emoji}[1]{{\Emoji #1}}
+
+% Kneeboard optimizations: smaller global font and tighter columns for half-letter kneeboard cards
+\AtBeginDocument{\fontsize{9}{11}\selectfont}
+\setlength{\columnsep}{6pt}
+% Smaller checkbox macro for tighter spacing (provide if not defined elsewhere)
+\providecommand{\checkbox}{\raisebox{0.0ex}{\fbox{\rule{0pt}{1.2ex}\rule{1.2ex}{0pt}}}\,}
+

@@ -39,8 +39,8 @@ fi
 
 # Render HTML using the repository renderer (supports YAML or Markdown source)
 if [ -x "$(command -v python3)" ]; then
-  echo "Rendering HTML using scripts/render_checklist.py (prefer Markdown then YAML)..."
-  python3 "$REPO_ROOT/scripts/render_checklist.py"
+  echo "Rendering HTML using scripts/render_checklist_v2.py (markdown, hierarchical)..."
+  python3 "$REPO_ROOT/scripts/render_checklist_v2.py"
   # ensure output filename matches expected
   if [ -f "$REPO_ROOT/output/checklist_from_yaml.html" ]; then
     mv "$REPO_ROOT/output/checklist_from_yaml.html" "$OUTDIR/checklist_print_ready.html"

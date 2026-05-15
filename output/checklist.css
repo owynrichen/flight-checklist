@@ -1,0 +1,142 @@
+@page { size: 5.5in 8.5in; margin: 0.20in; }
+body { font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #111; line-height: 1.12; }
+.sheet { width: 100%; height: 100%; box-sizing: border-box; }
+header { text-align: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
+header h1 { font-size: 12pt; margin: 0; letter-spacing: 0.5px; }
+.columns { column-count: 2; column-gap: 8px; column-fill: balance; }
+
+/* Section / heading scale */
+h1 { font-size: 12pt; margin: 4px 0 4px; }
+h2 { font-size: 10.5pt; margin: 4px 0 2px; }
+h3 { font-size: 9.5pt; margin: 3px 0; }
+
+.checklist { list-style: none; padding: 0; margin: 0 0 6px 0; }
+.checklist li { margin: 4px 0; line-height: 1.12; display: flex; align-items: flex-start; }
+.checklist li > .box { margin-top: 2px; }
+.checklist li > *:not(.box) { flex: 1 1 auto; }
+
+/* Keep sections and checklist groups together in print/columns */
+.columns section { break-inside: avoid-column; page-break-inside: avoid; -webkit-column-break-inside: avoid; }
+.columns .checklist { break-inside: auto; page-break-inside: auto; -webkit-column-break-inside: auto; }
+/* Keep emergency sections together */
+section[data-category="emergency"] .checklist { break-inside: avoid-column; }
+.columns section { padding-right: 4px; }
+
+/* Checkbox alignment */
+.box { display: inline-flex; align-items: center; justify-content: center; width: 10px; height: 10px; border: 1px solid #555; margin-right: 6px; flex: 0 0 10px; background: #fff; }
+.box:focus { outline: 2px solid #66a; outline-offset: 2px; }
+.box:before { content: ''; display: block; width: 8px; height: 8px; }
+
+.sub { font-size: 8pt; color: #444; }
+
+/* Critical items style: left rule + bold, with non-color fallback */
+/* Section color mapping (semantic) */
+section[data-category="emergency"] { color: #b30000; font-weight: 700; border-left: 4px solid #b30000; padding-left: 6px; background: linear-gradient(90deg, rgba(179,0,0,0.05), rgba(0,0,0,0)); }
+section[data-category="grey"] { color: #666; }
+section[data-category="blue"] { color: #0b63b8; }
+section[data-category="green"] { color: #1b7a1b; }
+
+/* Visual enhancements: make sections feel like cards and add a color badge */
+section[data-category] { padding: 6px; margin-bottom: 6px; border-radius: 4px; box-sizing: border-box; }
+section[data-category] > h2 { display: flex; align-items: center; gap: 8px; font-weight: 700; margin: 0 0 4px 0; font-size: 10pt; }
+section[data-category] > h2 .icon { margin-right: 6px; }
+section[data-category] > h2::before { content: ""; width: 14px; height: 14px; border-radius: 3px; display: inline-block; margin-right: 6px; flex: 0 0 auto; }
+section[data-category="emergency"] > h2::before { background: #b30000; }
+section[data-category="grey"] > h2::before { background: #999; }
+section[data-category="blue"] > h2::before { background: #0b63b8; }
+section[data-category="green"] > h2::before { background: #1b7a1b; }
+section[data-category] ul.checklist { margin-top: 4px; }
+section[data-category] li { padding-left: 4px; }
+
+/* Backwards compatibility for manually annotated items */
+.critical { color: #b30000; font-weight: 700; border-left: 4px solid #b30000; padding-left: 6px; }
+.critical strong { font-weight: 700; }
+.critical strong { font-weight: 700; }
+
+/* Small utilities */
+.sr-only { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* Icon styling */
+.icon { display: inline-block; width: 1em; height: 1em; vertical-align: text-bottom; margin-right: 6px; }
+.icon svg { width: 100%; height: 100%; fill: currentColor; }
+
+/* Table improvements */
+table { width: 100%; border-collapse: collapse; font-size: 8pt; }
+table td, table th { padding: 6px 8px; border: 0.5px solid #e6e6e6; }
+table tr:nth-child(even) { background: #fbfbfb; }
+table th { font-weight: 600; text-align: left; }
+
+@media print {
+	:root { -webkit-print-color-adjust: exact; color-adjust: exact; }
+	.box { border-color: #111; }
+	section[data-category="emergency"] { border-left-color: #b30000; background: none; }
+	section[data-category="grey"] { border-left-color: #999; background: none; }
+	section[data-category="blue"] { border-left-color: #0b63b8; background: none; }
+	section[data-category="green"] { border-left-color: #1b7a1b; background: none; }
+	header { margin-bottom: 4px; padding-bottom: 2px; border-bottom: 0; }
+	.sheet header .sub { display: none; }
+}
+
+/* ---------- v2 layout additions ---------- */
+
+/* Page divider band — full-column heading (replaces big H1 cards) */
+.page-divider {
+  break-before: column;
+  margin: 6px 0 4px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.page-divider h1 { font-size: 10.5pt; margin: 0; color: inherit; }
+.page-divider[data-category="emergency"] { background: #b30000; }
+.page-divider[data-category="grey"]      { background: #666; }
+.page-divider[data-category="blue"]      { background: #0b63b8; }
+.page-divider[data-category="green"]     { background: #1b7a1b; }
+
+/* H3 subsection nested inside a card — light divider, body color */
+.subsection {
+  margin: 3px 0 2px;
+  padding: 2px 0 0 8px;
+  border-left: 2px solid currentColor;
+  color: inherit;
+}
+.subsection h3 {
+  font-size: 8.5pt;
+  margin: 0 0 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Body text inside a colored card should stay readable (override category color) */
+section[data-category] .checklist li,
+section[data-category] .note,
+section[data-category] .subheader { color: #111; font-weight: 400; }
+section[data-category="emergency"] .subheader { color: #b30000; font-weight: 700; }
+
+/* Notes (informational, no checkbox) */
+.note {
+  font-size: 8pt;
+  font-style: italic;
+  color: #444;
+  margin: 2px 0 4px;
+  padding-left: 16px;
+  border-left: 2px solid #ddd;
+}
+
+/* Sub-headers (e.g. "IMMEDIATE ACTIONS") */
+.subheader {
+  font-size: 8.5pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin: 3px 0 2px;
+  color: #b30000;
+}
+
+/* Tables inside cards: tighter and aligned */
+section[data-category] table { margin: 3px 0; font-size: 7.5pt; }
+section[data-category] table th, section[data-category] table td { padding: 3px 5px; color: #111; }

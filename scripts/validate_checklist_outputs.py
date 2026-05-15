@@ -105,6 +105,13 @@ def parse_html(html_path):
         li_text = htmllib.unescape(li_html).strip()
         if li_text:
             all_items.append(li_text)
+    # Also collect <p class='note'> and <p class='subheader'> texts so source items
+    # rendered as notes / sub-headers still satisfy parity checks.
+    for p in re.finditer(r"<p[^>]*class=[\"'](?:note|subheader)[\"'][^>]*>(.*?)</p>", html, flags=re.S|re.I):
+        txt = re.sub(r'<[^>]+>', '', p.group(1))
+        txt = htmllib.unescape(txt).strip()
+        if txt:
+            all_items.append(txt)
     return headings, sections, all_items
 
 # Parse LaTeX-friendly markdown which includes raw latex comments inserted by latex_prepare.py
@@ -175,11 +182,17 @@ def find_match_norm(norm, norm_list):
 # Infer category heuristics duplicated from renderer
 def infer_category(title):
     t = (title or '').lower()
-    if any(k in t for k in ['emerg', 'critical', 'missed', 'engine failure', 'fire', 'immediate', 'memory']):
+    EMERGENCY_KW = [
+        'emerg', 'critical', 'missed', 'engine failure', 'fire', 'immediate',
+        'memory', 'forced landing', 'alternator', 'electrical fire', 'smoke',
+        '🟥', '🚨', '⚡',
+    ]
+    if any(k in t for k in EMERGENCY_KW):
         return 'emergency'
     if any(k in t for k in ['preflight', 'taxi', 'shutdown', 'before takeoff', 'run-up', 'run\u2011up', 'prefight']):
         return 'grey'
-    if any(k in t for k in ['flight', 'ifr', 'inflight', 'in\u2011flight', 'takeoff', 'climb', 'enroute', 'departure', 'approach', 'landing']):
+    if any(k in t for k in ['flight', 'ifr', 'inflight', 'in\u2011flight', 'takeoff', 'climb',
+                            'enroute', 'departure', 'approach', 'landing', 'go\u2011around', 'go-around']):
         return 'blue'
     return 'green'
 

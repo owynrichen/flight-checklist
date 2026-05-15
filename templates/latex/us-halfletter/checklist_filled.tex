@@ -1,0 +1,100 @@
+% Generated checklist filled from checklist_source.yaml
+\documentclass[10pt]{article}
+\usepackage[paperwidth=5.5in,paperheight=8.5in,margin=0.25in]{geometry}
+\usepackage{multicol}
+\usepackage{fontspec}
+\setmainfont{Arial}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{tcolorbox}
+\usepackage{parskip}
+\setlist[itemize]{left=0pt, nosep, itemsep=0pt, topsep=1pt}
+\pagestyle{empty}
+\setlength{\columnsep}{5pt}
+\setlength{\parindent}{0pt}
+
+% Simple checkbox box
+\newcommand{\checkbox}{\raisebox{0.0ex}{\fbox{\rule{0pt}{1.25ex}\rule{1.25ex}{0pt}}}\,}
+
+% Colored section header
+\newtcolorbox{sectbox}[2][]{
+  colback=#2!12,
+  colframe=#2!45,
+  boxrule=0pt,
+  arc=1.5mm,
+  left=3pt,
+  right=3pt,
+  top=1pt,
+  bottom=1pt,
+  boxsep=1pt,
+  fontupper=\small\bfseries,
+  before skip=2pt,
+  after skip=2pt,
+  #1
+}
+
+\begin{document}
+\begin{multicols}{2}
+\raggedright
+
+% --- General ---
+\begin{sectbox}{blue}
+  {\small\textbf{General}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item {\scriptsize It reads well as a \textbf{full reference document}}
+  \item {\scriptsize It \textbf{collapses cleanly} into your kneeboard cards}
+  \item {\scriptsize Icons, spacing, and hierarchy are consistent and intentional}
+  \item {\scriptsize It aligns with \textbf{POH logic}, \textbf{Flow + Verify}, and \textbf{IFR\x2011forward}}
+\end{itemize}
+
+% --- Missed approach (memory) ---
+\vspace{2mm}
+\begin{sectbox}{red}
+  {\small\textbf{🚨 MISSED APPROACH (MEMORY ITEMS)}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item \checkbox {\scriptsize \textbf{Power} --- FULL}
+  \item \checkbox {\scriptsize \textbf{Pitch} --- +7\degree}
+  \item \checkbox {\scriptsize \textbf{Configuration} --- CLEAN}
+  \item \checkbox {\scriptsize \textbf{Airspeed} --- 97 MPH}
+  \item \checkbox {\scriptsize \textbf{Climb} --- +800 fpm}
+\end{itemize}
+
+\columnbreak
+
+% --- Style system ---
+\begin{sectbox}{teal}
+  {\small\textbf{🎨 WORD STYLE SYSTEM (So it stays clean)}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item {\scriptsize \textbf{Title}: 16 pt, Bold}
+  \item {\scriptsize \textbf{Heading 1}: 14 pt, Bold (Sections)}
+  \item {\scriptsize \textbf{Heading 2}: 12 pt, Bold (Procedures)}
+  \item {\scriptsize \textbf{FLOW / VERIFY labels}: Bold, small caps}
+  \item {\scriptsize \textbf{Checklist lines}: 10--11 pt}
+  \item {\scriptsize \textbf{Icons}:}
+  \item {\scriptsize 🟩 Normal}
+  \item {\scriptsize 🔵 IFR}
+  \item {\scriptsize ⛔ Immediate action}
+  \item {\scriptsize ☑ Verify / confirmation}
+\end{itemize}
+
+% --- Next options ---
+\vspace{2mm}
+\begin{sectbox}{green}
+  {\small\textbf{✅ Next options (no rework needed)}}
+\end{sectbox}
+\vspace{1mm}
+\begin{itemize}[left=0pt,label={},labelsep=2mm]
+  \item {\scriptsize Export this as a \textbf{.docx file with styles + icons already applied}}
+  \item {\scriptsize Generate a \textbf{night\x2011IFR version} (no red, higher contrast)}
+  \item {\scriptsize Auto\x2011collapse this into your \textbf{final kneeboard card layouts}}
+\end{itemize}
+
+\vfill
+\end{multicols}
+\end{document}

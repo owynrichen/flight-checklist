@@ -1,0 +1,192 @@
+- section: ▶ FLOW
+  item: Fuel Quantity — CHECK / PROPER TANK
+- section: ▶ FLOW
+  item: Oil — CHECK
+- section: ▶ FLOW
+  item: Controls — FREE / CORRECT
+- section: ▶ FLOW
+  item: Flight Instruments — SET / NO FLAGS
+- section: ▶ FLOW
+  item: Trim — SET TAKEOFF
+- section: ▶ FLOW
+  item: Brakes — CHECK
+- section: ▶ FLOW
+  item: Avionics — AS REQUIRED
+- section: ▶ FLOW
+  item: Taxi — CLEAR / CONTROLLED
+- section: ▶ FLOW
+  item: Parking Brake — SET
+- section: ▶ FLOW
+  item: Throttle — 2000 RPM
+- section: ▶ FLOW
+  item: Magnetos — CHECK (within limits)
+- section: ▶ FLOW
+  item: Carburetor Heat — CHECK → OFF
+- section: ▶ FLOW
+  item: Engine Gauges — GREEN
+- section: ▶ FLOW
+  item: Suction — CHECK
+- section: ▶ FLOW
+  item: Throttle — IDLE / SMOOTH
+- section: ✔ VERIFY
+  item: Stable RPM
+- section: ✔ VERIFY
+  item: No abnormal vibration
+- section: ✔ VERIFY
+  item: Engine indications normal
+- section: ▶ FLOW
+  item: Fuel Pump — ON
+- section: ▶ FLOW
+  item: Lights — AS REQUIRED
+- section: ▶ FLOW
+  item: Flaps — SET
+- section: ▶ FLOW
+  item: Airspeed Alive — CHECK
+- section: ▶ FLOW
+  item: Rotate — **65 MPH**
+- section: ▶ FLOW
+  item: Climb — **Vy 105 MPH**
+- section: ▶ FLOW
+  item: Clearance — REVIEW (route / altitude / frequencies)
+- section: ▶ FLOW
+  item: Bugs — HDG / ALT / MINs SET
+- section: ▶ FLOW
+  item: Navigation Source — CONFIRM
+- section: ▶ FLOW
+  item: Instruments — CHECK (gyro / CDI sensing)
+- section: ▶ FLOW
+  item: Fuel Pump — ON
+- section: ▶ FLOW
+  item: Lights — AS REQUIRED
+- section: ▶ FLOW
+  item: Power — SET
+- section: ▶ FLOW
+  item: Pitch — SET
+- section: ▶ FLOW
+  item: Configuration — FLAPS \_\_\_°
+- section: ▶ FLOW
+  item: Airspeed — \_\_\_ MPH
+- section: ▶ FLOW
+  item: Sink Rate — \_\_\_ FPM
+- section: ▶ FLOW
+  item: '*Goal: Stabilized by FAF*'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**IMMEDIATE ACTIONS**'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**Power** — FULL'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**Pitch** — +7°'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**Configuration** — CLEAN'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**Airspeed** — 97 MPH'
+- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
+  item: '**Climb** — +800 fpm'
+- section: Landing — FLOW
+  item: Airspeed — AS REQUIRED
+- section: Landing — FLOW
+  item: Flaps — AS REQUIRED
+- section: Go‑Around — FLOW
+  item: Power — FULL
+- section: Go‑Around — FLOW
+  item: Carb Heat — OFF
+- section: Go‑Around — FLOW
+  item: Flaps — RETRACT IN STAGES
+- section: Go‑Around — FLOW
+  item: Airspeed — ≥95 MPH
+- section: 🚨 CRITICAL MEMORY ITEMS
+  item: Engine Failure — **100 MPH**
+- section: 🚨 CRITICAL MEMORY ITEMS
+  item: Engine Fire (In‑Flight) — **Mixture IDLE CUTOFF**
+- section: 🚨 CRITICAL MEMORY ITEMS
+  item: Electrical Fire / Smoke — **MASTER OFF**
+- section: ▶ FLOW
+  item: Airspeed — **100 MPH (BEST GLIDE)**
+- section: ▶ FLOW
+  item: Fuel Selector — FULLEST TANK
+- section: ▶ FLOW
+  item: Fuel Pump — ON
+- section: ▶ FLOW
+  item: Mixture — FULL RICH
+- section: ▶ FLOW
+  item: Carb Heat — ON
+- section: ▶ FLOW
+  item: Throttle — OPEN
+- section: ✔ VERIFY
+  item: Power restored → Resume normal operations
+- section: ▶ FLOW
+  item: Fuel Selector — FULLEST
+- section: ▶ FLOW
+  item: Fuel Pump — ON
+- section: ▶ FLOW
+  item: Mixture — FULL RICH
+- section: ▶ FLOW
+  item: Carb Heat — ON
+- section: ▶ FLOW
+  item: Throttle — 1″ OPEN
+- section: ▶ FLOW
+  item: Magnetos — BOTH
+- section: ▶ FLOW
+  item: Primer — AS REQUIRED
+- section: ▶ FLOW
+  item: Engine Gauges — CHECK
+- section: ▶ FLOW
+  item: Airspeed — **100 MPH**
+- section: ▶ FLOW
+  item: Landing Site — SELECT
+- section: ▶ FLOW
+  item: Mixture — IDLE CUTOFF
+- section: ▶ FLOW
+  item: Fuel Selector — OFF
+- section: ▶ FLOW
+  item: Fuel Pump — OFF
+- section: ▶ FLOW
+  item: Magnetos — OFF
+- section: ▶ FLOW
+  item: Master — OFF
+- section: ▶ FLOW
+  item: Seatbelts — SECURE
+- section: ▶ FLOW
+  item: Door — UNLATCH
+- section: ▶ FLOW
+  item: Flaps — AS REQUIRED
+- section: ▶ FLOW
+  item: Mixture — IDLE CUTOFF
+- section: ▶ FLOW
+  item: Fuel Selector — OFF
+- section: ▶ FLOW
+  item: Fuel Pump — OFF
+- section: ▶ FLOW
+  item: Magnetos — OFF
+- section: ▶ FLOW
+  item: Cabin Heat / Air — OFF
+- section: ▶ FLOW
+  item: Airspeed — **125 MPH (TOP WHITE ARC)**
+- section: ▶ FLOW
+  item: Master Switch — OFF
+- section: ▶ FLOW
+  item: All Electrical Switches — OFF
+- section: ▶ FLOW
+  item: Cabin Heat — OFF
+- section: ▶ FLOW
+  item: Air / Vents — OPEN (ventilate)
+- section: ✔ VERIFY
+  item: Smoke dissipating
+- section: 🔄 IF ELECTRICAL POWER REQUIRED
+  item: Master — ON
+- section: 🔄 IF ELECTRICAL POWER REQUIRED
+  item: Essential Circuits — ON **ONE AT A TIME**
+- section: 🔄 IF ELECTRICAL POWER REQUIRED
+  item: 'If smoke returns:'
+- section: ▶ FLOW
+  item: Electrical Load — REDUCE
+- section: ▶ FLOW
+  item: Alternator Field CB — CHECK / RESET
+- section: ▶ FLOW
+  item: Alternator Output CB — CHECK / RESET
+- section: ▶ FLOW
+  item: Alternator — OFF (30 sec) → ON
+- section: ✔ VERIFY
+  item: Ammeter shows system load
+- section: ✔ VERIFY
+  item: 'If no output:'
