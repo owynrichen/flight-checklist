@@ -159,3 +159,25 @@ main.emergency-page .page-edge {
 @media print {
   main.emergency-page { border-top-color: #b30000 !important; }
 }
+
+/* Tighter typography on the emergency card to fit more procedures per page */
+main.emergency-page { font-size: 8.5pt; line-height: 1.08; }
+main.emergency-page h2 { font-size: 9.5pt; }
+main.emergency-page h3 { font-size: 8.5pt; }
+main.emergency-page .checklist li { margin: 2px 0; }
+main.emergency-page section[data-category] { padding: 4px; margin-bottom: 4px; }
+main.emergency-page .subsection { padding-left: 6px; }
+main.emergency-page .box { width: 9px; height: 9px; flex: 0 0 9px; }
+
+/* Aggressive density tuning for the emergency card */
+main.emergency-page { font-size: 8pt; line-height: 1.05; column-gap: 6px; }
+main.emergency-page .page-divider { margin: 2px 0 2px; padding: 2px 5px; }
+main.emergency-page .page-divider h1 { font-size: 9.5pt; }
+main.emergency-page section[data-category] { padding: 3px 4px; margin-bottom: 3px; border-radius: 3px; }
+main.emergency-page section[data-category] > h2 { margin: 0 0 2px; font-size: 9pt; }
+main.emergency-page section[data-category] > h2::before { width: 10px; height: 10px; }
+main.emergency-page .subsection { margin: 2px 0 1px; padding-left: 5px; }
+main.emergency-page .subsection h3 { font-size: 7.5pt; letter-spacing: 0.3px; }
+main.emergency-page .checklist { margin-bottom: 3px; }
+main.emergency-page .checklist li { margin: 1px 0; }
+main.emergency-page .critical { padding-left: 4px; border-left-width: 3px; }
