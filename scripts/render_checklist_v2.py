@@ -219,10 +219,13 @@ def render_h2_block(h2, children_tokens):
 
 
 def build_html_from_tokens(tokens):
-    """Group tokens into H1 dividers + H2 cards (with nested H3 subsections)."""
+    """Group tokens into H1 dividers + H2 cards (with nested H3 subsections).
+    When an 'emergency' H1 is encountered, emit a sentinel that splits the
+    output into a second <main> container so a page break can be forced.
+    """
     out = []
-    # Skip the very first H1 (used as <header> title)
     seen_first_h1 = False
+    page_split_done = False
     i = 0
     n = len(tokens)
     while i < n:
@@ -233,6 +236,10 @@ def build_html_from_tokens(tokens):
                 i += 1
                 continue
             cat = infer_category(tok['text'])
+            # Emergency H1 starts a new physical kneeboard page
+            if cat == 'emergency' and not page_split_done:
+                out.append('__PAGE_SPLIT__')
+                page_split_done = True
             title_html = replace_icons(html.escape(tok['text']))
             out.append(f"  <div class='page-divider' data-category=\"{cat}\"><h1>{title_html}</h1></div>")
             i += 1
@@ -249,7 +256,6 @@ def build_html_from_tokens(tokens):
                 out.append(block)
             i = j
             continue
-        # Tokens before any H2 (loose items / orphans) — wrap in a generic card
         if tok['type'] in ('item', 'note', 'subheader', 'table'):
             j = i
             children = []
@@ -262,7 +268,16 @@ def build_html_from_tokens(tokens):
             i = j
             continue
         i += 1
-    return '\n'.join(out)
+    body = '\n'.join(out)
+    # Replace sentinel with main container split. Emergency page gets its own
+    # <main class="columns emergency-page"> and a small page header band.
+    split_marker = (
+        '</main>\n'
+        '    <main class="columns emergency-page" data-category="emergency">\n'
+        '      <div class="page-edge" aria-hidden="true"></div>\n'
+    )
+    body = body.replace('__PAGE_SPLIT__', split_marker)
+    return body
 
 
 # --- main --------------------------------------------------------------------
