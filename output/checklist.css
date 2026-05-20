@@ -1,17 +1,17 @@
 @page { size: 5.5in 8.5in; margin: 0.20in; }
-body { font-family: Arial, Helvetica, sans-serif; font-size: 9pt; color: #111; line-height: 1.12; }
+body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #111; line-height: 1.05; }
 .sheet { width: 100%; height: 100%; box-sizing: border-box; }
-header { text-align: center; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid #eee; }
-header h1 { font-size: 12pt; margin: 0; letter-spacing: 0.5px; }
+header { text-align: center; margin-bottom: 3px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
+header h1 { font-size: 10.5pt; margin: 0; letter-spacing: 0.3px; }
 .columns { column-count: 2; column-gap: 8px; column-fill: balance; }
 
 /* Section / heading scale */
-h1 { font-size: 12pt; margin: 4px 0 4px; }
-h2 { font-size: 10.5pt; margin: 4px 0 2px; }
-h3 { font-size: 9.5pt; margin: 3px 0; }
+h1 { font-size: 10.5pt; margin: 2px 0; }
+h2 { font-size: 9pt; margin: 2px 0 1px; }
+h3 { font-size: 8pt; margin: 1px 0; }
 
-.checklist { list-style: none; padding: 0; margin: 0 0 6px 0; }
-.checklist li { margin: 4px 0; line-height: 1.12; display: flex; align-items: flex-start; }
+.checklist { list-style: none; padding: 0; margin: 0 0 2px 0; }
+.checklist li { margin: 1px 0; line-height: 1.05; display: flex; align-items: flex-start; }
 .checklist li > .box { margin-top: 2px; }
 .checklist li > *:not(.box) { flex: 1 1 auto; }
 
@@ -79,10 +79,10 @@ table th { font-weight: 600; text-align: left; }
 
 /* ---------- v2 layout additions ---------- */
 
-/* Page divider band — full-column heading (replaces big H1 cards) */
+/* Page divider band — full-column heading (replaces big H1 cards).
+   No forced column break: let it sit inline so columns balance naturally. */
 .page-divider {
-  break-before: column;
-  margin: 6px 0 4px;
+  margin: 4px 0 3px;
   padding: 3px 6px;
   border-radius: 3px;
   color: #fff;
@@ -170,14 +170,14 @@ main.emergency-page .subsection { padding-left: 6px; }
 main.emergency-page .box { width: 9px; height: 9px; flex: 0 0 9px; }
 
 /* Aggressive density tuning for the emergency card */
-main.emergency-page { font-size: 8pt; line-height: 1.05; column-gap: 6px; }
-main.emergency-page .page-divider { margin: 2px 0 2px; padding: 2px 5px; }
-main.emergency-page .page-divider h1 { font-size: 9.5pt; }
-main.emergency-page section[data-category] { padding: 3px 4px; margin-bottom: 3px; border-radius: 3px; }
-main.emergency-page section[data-category] > h2 { margin: 0 0 2px; font-size: 9pt; }
-main.emergency-page section[data-category] > h2::before { width: 10px; height: 10px; }
-main.emergency-page .subsection { margin: 2px 0 1px; padding-left: 5px; }
-main.emergency-page .subsection h3 { font-size: 7.5pt; letter-spacing: 0.3px; }
+main.emergency-page { font-size: 7pt; line-height: 1.02; column-gap: 5px; }
+main.emergency-page .page-divider { margin: 1px 0; padding: 2px 5px; }
+main.emergency-page .page-divider h1 { font-size: 9pt; }
+main.emergency-page section[data-category] { padding: 2px 3px; margin-bottom: 2px; border-radius: 3px; }
+main.emergency-page section[data-category] > h2 { margin: 0 0 1px; font-size: 8.5pt; }
+main.emergency-page section[data-category] > h2::before { width: 9px; height: 9px; }
+main.emergency-page .subsection { margin: 1px 0; padding-left: 4px; }
+main.emergency-page .subsection h3 { font-size: 7pt; letter-spacing: 0.3px; }
 /* Hide emergency H3 sub-labels (▶ FLOW, ✔ VERIFY, 🔄 IF ELECTRICAL POWER REQUIRED).
    They add vertical space without operational value — pilots read items directly. */
 main.emergency-page .subsection > h3 { display: none; }
@@ -216,13 +216,33 @@ main.emergency-page .consequence {
   margin: 0 3px;
 }
 
-/* Emergency card uses 3 columns to fit all procedures on a single physical card.
-   Without this the ALTERNATOR card overflowed onto a near-empty page 4. */
-main.emergency-page { column-count: 3; }
+/* Emergency card uses 2 columns to match the rest of the deck. */
+main.emergency-page { column-count: 2; }
 
-/* Keep a critical ⛔ condition and its ➡ consequence on the same page/column.
-   Without these rules wkhtmltopdf splits between them and duplicates the antecedent. */
+/* Hide H3 sub-labels site-wide (▶ FLOW, ✔ VERIFY, 🔄 IF ELECTRICAL POWER REQUIRED).
+   They add vertical space without operational value — pilots read items directly.
+   The parent H2 already names the procedure. */
+.subsection > h3 { display: none; }
+.subsection { padding-left: 0; border-left: none; margin: 0; }
+
+/* Performance profile table: compact and spans both columns so it isn't
+   crushed inside a single ~2.4" column. */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 2px 0 4px;
+  font-size: 6.8pt;
+  line-height: 1.1;
+  column-span: all;
+}
+table th, table td { border: 0.5px solid #999; padding: 1px 3px; text-align: left; }
+table th { background: #f0f0f0; font-weight: 700; }
+
+/* Keep a critical ⛔ condition and its ➡ consequence together (they're now merged
+   into a single <li> in the renderer, but keep this as belt-and-suspenders). */
 .checklist li.critical { page-break-after: avoid; break-after: avoid; }
 .consequence { page-break-before: avoid; break-before: avoid;
   page-break-inside: avoid; break-inside: avoid; }
-.card, .subsection { page-break-inside: avoid; break-inside: avoid; }
+/* Allow cards to break across columns when needed for balance.
+   Subsections stay together so a procedure isn't split mid-flow. */
+.subsection { page-break-inside: avoid; break-inside: avoid; }
