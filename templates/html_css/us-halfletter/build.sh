@@ -75,10 +75,15 @@ else
   rm -f "$TMP_HTML"
 fi
 
-# Convert to PDF (wkhtmltopdf keeps CSS layout)
-if command -v wkhtmltopdf >/dev/null 2>&1; then
+# Convert to PDF. Prefer weasyprint (CSS3 multi-column support) over wkhtmltopdf
+# (ancient WebKit, ignores column-count → all content rendered as single column).
+if command -v weasyprint >/dev/null 2>&1; then
+  weasyprint "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf"
+  echo "PDF written to $OUTDIR/checklist_print_ready.pdf (weasyprint)"
+elif command -v wkhtmltopdf >/dev/null 2>&1; then
+  echo "WARNING: weasyprint not found; falling back to wkhtmltopdf — multi-column layout will NOT render correctly. Install with: pip install weasyprint"
   wkhtmltopdf --enable-local-file-access --page-width 5.5in --page-height 8.5in --margin-top 10mm --margin-bottom 10mm "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf"
-  echo "PDF written to $OUTDIR/checklist_print_ready.pdf"
+  echo "PDF written to $OUTDIR/checklist_print_ready.pdf (wkhtmltopdf — single column)"
 else
-  echo "wkhtmltopdf not found — HTML proof written to $OUTDIR/checklist_print_ready.html"
+  echo "Neither weasyprint nor wkhtmltopdf found — HTML proof written to $OUTDIR/checklist_print_ready.html"
 fi
