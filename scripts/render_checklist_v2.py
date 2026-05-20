@@ -121,6 +121,13 @@ def parse_markdown(md_path):
             tokens.append({'type': 'item', 'text': rest, 'line': i + 1, 'critical': True})
             i += 1
             continue
+        # ➡ consequence / follow-through action (rendered as non-checkbox note styled
+        # to look like an indented "then-do-this" step, e.g. "➡ Master OFF → Land ASAP").
+        if s.startswith('➡'):
+            rest = s.lstrip('➡').strip()
+            tokens.append({'type': 'consequence', 'text': rest, 'line': i + 1})
+            i += 1
+            continue
         # Checklist items: list markers or leading checkbox glyph
         if re.match(r'^[-*+]\s+', s) or s.startswith(tuple('☐☑✅✔')):
             t = re.sub(r'^[-*+]\s*', '', s)
@@ -148,6 +155,11 @@ def build_note(text):
 
 def build_subheader(text):
     return f"      <p class='subheader'>{replace_icons(md_to_html(text))}</p>"
+
+
+def build_consequence(text):
+    inner = replace_icons(md_to_html(text))
+    return f"      <p class='consequence'><span class='arrow' aria-hidden='true'>➡</span> {inner}</p>"
 
 
 def build_table(md_table):
@@ -184,8 +196,33 @@ def render_h2_block(h2, children_tokens):
                 out.extend(items_buffer)
                 out.append(f"{indent}</ul>")
                 items_buffer.clear()
-        for t in toks:
+        k = 0
+        while k < len(toks):
+            t = toks[k]
             if t['type'] == 'item':
+                # If a critical ⛔ condition is immediately followed by a ➡ consequence,
+                # merge them into a single checklist item so the renderer can't break
+                # the pair across pages/columns and the pilot reads "condition → action"
+                # as one statement.
+                if (t.get('critical') and k + 1 < len(toks)
+                        and toks[k + 1]['type'] == 'consequence'):
+                    cond = t['text'].rstrip(': ').rstrip()
+                    cons = toks[k + 1]['text']
+                    cond_html = replace_icons(md_to_html(cond))
+                    cons_html = replace_icons(md_to_html(cons))
+                    merged = (f"{cond_html} <span class='arrow' aria-hidden='true'>➡</span> "
+                              f"<span class='consequence-inline'>{cons_html}</span>")
+                    # build_item_li runs md_to_html on text; we've pre-built HTML, so
+                    # feed it via a marker that md_to_html will pass through unchanged
+                    # — easiest: skip md_to_html by inlining directly.
+                    items_buffer.append(
+                        "        <li class='critical'>"
+                        "<span class='box' role='checkbox' aria-checked='false' "
+                        "tabindex='0' aria-label='Checklist checkbox'></span> "
+                        f"{merged}</li>"
+                    )
+                    k += 2
+                    continue
                 items_buffer.append(build_item_li(t['text'], critical=t.get('critical', False)))
             elif t['type'] == 'note':
                 flush()
@@ -193,9 +230,13 @@ def render_h2_block(h2, children_tokens):
             elif t['type'] == 'subheader':
                 flush()
                 out.append(indent + build_subheader(t['text']).lstrip())
+            elif t['type'] == 'consequence':
+                flush()
+                out.append(indent + build_consequence(t['text']).lstrip())
             elif t['type'] == 'table':
                 flush()
                 out.append(indent + build_table(t['text']))
+            k += 1
         flush()
         return out
 
@@ -256,10 +297,10 @@ def build_html_from_tokens(tokens):
                 out.append(block)
             i = j
             continue
-        if tok['type'] in ('item', 'note', 'subheader', 'table'):
+        if tok['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
             j = i
             children = []
-            while j < n and tokens[j]['type'] in ('item', 'note', 'subheader', 'table'):
+            while j < n and tokens[j]['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
                 children.append(tokens[j])
                 j += 1
             block = render_h2_block({'text': 'General', 'level': 2}, children)

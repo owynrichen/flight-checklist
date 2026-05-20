@@ -178,6 +178,51 @@ main.emergency-page section[data-category] > h2 { margin: 0 0 2px; font-size: 9p
 main.emergency-page section[data-category] > h2::before { width: 10px; height: 10px; }
 main.emergency-page .subsection { margin: 2px 0 1px; padding-left: 5px; }
 main.emergency-page .subsection h3 { font-size: 7.5pt; letter-spacing: 0.3px; }
+/* Hide emergency H3 sub-labels (▶ FLOW, ✔ VERIFY, 🔄 IF ELECTRICAL POWER REQUIRED).
+   They add vertical space without operational value — pilots read items directly. */
+main.emergency-page .subsection > h3 { display: none; }
+main.emergency-page .subsection { padding-left: 0; border-left: none; margin: 0; }
 main.emergency-page .checklist { margin-bottom: 3px; }
 main.emergency-page .checklist li { margin: 1px 0; }
 main.emergency-page .critical { padding-left: 4px; border-left-width: 3px; }
+
+/* ➡ consequence / follow-through action (the "then-do-this" after a ⛔ condition).
+   Rendered without a checkbox; visually indented and tied to the preceding ⛔. */
+.consequence {
+  margin: 1px 0 4px 18px;
+  font-size: 9pt;
+  line-height: 1.15;
+  color: #1a1a1a;
+}
+.consequence .arrow {
+  display: inline-block;
+  color: #b30000;
+  font-weight: bold;
+  margin-right: 4px;
+}
+main.emergency-page .consequence {
+  margin: 0 0 2px 14px;
+  font-size: 7.8pt;
+  line-height: 1.05;
+}
+
+/* Inline consequence (when condition + ➡ action are merged into one item) */
+.consequence-inline {
+  color: #1a1a1a;
+}
+.checklist li.critical .arrow {
+  color: #b30000;
+  font-weight: bold;
+  margin: 0 3px;
+}
+
+/* Emergency card uses 3 columns to fit all procedures on a single physical card.
+   Without this the ALTERNATOR card overflowed onto a near-empty page 4. */
+main.emergency-page { column-count: 3; }
+
+/* Keep a critical ⛔ condition and its ➡ consequence on the same page/column.
+   Without these rules wkhtmltopdf splits between them and duplicates the antecedent. */
+.checklist li.critical { page-break-after: avoid; break-after: avoid; }
+.consequence { page-break-before: avoid; break-before: avoid;
+  page-break-inside: avoid; break-inside: avoid; }
+.card, .subsection { page-break-inside: avoid; break-inside: avoid; }
