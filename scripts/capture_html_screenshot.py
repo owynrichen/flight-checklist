@@ -1,13 +1,17 @@
 #!/usr/bin/env python3
-"""Capture a screenshot of the generated checklist HTML into output/.
+"""Capture screenshots of the generated checklist into output/.
 
-The screenshot is written to `output/checklist-html-screenshot.png` by default.
+The HTML screenshot is written to `output/checklist-html-screenshot.png` by default.
+If `pdftoppm` is available and the PDF exists, page images are also written as
+`output/checklist-page-1.png`, `output/checklist-page-2.png`, etc.
 """
 
 from __future__ import annotations
 
 import argparse
 import os
+import shutil
+import subprocess
 import sys
 
 
@@ -22,6 +26,11 @@ def main() -> int:
         "--out",
         default=os.path.join(os.path.dirname(__file__), "..", "output", "checklist-html-screenshot.png"),
         help="Screenshot output path",
+    )
+    parser.add_argument(
+        "--pdf",
+        default=os.path.join(os.path.dirname(__file__), "..", "output", "checklist_print_ready.pdf"),
+        help="PDF file to split into page images",
     )
     parser.add_argument("--width", type=int, default=1400)
     parser.add_argument("--height", type=int, default=6000)
@@ -51,6 +60,19 @@ def main() -> int:
         browser.close()
 
     print(f"Wrote {out_path}")
+
+    pdf_path = os.path.abspath(args.pdf)
+    pdf_prefix = os.path.join(os.path.dirname(out_path), "checklist-page")
+    if os.path.exists(pdf_path) and shutil.which("pdftoppm"):
+        for existing in sorted(
+            f for f in os.listdir(os.path.dirname(out_path)) if f.startswith("checklist-page-") and f.endswith(".png")
+        ):
+            try:
+                os.remove(os.path.join(os.path.dirname(out_path), existing))
+            except OSError:
+                pass
+        subprocess.run(["pdftoppm", "-png", "-f", "1", "-l", "999", pdf_path, pdf_prefix], check=True)
+        print(f"Wrote page images to {os.path.dirname(out_path)}")
     return 0
 
 

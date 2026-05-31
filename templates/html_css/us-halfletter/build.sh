@@ -78,15 +78,6 @@ else
   rm -f "$TMP_HTML"
 fi
 
-# Capture a screenshot for manual review when Playwright is available.
-if [ -x "$REPO_ROOT/.venv/bin/python" ] && [ -f "$OUTDIR/checklist_print_ready.html" ]; then
-  "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/scripts/capture_html_screenshot.py" --html "$OUTDIR/checklist_print_ready.html" --out "$OUTDIR/checklist-html-screenshot.png" || true
-fi
-
-if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
-  echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
-fi
-
 # Convert to PDF. Prefer weasyprint (CSS3 multi-column support) over wkhtmltopdf
 # (ancient WebKit, ignores column-count → all content rendered as single column).
 if command -v weasyprint >/dev/null 2>&1; then
@@ -98,4 +89,13 @@ elif command -v wkhtmltopdf >/dev/null 2>&1; then
   echo "PDF written to $OUTDIR/checklist_print_ready.pdf (wkhtmltopdf — single column)"
 else
   echo "Neither weasyprint nor wkhtmltopdf found — HTML proof written to $OUTDIR/checklist_print_ready.html"
+fi
+
+# Capture screenshots after PDF generation so page images are available too.
+if [ -x "$REPO_ROOT/.venv/bin/python" ] && [ -f "$OUTDIR/checklist_print_ready.html" ]; then
+  "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/scripts/capture_html_screenshot.py" --html "$OUTDIR/checklist_print_ready.html" --out "$OUTDIR/checklist-html-screenshot.png" --pdf "$OUTDIR/checklist_print_ready.pdf" || true
+fi
+
+if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
+  echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
 fi
