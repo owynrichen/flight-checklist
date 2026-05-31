@@ -43,7 +43,7 @@ def infer_category(title: str) -> str:
 
 
 def insert_category_comments(md: str) -> str:
-    """Insert raw LaTeX comment blocks before markdown headings.
+    r"""Insert raw LaTeX comment blocks before markdown headings.
 
     Example insertion before a heading `## 🚨 MISSED APPROACH`:
 

@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Tool caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Packaging / build artifacts
+build/
+dist/
+*.egg-info/
+*.egg
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# Repo outputs
+output/*
+!output/.gitkeep
+docx_images/
+Combined_VFR_IFR_Ch1.md
+Combined_VFR_IFR_Ch1_latex.md
+checklist_source.yaml

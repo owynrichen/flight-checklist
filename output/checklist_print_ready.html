@@ -36,9 +36,9 @@ section[data-category="emergency"] .checklist { break-inside: avoid-column; }
 
 /* Critical items style: left rule + bold, with non-color fallback */
 /* Section color mapping (semantic) */
-section[data-category="emergency"] { color: #b30000; font-weight: 700; border-left: 4px solid #b30000; padding-left: 6px; background: linear-gradient(90deg, rgba(179,0,0,0.05), rgba(0,0,0,0)); }
-section[data-category="grey"] { color: #666; }
-section[data-category="blue"] { color: #0b63b8; }
+section[data-category="emergency"] { color: #b30000; font-weight: 700; border-left: 4px solid #b30000; padding-left: 6px; background: linear-gradient(90deg, rgba(179,0,0,0.12), rgba(179,0,0,0.04)); }
+section[data-category="grey"] { color: #666; background: linear-gradient(90deg, rgba(120,120,120,0.10), rgba(120,120,120,0.04)); }
+section[data-category="blue"] { color: #0b63b8; background: linear-gradient(90deg, rgba(27,122,27,0.10), rgba(27,122,27,0.04)); }
 section[data-category="green"] { color: #1b7a1b; }
 
 /* Visual enhancements: make sections feel like cards and add a color badge */
@@ -74,10 +74,10 @@ table th { font-weight: 600; text-align: left; }
 @media print {
 	:root { -webkit-print-color-adjust: exact; color-adjust: exact; }
 	.box { border-color: #111; }
-	section[data-category="emergency"] { border-left-color: #b30000; background: none; }
-	section[data-category="grey"] { border-left-color: #999; background: none; }
-	section[data-category="blue"] { border-left-color: #0b63b8; background: none; }
-	section[data-category="green"] { border-left-color: #1b7a1b; background: none; }
+  section[data-category="emergency"] { border-left-color: #b30000; background: rgba(179,0,0,0.06); }
+  section[data-category="grey"] { border-left-color: #999; background: rgba(120,120,120,0.06); }
+  section[data-category="blue"] { border-left-color: #0b63b8; background: rgba(27,122,27,0.06); }
+  section[data-category="green"] { border-left-color: #1b7a1b; background: none; }
 	header { margin-bottom: 4px; padding-bottom: 2px; border-bottom: 0; }
 	.sheet header .sub { display: none; }
 }
@@ -145,6 +145,11 @@ section[data-category="emergency"] .subheader { color: #b30000; font-weight: 700
 /* Tables inside cards: tighter and aligned */
 section[data-category] table { margin: 3px 0; font-size: 7.5pt; }
 section[data-category] table th, section[data-category] table td { padding: 3px 5px; color: #111; }
+
+/* Section fills */
+section[data-category="grey"] { background-color: rgba(120,120,120,0.07); }
+section[data-category="blue"] { background-color: rgba(27,122,27,0.08); }
+section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
 
 /* ---------- Emergency as a second kneeboard card ---------- */
 /* Each <main class="columns"> is one physical kneeboard card. A break before

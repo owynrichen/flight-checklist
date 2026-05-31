@@ -15,6 +15,9 @@ DOCX_PATH="${1:-}"
 OUTDIR="$REPO_ROOT/output"
 mkdir -p "$OUTDIR"
 
+# Fail fast if the host can't support a build yet.
+python3 "$REPO_ROOT/scripts/check_setup.py"
+
 # Clear output directory for reproducible builds
 rm -rf "$OUTDIR"/* || true
 

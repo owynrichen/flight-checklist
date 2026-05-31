@@ -14,6 +14,9 @@ DOCX_PATH="${1:-}"
 OUTDIR="$REPO_ROOT/output"
 mkdir -p "$OUTDIR"
 
+# Fail fast if the host can't support a build yet.
+python3 "$REPO_ROOT/scripts/check_setup.py"
+
 # Clear output directory so builds are reproducible
 rm -rf "$OUTDIR"/* || true
 
@@ -73,6 +76,15 @@ else
     done < "$TEMPLATE"
   } > "$OUTDIR/checklist_print_ready.html"
   rm -f "$TMP_HTML"
+fi
+
+# Capture a screenshot for manual review when Playwright is available.
+if [ -x "$REPO_ROOT/.venv/bin/python" ] && [ -f "$OUTDIR/checklist_print_ready.html" ]; then
+  "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/scripts/capture_html_screenshot.py" --html "$OUTDIR/checklist_print_ready.html" --out "$OUTDIR/checklist-html-screenshot.png" || true
+fi
+
+if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
+  echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
 fi
 
 # Convert to PDF. Prefer weasyprint (CSS3 multi-column support) over wkhtmltopdf
