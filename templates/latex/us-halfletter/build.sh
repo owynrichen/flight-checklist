@@ -18,14 +18,14 @@ mkdir -p "$OUTDIR"
 # Fail fast if the host can't support a build yet.
 python3 "$REPO_ROOT/scripts/check_setup.py"
 
-# Clear output directory for reproducible builds
-rm -rf "$OUTDIR"/* || true
+# Clear only artifacts this build owns so HTML/PDF can coexist for validation
+rm -f "$OUTDIR/checklist_print_ready.pdf" || true
 
 # Step 1: optionally extract markdown and images using the repo script
 if [ -n "$DOCX_PATH" ]; then
-  python3 "$REPO_ROOT/scripts/extract_docx_structure.py" "$DOCX_PATH"
+	python3 "$REPO_ROOT/scripts/extract_docx_structure.py" "$DOCX_PATH"
 else
-  echo "No DOCX path supplied — using existing Markdown/YAML in repo root"
+	echo "No DOCX path supplied — using existing Markdown/YAML in repo root"
 fi
 
 # Step 2: render PDF via pandoc -> xelatex with US half-letter geometry
@@ -43,6 +43,25 @@ fi
 if [ -f "$LATEX_MD" ]; then
 	PANDOC_INPUT="$LATEX_MD"
 fi
+
+PRINT_MD="$REPO_ROOT/Combined_VFR_IFR_Ch1_print.md"
+python3 - <<PY
+from pathlib import Path
+src = Path('$PANDOC_INPUT').read_text(encoding='utf-8')
+lines = src.splitlines()
+out = []
+for line in lines:
+    if line.startswith('# ') and 'PA‑32‑260 CHEROKEE SIX' in line:
+        continue
+    if line.startswith('## ') and 'FLOW + VERIFY CHECKLIST' in line:
+        continue
+    if line.strip().startswith('**Aircraft:**') or line.strip().startswith('**Tail Number:**') or line.strip().startswith('**Engine:**'):
+        continue
+    out.append(line)
+Path('$PRINT_MD').write_text('\n'.join(out) + '\n', encoding='utf-8')
+print('Prepared print markdown:', '$PRINT_MD')
+PY
+PANDOC_INPUT="$PRINT_MD"
 
 # Copy any extracted images to output so PDF generation can find them
 if [ -d "$REPO_ROOT/docx_images" ]; then
@@ -68,10 +87,12 @@ fi
 pandoc "$PANDOC_INPUT" -o "$OUTDIR/checklist_print_ready.pdf" \
 		--pdf-engine=xelatex \
 		-H "$HEADER" \
-		-V geometry:paperwidth=5.5in -V geometry:paperheight=8.5in -V geometry:margin=0.4in
+		-V geometry:paperwidth=8.5in -V geometry:paperheight=11in -V geometry:margin=0.4in
 
 if [ -n "$TEMP_HEADER" ] && [ -f "$TEMP_HEADER" ]; then
 	rm -f "$TEMP_HEADER"
 fi
+
+rm -f "$PRINT_MD" || true
 
 echo "PDF written to $OUTDIR/checklist_print_ready.pdf"

@@ -17,8 +17,8 @@ mkdir -p "$OUTDIR"
 # Fail fast if the host can't support a build yet.
 python3 "$REPO_ROOT/scripts/check_setup.py"
 
-# Clear output directory so builds are reproducible
-rm -rf "$OUTDIR"/* || true
+# Clear only artifacts this build owns so HTML/PDF can coexist for validation
+rm -f "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf" "$OUTDIR/checklist_from_yaml.html" || true
 
 # Step 1: optionally extract markdown and images using the repo script
 if [ -n "$DOCX_PATH" ]; then
@@ -80,12 +80,26 @@ fi
 
 # Convert to PDF. Prefer weasyprint (CSS3 multi-column support) over wkhtmltopdf
 # (ancient WebKit, ignores column-count → all content rendered as single column).
+PDF_HTML="$OUTDIR/checklist_print_ready_for_pdf.html"
+if [ -f "$OUTDIR/checklist_print_ready.html" ]; then
+  python3 - <<PY
+from pathlib import Path
+src = Path('$OUTDIR/checklist_print_ready.html').read_text(encoding='utf-8')
+start = src.find('<header>')
+end = src.find('</header>')
+if start != -1 and end != -1:
+    end += len('</header>')
+    src = src[:start] + src[end:]
+Path('$PDF_HTML').write_text(src, encoding='utf-8')
+print('Prepared PDF HTML without header:', '$PDF_HTML')
+PY
+fi
 if command -v weasyprint >/dev/null 2>&1; then
-  weasyprint "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf"
+  weasyprint "$PDF_HTML" "$OUTDIR/checklist_print_ready.pdf"
   echo "PDF written to $OUTDIR/checklist_print_ready.pdf (weasyprint)"
 elif command -v wkhtmltopdf >/dev/null 2>&1; then
   echo "WARNING: weasyprint not found; falling back to wkhtmltopdf — multi-column layout will NOT render correctly. Install with: pip install weasyprint"
-  wkhtmltopdf --enable-local-file-access --page-width 5.5in --page-height 8.5in --margin-top 10mm --margin-bottom 10mm "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf"
+  wkhtmltopdf --enable-local-file-access --page-width 8.5in --page-height 11in --margin-top 10mm --margin-bottom 10mm "$PDF_HTML" "$OUTDIR/checklist_print_ready.pdf"
   echo "PDF written to $OUTDIR/checklist_print_ready.pdf (wkhtmltopdf — single column)"
 else
   echo "Neither weasyprint nor wkhtmltopdf found — HTML proof written to $OUTDIR/checklist_print_ready.html"
@@ -99,3 +113,4 @@ fi
 if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
   echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
 fi
+rm -f "$PDF_HTML" || true

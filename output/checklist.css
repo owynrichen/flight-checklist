@@ -1,4 +1,4 @@
-@page { size: 5.5in 8.5in; margin: 0.20in; }
+@page { size: 8.5in 11in; margin: 0.20in; }
 body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #111; line-height: 1.05; }
 .sheet { width: 100%; height: 100%; box-sizing: border-box; }
 header { text-align: center; margin-bottom: 3px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
@@ -67,12 +67,12 @@ table th { font-weight: 600; text-align: left; }
 
 @media print {
 	:root { -webkit-print-color-adjust: exact; color-adjust: exact; }
+	header { display: none; }
 	.box { border-color: #111; }
-  section[data-category="emergency"] { border-left-color: #b30000; background: rgba(179,0,0,0.06); }
-  section[data-category="grey"] { border-left-color: #999; background: rgba(120,120,120,0.06); }
-  section[data-category="blue"] { border-left-color: #0b63b8; background: rgba(27,122,27,0.06); }
-  section[data-category="green"] { border-left-color: #1b7a1b; background: none; }
-	header { margin-bottom: 4px; padding-bottom: 2px; border-bottom: 0; }
+	section[data-category="emergency"] { border-left-color: #b30000; background: none; }
+	section[data-category="grey"] { border-left-color: #999; background: none; }
+	section[data-category="blue"] { border-left-color: #0b63b8; background: none; }
+	section[data-category="green"] { border-left-color: #1b7a1b; background: none; }
 	.sheet header .sub { display: none; }
 }
 
@@ -229,18 +229,19 @@ main.emergency-page { column-count: 2; }
 .subsection > h3 { display: none; }
 .subsection { padding-left: 0; border-left: none; margin: 0; }
 
-/* Performance profile table: compact and spans both columns so it isn't
-   crushed inside a single ~2.4" column. */
-table {
+/* Performance profile table: span the full card width so it doesn't disrupt
+   the two-column checklist flow. */
+section.card > table {
   border-collapse: collapse;
   width: 100%;
-  margin: 2px 0 4px;
-  font-size: 6.8pt;
-  line-height: 1.1;
+  margin: 1px 0 3px;
+  font-size: 6.3pt;
+  line-height: 1.02;
   column-span: all;
+  break-inside: avoid;
 }
-table th, table td { border: 0.5px solid #999; padding: 1px 3px; text-align: left; }
-table th { background: #f0f0f0; font-weight: 700; }
+section.card > table th, section.card > table td { border: 0.5px solid #999; padding: 1px 2px; text-align: left; }
+section.card > table th { background: #f0f0f0; font-weight: 700; }
 
 /* Keep a critical ⛔ condition and its ➡ consequence together (they're now merged
    into a single <li> in the renderer, but keep this as belt-and-suspenders). */

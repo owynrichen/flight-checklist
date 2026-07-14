@@ -15,6 +15,21 @@
 **Engine:** **Lycoming O‑540‑E4B5**
 
 ```{=latex}
+% data-category: blue
+```
+## \emoji{📘} IFR PERFORMANCE PROFILES
+
+| Phase            | Power      | Pitch     | Config | Speed   | V/S      |
+|------------------|------------|-----------|--------|---------|----------|
+| Takeoff          | FULL       | +7°       | TO     | 65 MPH  | —        |
+| Climb            | CLIMB SET  | +3°       | CLEAN  | Vy 105  | +800 fpm |
+| Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
+| Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
+| Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
+| Approach Level 2 | ~17 in MP  | 0°        | 33°    | 104 MPH | −800     |
+| Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
+
+```{=latex}
 % data-category: green
 ```
 # \emoji{🟩} NORMAL OPERATIONS
@@ -31,8 +46,6 @@
 ```
 ### \emoji{▶} FLOW
 
-*Style: Normal with checkbox symbol*
-
 \emoji{☐} Fuel Quantity — CHECK / PROPER TANK
 
 \emoji{☐} Oil — CHECK
@@ -41,6 +54,12 @@
 
 \emoji{☐} Flight Instruments — SET / NO FLAGS
 
+\emoji{☐} Documents / Charts — ON BOARD / CURRENT
+
+\emoji{☐} Garmin 530W Database — CURRENT / IFR LEGAL
+
+\emoji{☐} Garmin 530W Flight Plan — LOADED / VERIFIED
+
 \emoji{☐} Trim — SET TAKEOFF
 
 \emoji{☐} Brakes — CHECK
@@ -48,6 +67,27 @@
 \emoji{☐} Avionics — AS REQUIRED
 
 \emoji{☐} Taxi — CLEAR / CONTROLLED
+
+```{=latex}
+% data-category: green
+```
+### \emoji{✔} VERIFY
+
+\emoji{✔} Attitude Indicator — ERECT / NO TUMBLE
+
+\emoji{✔} Heading Indicator — ALIGNED / SET
+
+\emoji{✔} Turn Coordinator — ALIVE / RESPONDS
+
+\emoji{✔} Altimeter — SET / CROSS-CHECKED
+
+\emoji{✔} CDI / OBS — IDENT / SET
+
+\emoji{✔} Suction — IN GREEN / STABLE
+
+\emoji{✔} Transponder — SET / ALT MODE
+
+\emoji{✔} COM / NAV Radios — SET / IDENTIFIED
 
 ```{=latex}
 % data-category: grey
@@ -102,9 +142,15 @@
 
 \emoji{☐} Flaps — SET
 
+\emoji{☐} Power — SET TAKEOFF POWER
+
+\emoji{☐} Engine Gauges — GREEN / FULL POWER
+
 \emoji{☐} Airspeed Alive — CHECK
 
 \emoji{☐} Rotate — **65 MPH**
+
+\emoji{☐} Climb Power — SET / VERIFY
 
 \emoji{☐} Climb — **Vy 105 MPH**
 
@@ -136,6 +182,40 @@
 \emoji{☐} Lights — AS REQUIRED
 
 ```{=latex}
+% data-category: green
+```
+### \emoji{✔} VERIFY
+
+\emoji{✔} Garmin 530W Database — CURRENT / APPROVED
+
+\emoji{✔} Garmin 530W Flight Plan — ACTIVE / CROSS-CHECKED
+
+\emoji{✔} CDI Source — GPS / VLOC AS REQUIRED
+
+\emoji{✔} Approach Frequency — SET / MONITOR
+
+```{=latex}
+% data-category: blue
+```
+### \emoji{📘} GARMIN 530W IFR QUICK CONFIG
+
+\emoji{☐} Power Up — SELF TEST / NO FLAGS
+
+\emoji{☐} Database Page — CHECK / CURRENT
+
+\emoji{☐} Flight Plan — LOAD / ACTIVATE
+
+\emoji{☐} CDI Source — GPS OR VLOC / VERIFY
+
+\emoji{☐} OBS Mode — SET / RESET AS REQUIRED
+
+\emoji{☐} Approach — SELECT / BRIEF
+
+\emoji{☐} Comms / Nav — CROSS-CHECK / IDENT
+
+\emoji{☐} Procedures — LOAD / VERIFY
+
+```{=latex}
 % data-category: blue
 ```
 ## \emoji{🎯} IFR — APPROACH CONFIGURATION
@@ -143,7 +223,41 @@
 ```{=latex}
 % data-category: green
 ```
-### \emoji{▶} FLOW
+### \emoji{▶} IN-RANGE
+
+\emoji{☐} Plate Brief — DSCRAM
+
+\emoji{☐} Communications — SET / MONITOR
+
+\emoji{☐} Missed Approach — REVIEW / BRIEF
+
+\emoji{☐} 6 Ts — CYCLE / CONFIRM
+
+\emoji{☐} DADS — BRIEF / CONFIRM
+
+```{=latex}
+% data-category: green
+```
+### \emoji{▶} PRE-FAF
+
+\emoji{☐} BCGUMPFS — BRIEF / CONFIRM
+
+\emoji{☐} Course Interception — SET / VERIFY
+
+\emoji{☐} Course Alive — CALL / VERIFY
+
+\emoji{☐} Glideslope Alive — CALL / VERIFY
+
+\emoji{☐} Groundspeed — VERIFY / TREND
+
+\emoji{☐} 6 Ts — CHECK / CONFIRM
+
+\emoji{☐} DADS — CHECK / CONFIRM
+
+```{=latex}
+% data-category: green
+```
+### \emoji{▶} FAF
 
 \emoji{☐} Power — SET
 
@@ -155,20 +269,13 @@
 
 \emoji{☐} Sink Rate — \_\_\_ FPM
 
+\emoji{☐} DA / DH / MDA — CALL OUT
+
+\emoji{☐} DADS — EVERY 500 FT
+
+\emoji{☐} Missed Approach — CALL OUT / EXECUTE AS REQUIRED
+
 \emoji{✅} *Goal: Stabilized by FAF*
-
-```{=latex}
-% data-category: blue
-```
-## \emoji{📘} IFR PERFORMANCE PROFILES
-
-| Phase            | Power      | Pitch     | Config | Speed   | V/S      |
-|------------------|------------|-----------|--------|---------|----------|
-| Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
-| Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
-| Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
-| Approach Level 2 | ~17 in MP  | 0°        | 33°    | 104 MPH | −800     |
-| Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
 
 ```{=latex}
 % data-category: emergency

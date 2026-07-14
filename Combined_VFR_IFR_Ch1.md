@@ -8,6 +8,18 @@
 
 **Engine:** **Lycoming O‑540‑E4B5**
 
+## 📘 IFR PERFORMANCE PROFILES
+
+| Phase            | Power      | Pitch     | Config | Speed   | V/S      |
+|------------------|------------|-----------|--------|---------|----------|
+| Takeoff          | FULL       | +7°       | TO     | 65 MPH  | —        |
+| Climb            | CLIMB SET  | +3°       | CLEAN  | Vy 105  | +800 fpm |
+| Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
+| Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
+| Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
+| Approach Level 2 | ~17 in MP  | 0°        | 33°    | 104 MPH | −800     |
+| Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
+
 # 🟩 NORMAL OPERATIONS
 
 ## 🧭 PREFLIGHT / TAXI
@@ -15,8 +27,6 @@
 *Style: Heading 2 (Green icon prefix)*
 
 ### ▶ FLOW
-
-*Style: Normal with checkbox symbol*
 
 ☐ Fuel Quantity — CHECK / PROPER TANK
 
@@ -26,6 +36,12 @@
 
 ☐ Flight Instruments — SET / NO FLAGS
 
+☐ Documents / Charts — ON BOARD / CURRENT
+
+☐ Garmin 530W Database — CURRENT / IFR LEGAL
+
+☐ Garmin 530W Flight Plan — LOADED / VERIFIED
+
 ☐ Trim — SET TAKEOFF
 
 ☐ Brakes — CHECK
@@ -33,6 +49,24 @@
 ☐ Avionics — AS REQUIRED
 
 ☐ Taxi — CLEAR / CONTROLLED
+
+### ✔ VERIFY
+
+✔ Attitude Indicator — ERECT / NO TUMBLE
+
+✔ Heading Indicator — ALIGNED / SET
+
+✔ Turn Coordinator — ALIVE / RESPONDS
+
+✔ Altimeter — SET / CROSS-CHECKED
+
+✔ CDI / OBS — IDENT / SET
+
+✔ Suction — IN GREEN / STABLE
+
+✔ Transponder — SET / ALT MODE
+
+✔ COM / NAV Radios — SET / IDENTIFIED
 
 ## 🔍 RUN‑UP / BEFORE TAKEOFF
 
@@ -72,9 +106,15 @@
 
 ☐ Flaps — SET
 
+☐ Power — SET TAKEOFF POWER
+
+☐ Engine Gauges — GREEN / FULL POWER
+
 ☐ Airspeed Alive — CHECK
 
 ☐ Rotate — **65 MPH**
+
+☐ Climb Power — SET / VERIFY
 
 ☐ Climb — **Vy 105 MPH**
 
@@ -96,9 +136,65 @@
 
 ☐ Lights — AS REQUIRED
 
+### ✔ VERIFY
+
+✔ Garmin 530W Database — CURRENT / APPROVED
+
+✔ Garmin 530W Flight Plan — ACTIVE / CROSS-CHECKED
+
+✔ CDI Source — GPS / VLOC AS REQUIRED
+
+✔ Approach Frequency — SET / MONITOR
+
+### 📘 GARMIN 530W IFR QUICK CONFIG
+
+☐ Power Up — SELF TEST / NO FLAGS
+
+☐ Database Page — CHECK / CURRENT
+
+☐ Flight Plan — LOAD / ACTIVATE
+
+☐ CDI Source — GPS OR VLOC / VERIFY
+
+☐ OBS Mode — SET / RESET AS REQUIRED
+
+☐ Approach — SELECT / BRIEF
+
+☐ Comms / Nav — CROSS-CHECK / IDENT
+
+☐ Procedures — LOAD / VERIFY
+
 ## 🎯 IFR — APPROACH CONFIGURATION
 
-### ▶ FLOW
+### ▶ IN-RANGE
+
+☐ Plate Brief — DSCRAM
+
+☐ Communications — SET / MONITOR
+
+☐ Missed Approach — REVIEW / BRIEF
+
+☐ 6 Ts — CYCLE / CONFIRM
+
+☐ DADS — BRIEF / CONFIRM
+
+### ▶ PRE-FAF
+
+☐ BCGUMPFS — BRIEF / CONFIRM
+
+☐ Course Interception — SET / VERIFY
+
+☐ Course Alive — CALL / VERIFY
+
+☐ Glideslope Alive — CALL / VERIFY
+
+☐ Groundspeed — VERIFY / TREND
+
+☐ 6 Ts — CHECK / CONFIRM
+
+☐ DADS — CHECK / CONFIRM
+
+### ▶ FAF
 
 ☐ Power — SET
 
@@ -110,17 +206,13 @@
 
 ☐ Sink Rate — \_\_\_ FPM
 
+☐ DA / DH / MDA — CALL OUT
+
+☐ DADS — EVERY 500 FT
+
+☐ Missed Approach — CALL OUT / EXECUTE AS REQUIRED
+
 ✅ *Goal: Stabilized by FAF*
-
-## 📘 IFR PERFORMANCE PROFILES
-
-| Phase            | Power      | Pitch     | Config | Speed   | V/S      |
-|------------------|------------|-----------|--------|---------|----------|
-| Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
-| Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
-| Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
-| Approach Level 2 | ~17 in MP  | 0°        | 33°    | 104 MPH | −800     |
-| Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
 
 ## 🚨 MISSED APPROACH (MEMORY ITEMS)
 
