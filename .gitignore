@@ -38,3 +38,4 @@ docx_images/
 Combined_VFR_IFR_Ch1.md
 Combined_VFR_IFR_Ch1_latex.md
 checklist_source.yaml
+*.log
