@@ -21,8 +21,8 @@
 
 | Phase            | Power      | Pitch     | Config | Speed   | V/S      |
 |------------------|------------|-----------|--------|---------|----------|
-| Takeoff          | FULL       | +7°       | TO     | 65 MPH  | —        |
-| Climb            | CLIMB SET  | +3°       | CLEAN  | Vy 105  | +800 fpm |
+| Takeoff          | FULL       | +8 to +10° | 10°   | 65 MPH rotate / 105 MPH Vy | +800 fpm |
+| Climb            | FULL       | +7°       | CLEAN  | 105 MPH | +800 fpm |
 | Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
 | Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
 | Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
@@ -33,6 +33,61 @@
 % data-category: green
 ```
 # \emoji{🟩} NORMAL OPERATIONS
+
+```{=latex}
+% data-category: green
+```
+## 🔑 INITIAL STARTUP
+
+```{=latex}
+% data-category: green
+```
+### \emoji{▶} FLOW
+
+\emoji{☐} Brakes — SET
+
+\emoji{☐} Flaps — UP
+
+\emoji{☐} Electrical — OFF
+
+\emoji{☐} Circuit Breakers — ALL IN
+
+\emoji{☐} Propeller — FULL FORWARD
+
+\emoji{☐} Throttle — 1/4" OPEN
+
+\emoji{☐} Carb Heat — OFF
+
+\emoji{☐} Battery / Master — ON
+
+\emoji{☐} Fuel Pump — ON
+
+\emoji{☐} Prime — 2-3 STROKES / AS REQUIRED
+
+\emoji{☐} Primer — LOCKED
+
+\emoji{☐} Fuel Selector — PROPER TANK
+
+\emoji{☐} Mixture — RICH
+
+\emoji{☐} Prop Area — CLEAR
+
+\emoji{☐} Engine Start — ENGAGE
+
+\emoji{☐} Oil Pressure — CHECK
+
+\emoji{☐} Avionics Master — ON
+
+\emoji{☐} Throttle — SET 1000 RPM
+
+```{=latex}
+% data-category: green
+```
+### \emoji{✔} VERIFY
+
+\emoji{✔} Radios / GPS — POWERED / READY
+
+\emoji{✔} Annunciators — CHECKED
 
 ```{=latex}
 % data-category: grey
@@ -105,11 +160,13 @@
 
 \emoji{☐} Throttle — 2000 RPM
 
+\emoji{☐} Engine Gauges — GREEN
+
 \emoji{☐} Magnetos — CHECK (within limits)
 
 \emoji{☐} Carburetor Heat — CHECK → OFF
 
-\emoji{☐} Engine Gauges — GREEN
+\emoji{☐} Propeller Pitch — CYCLE 3 TIMES / −300 RPM MAX
 
 \emoji{☐} Suction — CHECK
 
@@ -320,6 +377,39 @@
 \emoji{☐} Flaps — RETRACT IN STAGES
 
 \emoji{☐} Airspeed — ≥95 MPH
+
+```{=latex}
+% data-category: grey
+```
+## 📴 SHUTDOWN
+
+```{=latex}
+% data-category: green
+```
+### \emoji{▶} FLOW
+
+\emoji{☐} Avionics Master — OFF
+
+\emoji{☐} Lights — OFF AS REQUIRED
+
+\emoji{☐} Mixture — IDLE CUTOFF
+
+\emoji{☐} Throttle — IDLE
+
+\emoji{☐} Magnetos — OFF
+
+\emoji{☐} Master — OFF
+
+\emoji{☐} Fuel Selector — OFF
+
+```{=latex}
+% data-category: green
+```
+### \emoji{✔} VERIFY
+
+\emoji{✔} Engine Secured
+
+\emoji{✔} Keys Removed / Aircraft Secure
 
 ```{=latex}
 % data-category: emergency

@@ -235,6 +235,10 @@ def main():
     missing_in_latex = []
     for h in src_headings:
         hn = normalize_text(h['text'])
+        if h['level'] == 1 and h['line'] == 1:
+            # The document title H1 is intentionally suppressed in HTML and
+            # rendered in the page header instead.
+            continue
         m_html = find_match_norm(hn, html_head_norm)
         m_latex = find_match_norm(hn, latex_head_norm)
         if not m_html:

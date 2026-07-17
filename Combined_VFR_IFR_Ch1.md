@@ -12,8 +12,8 @@
 
 | Phase            | Power      | Pitch     | Config | Speed   | V/S      |
 |------------------|------------|-----------|--------|---------|----------|
-| Takeoff          | FULL       | +7°       | TO     | 65 MPH  | —        |
-| Climb            | CLIMB SET  | +3°       | CLEAN  | Vy 105  | +800 fpm |
+| Takeoff          | FULL       | +8 to +10° | 10°   | 65 MPH rotate / 105 MPH Vy | +800 fpm |
+| Climb            | FULL       | +7°       | CLEAN  | 105 MPH | +800 fpm |
 | Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
 | Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
 | Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
@@ -21,6 +21,52 @@
 | Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
 
 # 🟩 NORMAL OPERATIONS
+
+## 🔑 INITIAL STARTUP
+
+### ▶ FLOW
+
+☐ Brakes — SET
+
+☐ Flaps — UP
+
+☐ Electrical — OFF
+
+☐ Circuit Breakers — ALL IN
+
+☐ Propeller — FULL FORWARD
+
+☐ Throttle — 1/4" OPEN
+
+☐ Carb Heat — OFF
+
+☐ Battery / Master — ON
+
+☐ Fuel Pump — ON
+
+☐ Prime — 2-3 STROKES / AS REQUIRED
+
+☐ Primer — LOCKED
+
+☐ Fuel Selector — PROPER TANK
+
+☐ Mixture — RICH
+
+☐ Prop Area — CLEAR
+
+☐ Engine Start — ENGAGE
+
+☐ Oil Pressure — CHECK
+
+☐ Avionics Master — ON
+
+☐ Throttle — SET 1000 RPM
+
+### ✔ VERIFY
+
+✔ Radios / GPS — POWERED / READY
+
+✔ Annunciators — CHECKED
 
 ## 🧭 PREFLIGHT / TAXI
 
@@ -78,11 +124,13 @@
 
 ☐ Throttle — 2000 RPM
 
+☐ Engine Gauges — GREEN
+
 ☐ Magnetos — CHECK (within limits)
 
 ☐ Carburetor Heat — CHECK → OFF
 
-☐ Engine Gauges — GREEN
+☐ Propeller Pitch — CYCLE 3 TIMES / −300 RPM MAX
 
 ☐ Suction — CHECK
 
@@ -245,6 +293,30 @@
 ☐ Flaps — RETRACT IN STAGES
 
 ☐ Airspeed — ≥95 MPH
+
+## 📴 SHUTDOWN
+
+### ▶ FLOW
+
+☐ Avionics Master — OFF
+
+☐ Lights — OFF AS REQUIRED
+
+☐ Mixture — IDLE CUTOFF
+
+☐ Throttle — IDLE
+
+☐ Magnetos — OFF
+
+☐ Master — OFF
+
+☐ Fuel Selector — OFF
+
+### ✔ VERIFY
+
+✔ Engine Secured
+
+✔ Keys Removed / Aircraft Secure
 
 # 🟥 EMERGENCY & ABNORMAL OPERATIONS
 
