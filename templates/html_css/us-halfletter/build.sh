@@ -78,40 +78,31 @@ else
   rm -f "$TMP_HTML"
 fi
 
-# Convert to PDF using Playwright so the browser and PDF use the same layout engine.
-PDF_HTML="$OUTDIR/checklist_print_ready.html"
-if [ -x "$REPO_ROOT/.venv/bin/python" ]; then
-  "$REPO_ROOT/.venv/bin/python" - <<PY
+# Convert to PDF. Prefer weasyprint (CSS3 multi-column support) over wkhtmltopdf
+# (ancient WebKit, ignores column-count → all content rendered as single column).
+PDF_HTML="$OUTDIR/checklist_print_ready_for_pdf.html"
+if [ -f "$OUTDIR/checklist_print_ready.html" ]; then
+  python3 - <<PY
 from pathlib import Path
-from playwright.sync_api import sync_playwright
-
-html_path = Path(r"$PDF_HTML").resolve()
-pdf_path = Path(r"$OUTDIR/checklist_print_ready.pdf").resolve()
-
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=True)
-    page = browser.new_page(viewport={"width": 1400, "height": 1800})
-    page.goto(html_path.as_uri(), wait_until="networkidle")
-    page.emulate_media(media="print")
-    page.pdf(
-        path=str(pdf_path),
-        format="Letter",
-        print_background=True,
-        prefer_css_page_size=True,
-        margin={"top": "0in", "right": "0in", "bottom": "0in", "left": "0in"},
-    )
-    browser.close()
-print(f"PDF written to {pdf_path} (playwright)")
+src = Path('$OUTDIR/checklist_print_ready.html').read_text(encoding='utf-8')
+start = src.find('<header>')
+end = src.find('</header>')
+if start != -1 and end != -1:
+    end += len('</header>')
+    src = src[:start] + src[end:]
+Path('$PDF_HTML').write_text(src, encoding='utf-8')
+print('Prepared PDF HTML without header:', '$PDF_HTML')
 PY
-elif command -v weasyprint >/dev/null 2>&1; then
+fi
+if command -v weasyprint >/dev/null 2>&1; then
   weasyprint "$PDF_HTML" "$OUTDIR/checklist_print_ready.pdf"
   echo "PDF written to $OUTDIR/checklist_print_ready.pdf (weasyprint)"
 elif command -v wkhtmltopdf >/dev/null 2>&1; then
-  echo "WARNING: playwright/weasyprint not found; falling back to wkhtmltopdf — multi-column layout will NOT render correctly. Install with: pip install playwright"
+  echo "WARNING: weasyprint not found; falling back to wkhtmltopdf — multi-column layout will NOT render correctly. Install with: pip install weasyprint"
   wkhtmltopdf --enable-local-file-access --page-width 8.5in --page-height 11in --margin-top 10mm --margin-bottom 10mm "$PDF_HTML" "$OUTDIR/checklist_print_ready.pdf"
   echo "PDF written to $OUTDIR/checklist_print_ready.pdf (wkhtmltopdf — single column)"
 else
-  echo "No PDF engine found — HTML proof written to $OUTDIR/checklist_print_ready.html"
+  echo "Neither weasyprint nor wkhtmltopdf found — HTML proof written to $OUTDIR/checklist_print_ready.html"
 fi
 
 # Capture screenshots after PDF generation so page images are available too.
@@ -122,3 +113,4 @@ fi
 if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
   echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
 fi
+rm -f "$PDF_HTML" || true
