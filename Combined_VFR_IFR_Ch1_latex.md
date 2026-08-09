@@ -1,7 +1,4 @@
-```{=latex}
-% data-category: green
-```
-# \emoji{✅} PA‑32‑260 CHEROKEE SIX
+\emoji{✅} PA‑32‑260 CHEROKEE SIX
 
 ```{=latex}
 % data-category: green
@@ -17,204 +14,30 @@
 ```{=latex}
 % data-category: blue
 ```
-## \emoji{📘} IFR PERFORMANCE PROFILES
-
-| Phase            | Power      | Pitch     | Config | Speed   | V/S      |
-|------------------|------------|-----------|--------|---------|----------|
-| Takeoff          | FULL       | +8 to +10° | 10°   | 65 MPH rotate / 105 MPH Vy | +800 fpm |
-| Climb            | FULL       | +7°       | CLEAN  | 105 MPH | +800 fpm |
-| Cruise           | ~15 in MP  | 0°        | Clean  | —       | —        |
-| Descent          | Low / Idle | −2 to −3° | Clean  | 138 MPH | −500 fpm |
-| Approach Level 1 | ~15 in MP  | 0 to −1°  | 25°    | 104 MPH | −500     |
-| Approach Level 2 | ~17 in MP  | 0°        | 33°    | 104 MPH | −800     |
-| Missed           | FULL       | +7°       | Clean  | 97 MPH  | +800     |
-
-```{=latex}
-% data-category: green
-```
-# \emoji{🟩} NORMAL OPERATIONS
-
-```{=latex}
-% data-category: green
-```
-## 🔑 INITIAL STARTUP
+## \emoji{🛫} TAKEOFF
 
 ```{=latex}
 % data-category: green
 ```
 ### \emoji{▶} FLOW
 
-\emoji{☐} Brakes — SET
+Fuel Pump — ON
 
-\emoji{☐} Flaps — UP
-
-\emoji{☐} Electrical — OFF
-
-\emoji{☐} Circuit Breakers — ALL IN
-
-\emoji{☐} Propeller — FULL FORWARD
-
-\emoji{☐} Throttle — 1/4" OPEN
-
-\emoji{☐} Carb Heat — OFF
-
-\emoji{☐} Battery / Master — ON
-
-\emoji{☐} Fuel Pump — ON
-
-\emoji{☐} Prime — 2-3 STROKES / AS REQUIRED
-
-\emoji{☐} Primer — LOCKED
-
-\emoji{☐} Fuel Selector — PROPER TANK
-
-\emoji{☐} Mixture — RICH
-
-\emoji{☐} Prop Area — CLEAR
-
-\emoji{☐} Engine Start — ENGAGE
-
-\emoji{☐} Oil Pressure — CHECK
-
-\emoji{☐} Avionics Master — ON
-
-\emoji{☐} Throttle — SET 1000 RPM
-
-```{=latex}
-% data-category: green
-```
-### \emoji{✔} VERIFY
-
-\emoji{✔} Radios / GPS — POWERED / READY
-
-\emoji{✔} Annunciators — CHECKED
-
-```{=latex}
-% data-category: grey
-```
-## \emoji{🧭} PREFLIGHT / TAXI
-
-*Style: Heading 2 (Green icon prefix)*
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} FLOW
-
-\emoji{☐} Fuel Quantity — CHECK / PROPER TANK
-
-\emoji{☐} Oil — CHECK
-
-\emoji{☐} Controls — FREE / CORRECT
-
-\emoji{☐} Flight Instruments — SET / NO FLAGS
-
-\emoji{☐} Documents / Charts — ON BOARD / CURRENT
-
-\emoji{☐} Garmin 530W Database — CURRENT / IFR LEGAL
-
-\emoji{☐} Garmin 530W Flight Plan — LOADED / VERIFIED
-
-\emoji{☐} Trim — SET TAKEOFF
-
-\emoji{☐} Brakes — CHECK
-
-\emoji{☐} Avionics — AS REQUIRED
-
-\emoji{☐} Taxi — CLEAR / CONTROLLED
-
-```{=latex}
-% data-category: green
-```
-### \emoji{✔} VERIFY
-
-\emoji{✔} Attitude Indicator — ERECT / NO TUMBLE
-
-\emoji{✔} Heading Indicator — ALIGNED / SET
-
-\emoji{✔} Turn Coordinator — ALIVE / RESPONDS
-
-\emoji{✔} Altimeter — SET / CROSS-CHECKED
-
-\emoji{✔} CDI / OBS — IDENT / SET
-
-\emoji{✔} Suction — IN GREEN / STABLE
-
-\emoji{✔} Transponder — SET / ALT MODE
-
-\emoji{✔} COM / NAV Radios — SET / IDENTIFIED
-
-```{=latex}
-% data-category: grey
-```
-## \emoji{\emoji{🔍}} RUN‑UP / BEFORE TAKEOFF
-
-*Style: Heading 2*
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} FLOW
-
-\emoji{☐} Parking Brake — SET
-
-\emoji{☐} Throttle — 2000 RPM
-
-\emoji{☐} Engine Gauges — GREEN
-
-\emoji{☐} Magnetos — CHECK (within limits)
-
-\emoji{☐} Carburetor Heat — CHECK → OFF
-
-\emoji{☐} Propeller Pitch — CYCLE 3 TIMES / −300 RPM MAX
-
-\emoji{☐} Suction — CHECK
-
-\emoji{☐} Throttle — IDLE / SMOOTH
-
-```{=latex}
-% data-category: green
-```
-### \emoji{✔} VERIFY
-
-\emoji{✔} Stable RPM
-
-\emoji{✔} No abnormal vibration
-
-\emoji{✔} Engine indications normal
-
-```{=latex}
-% data-category: blue
-```
-## \emoji{🛫} TAKEOFF / CLIMB
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} FLOW
-
-\emoji{☐} Fuel Pump — ON
+Fuel Tank - FULLEST TANK
 
 \emoji{☐} Lights — AS REQUIRED
 
-\emoji{☐} Flaps — SET
+Flaps — SET 10° (25° SHORT/SOFT)
 
-\emoji{☐} Power — SET TAKEOFF POWER
-
-\emoji{☐} Engine Gauges — GREEN / FULL POWER
+Fuel/Oil Gauges - GREEN
 
 \emoji{☐} Airspeed Alive — CHECK
 
-\emoji{☐} Rotate — **65 MPH**
+\emoji{☐} Rotate — **65-70 MPH**
 
-\emoji{☐} Climb Power — SET / VERIFY
+\emoji{☐} Climb — **Vy 105 MPH / Vx 95 MPH**
 
-\emoji{☐} Climb — **Vy 105 MPH**
-
-```{=latex}
-% data-category: blue
-```
-# \emoji{\emoji{🔵}} INSTRUMENT FLIGHT RULES (IFR)
+\emoji{\emoji{🔵}} INSTRUMENT FLIGHT RULES (IFR)
 
 ```{=latex}
 % data-category: blue
@@ -239,40 +62,6 @@
 \emoji{☐} Lights — AS REQUIRED
 
 ```{=latex}
-% data-category: green
-```
-### \emoji{✔} VERIFY
-
-\emoji{✔} Garmin 530W Database — CURRENT / APPROVED
-
-\emoji{✔} Garmin 530W Flight Plan — ACTIVE / CROSS-CHECKED
-
-\emoji{✔} CDI Source — GPS / VLOC AS REQUIRED
-
-\emoji{✔} Approach Frequency — SET / MONITOR
-
-```{=latex}
-% data-category: blue
-```
-### \emoji{📘} GARMIN 530W IFR QUICK CONFIG
-
-\emoji{☐} Power Up — SELF TEST / NO FLAGS
-
-\emoji{☐} Database Page — CHECK / CURRENT
-
-\emoji{☐} Flight Plan — LOAD / ACTIVATE
-
-\emoji{☐} CDI Source — GPS OR VLOC / VERIFY
-
-\emoji{☐} OBS Mode — SET / RESET AS REQUIRED
-
-\emoji{☐} Approach — SELECT / BRIEF
-
-\emoji{☐} Comms / Nav — CROSS-CHECK / IDENT
-
-\emoji{☐} Procedures — LOAD / VERIFY
-
-```{=latex}
 % data-category: blue
 ```
 ## \emoji{🎯} IFR — APPROACH CONFIGURATION
@@ -280,76 +69,68 @@
 ```{=latex}
 % data-category: green
 ```
-### \emoji{▶} IN-RANGE
-
-\emoji{☐} Plate Brief — DSCRAM
-
-\emoji{☐} Communications — SET / MONITOR
-
-\emoji{☐} Missed Approach — REVIEW / BRIEF
-
-\emoji{☐} 6 Ts — CYCLE / CONFIRM
-
-\emoji{☐} DADS — BRIEF / CONFIRM
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} PRE-FAF
-
-\emoji{☐} BCGUMPFS — BRIEF / CONFIRM
-
-\emoji{☐} Course Interception — SET / VERIFY
-
-\emoji{☐} Course Alive — CALL / VERIFY
-
-\emoji{☐} Glideslope Alive — CALL / VERIFY
-
-\emoji{☐} Groundspeed — VERIFY / TREND
-
-\emoji{☐} 6 Ts — CHECK / CONFIRM
-
-\emoji{☐} DADS — CHECK / CONFIRM
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} FAF
+### \emoji{▶} FLOW
 
 \emoji{☐} Power — SET
 
 \emoji{☐} Pitch — SET
 
-\emoji{☐} Configuration — FLAPS \_\_\_°
+\emoji{☐} Configuration — FLAPS 10°
 
-\emoji{☐} Airspeed — \_\_\_ MPH
+\emoji{☐} Airspeed — 110 MPH
 
-\emoji{☐} Sink Rate — \_\_\_ FPM
+\emoji{☐} Sink Rate — 500 FPM
 
-\emoji{☐} DA / DH / MDA — CALL OUT
+\emoji{☐} Garmin 530W approach activation — LOAD / VERIFY
 
-\emoji{☐} DADS — EVERY 500 FT
+\emoji{☐} DADS — CHECK every 1 NM or 500 FT
 
-\emoji{☐} Missed Approach — CALL OUT / EXECUTE AS REQUIRED
+\emoji{☐} 6 Ts — APPLY / REVIEW on change
 
 \emoji{✅} *Goal: Stabilized by FAF*
 
 ```{=latex}
-% data-category: emergency
+% data-category: blue
 ```
-## \emoji{🚨} MISSED APPROACH (MEMORY ITEMS)
+## \emoji{📘} IFR PERFORMANCE PROFILES
 
-\emoji{⛔} **IMMEDIATE ACTIONS**
+|                      |            |           |            |           |          |
+|----------------------|------------|-----------|------------|-----------|----------|
+| **Phase**            | **Power**  | **Pitch** | **Config** | **Speed** | **V/S**  |
+| **Cruise**           | ~15 in MP  | 0°        | Clean      | —         | —        |
+| **Descent**          | Low / Idle | −2 to −3° | Clean      | 138 MPH   | −500 fpm |
+| **Approach Level 1** | ~15 in MP  | 0 to −1°  | 25°        | 104 MPH   | −500     |
+| **Approach Level 2** | ~17 in MP  | 0°        | 33°        | 104 MPH   | −800     |
+| **Missed**           | FULL       | +7°       | Clean      | 97 MPH    | +800     |
 
-- **Power** — FULL
+##
 
-- **Pitch** — +7°
+```{=latex}
+% data-category: green
+```
+## V SPEEDS
 
-- **Configuration** — CLEAN
+V1 - Abort Takeoff - 46 MPH (50% RWY)
 
-- **Airspeed** — 97 MPH
+Vs0 - stall w/ flaps - 63 MPH (55kts)
 
-- **Climb** — +800 fpm
+Vs1 - stall clean - 71 MPH (62kts)
+
+Vr - rotate - 65 MPH (56kts)
+
+Vy - best rate - 105 MPH (91kts)
+
+Vx - best angle - 95 MPH (83kts)
+
+BEST GLIDE - 100 MPH (87kts)
+
+Vfe - flaps extend - 125 MPH (109kts)
+
+Va - maneuvering - 149 MPH (129kts)
+
+Vno - max cruise - 168 MPH (146kts)
+
+Vne - never exceed - 212 MPH (184kts)
 
 ```{=latex}
 % data-category: blue
@@ -361,9 +142,13 @@
 ```
 ### Landing — FLOW
 
-\emoji{☐} Airspeed — AS REQUIRED
+Downwind — 110 MPH
 
-\emoji{☐} Flaps — AS REQUIRED
+Abeam - 90-95 MPH
+
+Over the \#s - 80 MPH
+
+\emoji{☐} Flaps — AS REQUIRED (10° REC)
 
 ```{=latex}
 % data-category: green
@@ -379,42 +164,63 @@
 \emoji{☐} Airspeed — ≥95 MPH
 
 ```{=latex}
-% data-category: grey
-```
-## 📴 SHUTDOWN
-
-```{=latex}
-% data-category: green
-```
-### \emoji{▶} FLOW
-
-\emoji{☐} Avionics Master — OFF
-
-\emoji{☐} Lights — OFF AS REQUIRED
-
-\emoji{☐} Mixture — IDLE CUTOFF
-
-\emoji{☐} Throttle — IDLE
-
-\emoji{☐} Magnetos — OFF
-
-\emoji{☐} Master — OFF
-
-\emoji{☐} Fuel Selector — OFF
-
-```{=latex}
-% data-category: green
-```
-### \emoji{✔} VERIFY
-
-\emoji{✔} Engine Secured
-
-\emoji{✔} Keys Removed / Aircraft Secure
-
-```{=latex}
 % data-category: emergency
 ```
-# \emoji{🟥} EMERGENCY & ABNORMAL OPERATIONS
+## \emoji{🚨} MISSED APPROACH (MEMORY ITEMS)
+
+\emoji{⛔} **IMMEDIATE ACTIONS**
+
+\emoji{☐} Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
+
+\emoji{☐} Squawk — 7700
+
+**Power** — FULL
+
+**Pitch** — +7°
+
+**Configuration** — CLEAN
+
+**Airspeed** — 97 MPH
+
+**Climb** — +800 fpm
+
+\emoji{🟥} EMERGENCY & ABNORMAL OPERATIONS
+
+```{=latex}
+% data-category: green
+```
+## CLEAR RUNWAY
+
+- Trim - TAKEOFF
+
+- Flaps - UP
+
+- Fuel Pump - OFF
+
+- Landing Light - OFF
+
+- Transponder - 1200
+
+```{=latex}
+% data-category: grey
+```
+## SHUTDOWN
+
+- Avionics - OFF
+
+- Magnetos - CHECK
+
+- Throttle - 1/4 INCH
+
+- Mixture - FULL OUT/CUTOFF
+
+- Magnetos - OFF
+
+- Master - OFF
+
+- Control Lock - SECURE
+
+- Flight Plan - CLOSED
 
 ```{=latex}
 % data-category: emergency
@@ -423,11 +229,201 @@
 
 *(Always accessible)*
 
+\emoji{☐} Radio call — PAN-PAN / MAYDAY as appropriate on 121.5
+
+\emoji{☐} Squawk — 7700
+
 \emoji{⛔} Engine Failure — **100 MPH**
 
 \emoji{⛔} Engine Fire (In‑Flight) — **Mixture IDLE CUTOFF**
 
 \emoji{⛔} Electrical Fire / Smoke — **MASTER OFF**
+
+\emoji{🟩} NORMAL OPERATIONS
+
+```{=latex}
+% data-category: grey
+```
+## \emoji{🧭} PREFLIGHT
+
+```{=latex}
+% data-category: green
+```
+## \emoji{▶} FLOW
+
+Covers & Wheel Chalks - REMOVE
+
+Paperwork - ARROW-AV1ATE
+
+Control Lock - REMOVE
+
+Flaps - DOWN
+
+Trim - TAKEOFF
+
+Master - ON
+
+Lights - ON & CHECK
+
+Pitot Heat - ON & CHECK
+
+Stall Light - CHECK
+
+Fuel Quantity — CHECK / PROPER TANK
+
+Lights - OFF (KEEP BEACON ON)
+
+Pitot Heat - OFF
+
+Master - OFF
+
+Airframe & Hinges - WALK AROUND & CHECK
+
+Cowling - SECURE
+
+Tires & Brakes - CHECK
+
+Prop and Intake - CHECK
+
+Fuel Tanks - SUMP, MEASURE
+
+Oil — CHECK (6-10 QTS)
+
+Tow Bar - STOW
+
+Baggage - SECURE
+
+```{=latex}
+% data-category: green
+```
+## SAFETY CHECKLIST
+
+- Seatbelts - EXPLAIN & ON
+
+- Air vents/Heat - LOCATE & EXPLAIN
+
+- First Aid & Fire Extinguisher - LOCATE
+
+- Exits - EXPLAIN & LOCK
+
+- Talking - ASSIST TRAFFIC
+
+- Your Questions - ASK
+
+```{=latex}
+% data-category: green
+```
+## ENGINE START
+
+Brakes - SET
+
+Flaps - UP
+
+Electrical - ALL OFF
+
+Circuit Breaker - ALL IN
+
+Carburetor Heat - OFF
+
+Controls — FREE / CORRECT
+
+Prop - FULL FORWARD
+
+Mixture - RICH
+
+Fuel Selector - STARTUP SIDE
+
+Master - ON
+
+Throttle - 1/4 INCH OPEN
+
+Key/Mags - BOTH
+
+Area - CLEAR PROP
+
+Fuel Pump - ON
+
+Primer - 2 TO 3 OR AS REQUIRED
+
+Starter - CRANK ENGINE
+
+Throttle - 1000 RPM
+
+Avionics Master - ON
+
+Fuel Pump - OFF
+
+```{=latex}
+% data-category: green
+```
+## GROUND CHECK
+
+- Doors & Windows - CLOSED
+
+- Seatbelts - SECURE
+
+- Controls - CHECK
+
+- Trim - TAKEOFF
+
+- Airspeed Indicator - READS 0
+
+- Attitude Indicator - \<5° BANK AND WINGS LEVEL
+
+- Altimeter - FIELD ELEVATION
+
+- VSI - Zero
+
+- Turn & Slip Indicator - FLAGS OFF, WINGS LEVEL, FULL FLUID
+
+- Heading Indicator - SET TO COMPASS HEADING
+
+\emoji{☐} Garmin 530W database — CHECK / UPDATE
+
+```{=latex}
+% data-category: grey
+```
+## \emoji{\emoji{🔍}} RUN‑UP
+
+```{=latex}
+% data-category: green
+```
+### \emoji{▶} FLOW
+
+\emoji{☐} Brake — SET
+
+\emoji{☐} Throttle — 2000 RPM
+
+\emoji{☐} Magnetos — CHECK (175 RPM MAX/50 RPM DIFFERENCE)
+
+\emoji{☐} Propeller — CHECK / FULL FORWARD
+
+Fuel/Oil Gauges — GREEN
+
+Ammeter - POSITIVE AMPS
+
+Suction — CHECK 5.0” +/- 1” HG
+
+\emoji{☐} Carburetor Heat — ON
+
+Throttle — IDLE / SMOOTH
+
+Carburetor Heat - OFF
+
+Throttle - 800-1000 RPM
+
+Flight Plan - ACTIVATE
+
+```{=latex}
+% data-category: green
+```
+### \emoji{✔} VERIFY
+
+\emoji{✔} Stable RPM
+
+\emoji{✔} No abnormal vibration
+
+- Engine indications normal
 
 ```{=latex}
 % data-category: emergency
@@ -438,6 +434,10 @@
 % data-category: green
 ```
 ### \emoji{▶} FLOW
+
+\emoji{☐} Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
+
+\emoji{☐} Squawk — 7700
 
 \emoji{⛔} Airspeed — **100 MPH (BEST GLIDE)**
 
@@ -524,6 +524,10 @@
 ```
 ### \emoji{▶} FLOW
 
+\emoji{☐} Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
+
+\emoji{☐} Squawk — 7700
+
 \emoji{⛔} Mixture — IDLE CUTOFF
 
 \emoji{☐} Fuel Selector — OFF
@@ -547,6 +551,10 @@
 % data-category: green
 ```
 ### \emoji{▶} FLOW
+
+\emoji{☐} Radio call — MAYDAY or PAN-PAN on 121.5
+
+\emoji{☐} Squawk — 7600 if comms fail; otherwise 7700
 
 \emoji{⛔} Master Switch — OFF
 
@@ -586,6 +594,10 @@
 ```
 ### \emoji{▶} FLOW
 
+\emoji{☐} Radio call — advise ATC / request assistance and vectors
+
+\emoji{☐} Squawk — as assigned; 7600 if radios fail
+
 \emoji{☐} Electrical Load — REDUCE
 
 \emoji{☐} Alternator Field CB — CHECK / RESET
@@ -604,3 +616,62 @@
 \emoji{⛔} If no output:
 
 ➡ Alternator OFF → Minimal load → **Land ASAP / Practical**
+
+```{=latex}
+% data-category: blue
+```
+## IFR ACRONYMS / MNEMONICS
+
+\emoji{☐} IFR - Instrument Flight Rules
+
+\emoji{☐} VFR - Visual Flight Rules
+
+\emoji{☐} CDI - Course Deviation Indicator
+
+\emoji{☐} DME - Distance Measuring Equipment
+
+\emoji{☐} RNAV - Area Navigation
+
+\emoji{☐} ILS - Instrument Landing System
+
+\emoji{☐} FAF - Final Approach Fix
+
+\emoji{☐} MAP - Missed Approach Point
+
+\emoji{☐} MSA - Minimum Safe Altitude
+
+\emoji{☐} DA/MDA - Decision Altitude / Minimum Descent Altitude
+
+\emoji{☐} WAAS - Wide Area Augmentation System
+
+\emoji{☐} RAIM - Receiver Autonomous Integrity Monitoring
+
+\emoji{☐} ETE - Estimated Time Enroute
+
+\emoji{☐} ETA - Estimated Time of Arrival
+
+\emoji{☐} QNH - Altimeter setting to sea level
+
+\emoji{☐} DADS - Distance, Altitude, Direction, Speed. Check every 1 NM or 500
+FT.
+
+\emoji{☐} 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.
+
+\emoji{☐} GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.
+
+\emoji{☐} GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.
+
+\emoji{☐} CRAFT - Clearance, Route, Altitude, Frequency, Transponder.
+
+\emoji{☐} PAVE - Pilot, Aircraft, enVironment, External pressures.
+
+\emoji{☐} IMSAFE - Illness, Medication, Stress, Alcohol, Fatigue, Emotion.
+
+\emoji{☐} ARROW - Airworthiness certificate, Registration, Radio license,
+Operating handbook, Weight and balance.
+
+\emoji{☐} ATOMATOFLAMES - Common required instruments and equipment.
+
+\emoji{☐} 3 Ps - Perceive, Process, Perform.
+
+\emoji{☐} 5 Ps - Plane, Pilot, Passengers, Programming, Plan.

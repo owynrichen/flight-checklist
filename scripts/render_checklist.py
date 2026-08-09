@@ -44,6 +44,20 @@ ICON_MAP = {
     '☑': ("<svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><path fill='currentColor' d='M6.173 11.414 2.76 8l-1.06 1.06L6.173 13.53l9.127-9.127L14.24 3.47z'/></svg>", 'Verified')
 }
 
+LEADING_MARKERS = (
+    '☐', '☑', '✅', '✔', '⛔', '➡', '🟥', '🟩', '🟫', '🔁', '🔄',
+    '🛫', '🛬', '🚨', '⚠️', '⚠', '⚡', '🎯', '📘', '🔥', '🧭', '▶', '✈️', '✈', '🔍',
+)
+
+
+def strip_item_prefix(text):
+    text = re.sub(r'^\s*[-*+]\s*', '', text)
+    text = re.sub(r'^\s*\[(?: |x|X)\]\s*', '', text)
+    for marker in sorted(LEADING_MARKERS, key=len, reverse=True):
+        if text.startswith(marker):
+            return text[len(marker):].lstrip()
+    return text.strip()
+
 
 def replace_icons(text):
     for k, (svg, desc) in ICON_MAP.items():
@@ -55,6 +69,8 @@ def replace_icons(text):
 
 def infer_category(title):
     t = (title or '').lower()
+    if 'missed approach' in t:
+        return 'green'
     if any(k in t for k in ['emerg', 'critical', 'missed', 'engine failure', 'fire', 'immediate', 'memory']):
         return 'emergency'
     if any(k in t for k in ['preflight', 'taxi', 'shutdown', 'before takeoff', 'run-up', 'run‑up', 'prefight']):
@@ -78,10 +94,9 @@ def parse_markdown_tokens(md_path):
                     title = m.group(2).strip()
                     tokens.append({'type': 'heading', 'level': level, 'text': title, 'line': i})
                 continue
-            if re.match(r'^\s*[-*+]\s+', raw) or '\\emoji{' in raw or raw.strip().startswith(tuple('☐☑✅⛔✔')):
-                t = re.sub(r'^\s*[-*+]\s*', '', raw)
+            if re.match(r'^\s*[-*+]\s+', raw) or '\\emoji{' in raw or raw.strip().startswith(tuple(LEADING_MARKERS)):
+                t = strip_item_prefix(raw)
                 t = re.sub(r'\\emoji\{(.*?)\}', r'\1', t)
-                t = re.sub(r'^[\u2600-\u27BF\u1F300-\u1F6FF]\s*', '', t)
                 tokens.append({'type': 'item', 'text': t.strip(), 'line': i})
     return tokens
 

@@ -58,6 +58,9 @@ def insert_category_comments(md: str) -> str:
         if stripped.startswith('#'):
             # extract heading text without leading #'s and trailing attributes
             heading = stripped.lstrip('#').strip()
+            if not heading:
+                out_lines.append(line)
+                continue
             category = infer_category(heading)
             out_lines.append('```{=latex}')
             out_lines.append(f'% data-category: {category}')

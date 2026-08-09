@@ -50,15 +50,19 @@ md_lines = md.splitlines()
 current_heading = 'General'
 md_headings = []
 heading_has_items = {}
+heading_order = []
 for line in md_lines:
     hmatch = re.match(r'^(#{1,6})\s+(.*)', line)
     if hmatch:
         current_heading = hmatch.group(2).strip()
+        if not current_heading:
+            continue
         # initialize
         heading_has_items.setdefault(current_heading, False)
+        heading_order.append(current_heading)
         continue
     # treat checklist list prefixes and checkbox glyphs as items
-    if re.match(r'^\s*([-*+]|\d+\.)\s+.+', line) or re.match(r'^\s*[☐⛔✔✅☑]', line):
+    if re.match(r'^\s*([-*+]|\d+\.)\s+.+', line) or re.match(r'^\s*[☐⛔✔✅☑]', line) or re.match(r'^\s*[A-Za-z0-9]', line):
         heading_has_items[current_heading] = True
 
 # only include headings that have items under them
