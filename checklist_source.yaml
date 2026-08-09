@@ -1,51 +1,13 @@
-- section: ▶ FLOW
-  item: Fuel Quantity — CHECK / PROPER TANK
-- section: ▶ FLOW
-  item: Oil — CHECK
-- section: ▶ FLOW
-  item: Controls — FREE / CORRECT
-- section: ▶ FLOW
-  item: Flight Instruments — SET / NO FLAGS
-- section: ▶ FLOW
-  item: Trim — SET TAKEOFF
-- section: ▶ FLOW
-  item: Brakes — CHECK
-- section: ▶ FLOW
-  item: Avionics — AS REQUIRED
-- section: ▶ FLOW
-  item: Taxi — CLEAR / CONTROLLED
-- section: ▶ FLOW
-  item: Parking Brake — SET
-- section: ▶ FLOW
-  item: Throttle — 2000 RPM
-- section: ▶ FLOW
-  item: Magnetos — CHECK (within limits)
-- section: ▶ FLOW
-  item: Carburetor Heat — CHECK → OFF
-- section: ▶ FLOW
-  item: Engine Gauges — GREEN
-- section: ▶ FLOW
-  item: Suction — CHECK
-- section: ▶ FLOW
-  item: Throttle — IDLE / SMOOTH
-- section: ✔ VERIFY
-  item: Stable RPM
-- section: ✔ VERIFY
-  item: No abnormal vibration
-- section: ✔ VERIFY
-  item: Engine indications normal
-- section: ▶ FLOW
-  item: Fuel Pump — ON
+- section: General
+  item: PA‑32‑260 CHEROKEE SIX
 - section: ▶ FLOW
   item: Lights — AS REQUIRED
 - section: ▶ FLOW
-  item: Flaps — SET
-- section: ▶ FLOW
   item: Airspeed Alive — CHECK
 - section: ▶ FLOW
-  item: Rotate — **65 MPH**
+  item: Rotate — **65-70 MPH**
 - section: ▶ FLOW
-  item: Climb — **Vy 105 MPH**
+  item: Climb — **Vy 105 MPH / Vx 95 MPH**
 - section: ▶ FLOW
   item: Clearance — REVIEW (route / altitude / frequencies)
 - section: ▶ FLOW
@@ -63,29 +25,21 @@
 - section: ▶ FLOW
   item: Pitch — SET
 - section: ▶ FLOW
-  item: Configuration — FLAPS \_\_\_°
+  item: Configuration — FLAPS 10°
 - section: ▶ FLOW
-  item: Airspeed — \_\_\_ MPH
+  item: Airspeed — 110 MPH
 - section: ▶ FLOW
-  item: Sink Rate — \_\_\_ FPM
+  item: Sink Rate — 500 FPM
+- section: ▶ FLOW
+  item: Garmin 530W approach activation — LOAD / VERIFY
+- section: ▶ FLOW
+  item: DADS — CHECK every 1 NM or 500 FT
+- section: ▶ FLOW
+  item: 6 Ts — APPLY / REVIEW on change
 - section: ▶ FLOW
   item: '*Goal: Stabilized by FAF*'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**IMMEDIATE ACTIONS**'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**Power** — FULL'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**Pitch** — +7°'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**Configuration** — CLEAN'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**Airspeed** — 97 MPH'
-- section: 🚨 MISSED APPROACH (MEMORY ITEMS)
-  item: '**Climb** — +800 fpm'
 - section: Landing — FLOW
-  item: Airspeed — AS REQUIRED
-- section: Landing — FLOW
-  item: Flaps — AS REQUIRED
+  item: Flaps — AS REQUIRED (10° REC)
 - section: Go‑Around — FLOW
   item: Power — FULL
 - section: Go‑Around — FLOW
@@ -94,6 +48,86 @@
   item: Flaps — RETRACT IN STAGES
 - section: Go‑Around — FLOW
   item: Airspeed — ≥95 MPH
+- section: SAFETY CHECKLIST
+  item: Seatbelts - EXPLAIN & ON
+- section: SAFETY CHECKLIST
+  item: Air vents/Heat - LOCATE & EXPLAIN
+- section: SAFETY CHECKLIST
+  item: First Aid & Fire Extinguisher - LOCATE
+- section: SAFETY CHECKLIST
+  item: Exits - EXPLAIN & LOCK
+- section: SAFETY CHECKLIST
+  item: Talking - ASSIST TRAFFIC
+- section: SAFETY CHECKLIST
+  item: Your Questions - ASK
+- section: GROUND CHECK
+  item: Doors & Windows - CLOSED
+- section: GROUND CHECK
+  item: Seatbelts - SECURE
+- section: GROUND CHECK
+  item: Controls - CHECK
+- section: GROUND CHECK
+  item: Trim - TAKEOFF
+- section: GROUND CHECK
+  item: Airspeed Indicator - READS 0
+- section: GROUND CHECK
+  item: Attitude Indicator - \<5° BANK AND WINGS LEVEL
+- section: GROUND CHECK
+  item: Altimeter - FIELD ELEVATION
+- section: GROUND CHECK
+  item: VSI - Zero
+- section: GROUND CHECK
+  item: Turn & Slip Indicator - FLAGS OFF, WINGS LEVEL, FULL FLUID
+- section: GROUND CHECK
+  item: Heading Indicator - SET TO COMPASS HEADING
+- section: GROUND CHECK
+  item: Garmin 530W database — CHECK / UPDATE
+- section: GROUND CHECK
+  item: Garmin 530W instrument check — VERIFY
+- section: ▶ FLOW
+  item: Brake — SET
+- section: ▶ FLOW
+  item: Throttle — 2000 RPM
+- section: ▶ FLOW
+  item: Magnetos — CHECK (175 RPM MAX/50 RPM DIFFERENCE)
+- section: ▶ FLOW
+  item: Propeller — CHECK / FULL FORWARD
+- section: ▶ FLOW
+  item: Carburetor Heat — ON
+- section: ✔ VERIFY
+  item: Stable RPM
+- section: ✔ VERIFY
+  item: No abnormal vibration
+- section: ✔ VERIFY
+  item: Engine indications normal
+- section: CLEAR RUNWAY
+  item: Trim - TAKEOFF
+- section: CLEAR RUNWAY
+  item: Flaps - UP
+- section: CLEAR RUNWAY
+  item: Fuel Pump - OFF
+- section: CLEAR RUNWAY
+  item: Landing Light - OFF
+- section: CLEAR RUNWAY
+  item: Transponder - 1200
+- section: SHUTDOWN
+  item: Avionics - OFF
+- section: SHUTDOWN
+  item: Magnetos - CHECK
+- section: SHUTDOWN
+  item: Throttle - 1/4 INCH
+- section: SHUTDOWN
+  item: Mixture - FULL OUT/CUTOFF
+- section: SHUTDOWN
+  item: Magnetos - OFF
+- section: SHUTDOWN
+  item: Master - OFF
+- section: SHUTDOWN
+  item: Control Lock - SECURE
+- section: SHUTDOWN
+  item: Flight Plan - CLOSED
+- section: MISSED APPROACH
+  item: '**IMMEDIATE ACTIONS**'
 - section: 🚨 CRITICAL MEMORY ITEMS
   item: Engine Failure — **100 MPH**
 - section: 🚨 CRITICAL MEMORY ITEMS
@@ -190,3 +224,55 @@
   item: Ammeter shows system load
 - section: ✔ VERIFY
   item: 'If no output:'
+- section: IFR ACRONYMS / MNEMONICS
+  item: IFR - Instrument Flight Rules
+- section: IFR ACRONYMS / MNEMONICS
+  item: VFR - Visual Flight Rules
+- section: IFR ACRONYMS / MNEMONICS
+  item: CDI - Course Deviation Indicator
+- section: IFR ACRONYMS / MNEMONICS
+  item: DME - Distance Measuring Equipment
+- section: IFR ACRONYMS / MNEMONICS
+  item: RNAV - Area Navigation
+- section: IFR ACRONYMS / MNEMONICS
+  item: ILS - Instrument Landing System
+- section: IFR ACRONYMS / MNEMONICS
+  item: FAF - Final Approach Fix
+- section: IFR ACRONYMS / MNEMONICS
+  item: MAP - Missed Approach Point
+- section: IFR ACRONYMS / MNEMONICS
+  item: MSA - Minimum Safe Altitude
+- section: IFR ACRONYMS / MNEMONICS
+  item: DA/MDA - Decision Altitude / Minimum Descent Altitude
+- section: IFR ACRONYMS / MNEMONICS
+  item: WAAS - Wide Area Augmentation System
+- section: IFR ACRONYMS / MNEMONICS
+  item: RAIM - Receiver Autonomous Integrity Monitoring
+- section: IFR ACRONYMS / MNEMONICS
+  item: ETE - Estimated Time Enroute
+- section: IFR ACRONYMS / MNEMONICS
+  item: ETA - Estimated Time of Arrival
+- section: IFR ACRONYMS / MNEMONICS
+  item: QNH - Altimeter setting to sea level
+- section: IFR ACRONYMS / MNEMONICS
+  item: DADS - Distance, Altitude, Direction, Speed. Check every 1 NM or 500
+- section: IFR ACRONYMS / MNEMONICS
+  item: 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.
+- section: IFR ACRONYMS / MNEMONICS
+  item: GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.
+- section: IFR ACRONYMS / MNEMONICS
+  item: GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.
+- section: IFR ACRONYMS / MNEMONICS
+  item: CRAFT - Clearance, Route, Altitude, Frequency, Transponder.
+- section: IFR ACRONYMS / MNEMONICS
+  item: PAVE - Pilot, Aircraft, enVironment, External pressures.
+- section: IFR ACRONYMS / MNEMONICS
+  item: IMSAFE - Illness, Medication, Stress, Alcohol, Fatigue, Emotion.
+- section: IFR ACRONYMS / MNEMONICS
+  item: ARROW - Airworthiness certificate, Registration, Radio license,
+- section: IFR ACRONYMS / MNEMONICS
+  item: ATOMATOFLAMES - Common required instruments and equipment.
+- section: IFR ACRONYMS / MNEMONICS
+  item: 3 Ps - Perceive, Process, Perform.
+- section: IFR ACRONYMS / MNEMONICS
+  item: 5 Ps - Plane, Pilot, Passengers, Programming, Plan.
