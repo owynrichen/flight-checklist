@@ -4,6 +4,14 @@ body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #111;
 header { text-align: center; margin-bottom: 3px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
 header h1 { font-size: 10.5pt; margin: 0; letter-spacing: 0.3px; }
 .columns { column-count: 2; column-gap: 8px; column-fill: balance; }
+.page-break { break-before: page; page-break-before: always; height: 0; }
+
+.page { display: block; }
+.page .card { break-inside: avoid; page-break-inside: avoid; }
+
+main.page-1 { column-count: 2; }
+main.page-2 { column-count: 2; }
+main.page-3 { column-count: 2; }
 
 /* Section / heading scale */
 h1 { font-size: 10.5pt; margin: 2px 0; }
@@ -68,6 +76,26 @@ table th { font-weight: 600; text-align: left; }
 @media print {
 	:root { -webkit-print-color-adjust: exact; color-adjust: exact; }
 	header { display: none; }
+	.sheet { width: 100%; }
+	.page {
+	  display: block !important;
+	  width: 100%;
+	  height: 10.9in;
+	  margin: 0;
+	  padding: 0.08in;
+	  box-shadow: none;
+	  border: none;
+	  background: transparent;
+	  min-height: 10.9in;
+	  overflow: hidden;
+	  break-after: page;
+	  page-break-after: always;
+	}
+	.page:last-child {
+	  break-after: auto;
+	  page-break-after: auto;
+	}
+	.page-1, .page-2, .page-3 { display: block; column-count: 2; column-gap: 8px; column-fill: balance; }
 	.box { border-color: #111; }
 	section[data-category="emergency"] { border-left-color: #b30000; background: none; }
 	section[data-category="grey"] { border-left-color: #999; background: none; }
@@ -144,6 +172,26 @@ section[data-category] table th, section[data-category] table td { padding: 3px 
 section[data-category="grey"] { background-color: rgba(120,120,120,0.07); }
 section[data-category="blue"] { background-color: rgba(27,122,27,0.08); }
 section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
+
+@media screen {
+  body { background: #ececec; }
+  .sheet { width: 8.5in; margin: 0 auto; }
+  .columns { display: block; }
+  .page { column-count: 2; column-gap: 8px; column-fill: balance; }
+  .page {
+    width: 8.5in;
+    margin: 0.18in 0;
+    padding: 0.08in;
+    height: 10.4in;
+    min-height: 10.4in;
+    overflow: hidden;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .page + .page { margin-top: 0.22in; }
+}
 
 /* ---------- Emergency as a second kneeboard card ---------- */
 /* Each <main class="columns"> is one physical kneeboard card. A break before
@@ -237,11 +285,14 @@ section.card > table {
   margin: 1px 0 3px;
   font-size: 6.3pt;
   line-height: 1.02;
-  column-span: all;
   break-inside: avoid;
 }
 section.card > table th, section.card > table td { border: 0.5px solid #999; padding: 1px 2px; text-align: left; }
 section.card > table th { background: #f0f0f0; font-weight: 700; }
+
+@media print {
+  section.card > table { column-span: all; }
+}
 
 /* Keep a critical ⛔ condition and its ➡ consequence together (they're now merged
    into a single <li> in the renderer, but keep this as belt-and-suspenders). */

@@ -82,6 +82,26 @@ table th { font-weight: 600; text-align: left; }
 @media print {
 	:root { -webkit-print-color-adjust: exact; color-adjust: exact; }
 	header { display: none; }
+	.sheet { width: 100%; }
+	.page {
+	  display: block !important;
+	  width: 100%;
+	  height: 10.9in;
+	  margin: 0;
+	  padding: 0.08in;
+	  box-shadow: none;
+	  border: none;
+	  background: transparent;
+	  min-height: 10.9in;
+	  overflow: hidden;
+	  break-after: page;
+	  page-break-after: always;
+	}
+	.page:last-child {
+	  break-after: auto;
+	  page-break-after: auto;
+	}
+	.page-1, .page-2, .page-3 { display: block; column-count: 2; column-gap: 8px; column-fill: balance; }
 	.box { border-color: #111; }
 	section[data-category="emergency"] { border-left-color: #b30000; background: none; }
 	section[data-category="grey"] { border-left-color: #999; background: none; }
@@ -158,6 +178,26 @@ section[data-category] table th, section[data-category] table td { padding: 3px 
 section[data-category="grey"] { background-color: rgba(120,120,120,0.07); }
 section[data-category="blue"] { background-color: rgba(27,122,27,0.08); }
 section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
+
+@media screen {
+  body { background: #ececec; }
+  .sheet { width: 8.5in; margin: 0 auto; }
+  .columns { display: block; }
+  .page { column-count: 2; column-gap: 8px; column-fill: balance; }
+  .page {
+    width: 8.5in;
+    margin: 0.18in 0;
+    padding: 0.08in;
+    height: 10.4in;
+    min-height: 10.4in;
+    overflow: hidden;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  }
+  .page + .page { margin-top: 0.22in; }
+}
 
 /* ---------- Emergency as a second kneeboard card ---------- */
 /* Each <main class="columns"> is one physical kneeboard card. A break before
@@ -430,21 +470,6 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> EMERGENCY &amp; ABNORMAL OPERATIONS</li>
       </ul>
   </section>
-  <section class='card' data-category="emergency">
-    <h2><span class="icon" aria-hidden="true"><svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='6' fill='currentColor'/></svg></span><span class="sr-only">Alert</span> CRITICAL MEMORY ITEMS</h2>
-      <p class='note'><em>(Always accessible)</em></p>
-      <ul class='checklist'>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — PAN-PAN / MAYDAY as appropriate on 121.5</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — 7700</li>
-        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Engine Failure — <strong>100 MPH</strong></li>
-        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Engine Fire (In‑Flight) — <strong>Mixture IDLE CUTOFF</strong></li>
-        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Electrical Fire / Smoke — <strong>MASTER OFF</strong></li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> NORMAL OPERATIONS</li>
-      </ul>
-  </section>
-</div>
-<div class="page-break" aria-hidden="true"></div>
-<div class="page page-2">
   <section class='card' data-category="green">
     <h2>CLEAR RUNWAY</h2>
       <ul class='checklist'>
@@ -468,6 +493,20 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flight Plan - CLOSED</li>
       </ul>
   </section>
+  <section class='card' data-category="emergency">
+    <h2><span class="icon" aria-hidden="true"><svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='6' fill='currentColor'/></svg></span><span class="sr-only">Alert</span> CRITICAL MEMORY ITEMS</h2>
+      <p class='note'><em>(Always accessible)</em></p>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — PAN-PAN / MAYDAY as appropriate on 121.5</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — 7700</li>
+        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Engine Failure — <strong>100 MPH</strong></li>
+        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Engine Fire (In‑Flight) — <strong>Mixture IDLE CUTOFF</strong></li>
+        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Electrical Fire / Smoke — <strong>MASTER OFF</strong></li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> NORMAL OPERATIONS</li>
+      </ul>
+  </section>
+</div>
+<div class="page page-2">
   <section class='card' data-category="grey">
     <h2>🧭 PREFLIGHT</h2>
     <ul class='checklist'></ul>
@@ -578,42 +617,7 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       </ul>
     </div>
   </section>
-  <section class='card' data-category="blue">
-    <h2>IFR ACRONYMS / MNEMONICS</h2>
-      <ul class='checklist'>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> IFR - Instrument Flight Rules</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> VFR - Visual Flight Rules</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - Course Deviation Indicator</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DME - Distance Measuring Equipment</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> RNAV - Area Navigation</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ILS - Instrument Landing System</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> FAF - Final Approach Fix</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> MAP - Missed Approach Point</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> MSA - Minimum Safe Altitude</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DA/MDA - Decision Altitude / Minimum Descent Altitude</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> WAAS - Wide Area Augmentation System</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> RAIM - Receiver Autonomous Integrity Monitoring</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ETE - Estimated Time Enroute</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ETA - Estimated Time of Arrival</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> QNH - Altimeter setting to sea level</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS - Distance, Altitude, Direction, Speed. Check every 1 NM or
-500</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> FT.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CRAFT - Clearance, Route, Altitude, Frequency, Transponder.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> PAVE - Pilot, Aircraft, enVironment, External pressures.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> IMSAFE - Illness, Medication, Stress, Alcohol, Fatigue, Emotion.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ARROW - Airworthiness certificate, Registration, Radio license,</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Operating handbook, Weight and balance.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ATOMATOFLAMES - Common required instruments and equipment.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 3 Ps - Perceive, Process, Perform.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 5 Ps - Plane, Pilot, Passengers, Programming, Plan.</li>
-      </ul>
-  </section>
 </div>
-<div class="page-break" aria-hidden="true"></div>
 <div class="page page-3 emergency-page">
 <div class="page-edge" aria-hidden="true"></div>
   <section class='card' data-category="emergency">
@@ -737,6 +741,40 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
 Practical</strong></span></li>
       </ul>
     </div>
+  </section>
+  <section class='card' data-category="blue">
+    <h2>IFR ACRONYMS / MNEMONICS</h2>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> IFR - Instrument Flight Rules</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> VFR - Visual Flight Rules</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - Course Deviation Indicator</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DME - Distance Measuring Equipment</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> RNAV - Area Navigation</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ILS - Instrument Landing System</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> FAF - Final Approach Fix</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> MAP - Missed Approach Point</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> MSA - Minimum Safe Altitude</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DA/MDA - Decision Altitude / Minimum Descent Altitude</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> WAAS - Wide Area Augmentation System</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> RAIM - Receiver Autonomous Integrity Monitoring</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ETE - Estimated Time Enroute</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ETA - Estimated Time of Arrival</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> QNH - Altimeter setting to sea level</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS - Distance, Altitude, Direction, Speed. Check every 1 NM or
+500</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> FT.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CRAFT - Clearance, Route, Altitude, Frequency, Transponder.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> PAVE - Pilot, Aircraft, enVironment, External pressures.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> IMSAFE - Illness, Medication, Stress, Alcohol, Fatigue, Emotion.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ARROW - Airworthiness certificate, Registration, Radio license,</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Operating handbook, Weight and balance.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ATOMATOFLAMES - Common required instruments and equipment.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 3 Ps - Perceive, Process, Perform.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 5 Ps - Plane, Pilot, Passengers, Programming, Plan.</li>
+      </ul>
   </section>
 </div>
     </main>

@@ -34,6 +34,88 @@ ICON_MAP = {
     '☑': ("<svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><path fill='currentColor' d='M6.173 11.414 2.76 8l-1.06 1.06L6.173 13.53l9.127-9.127L14.24 3.47z'/></svg>", 'Verified'),
 }
 
+LEADING_MARKERS = (
+    '☐', '☑', '✅', '✔', '⛔', '➡', '🟥', '🟩', '🟫', '🔁', '🔄',
+    '🛫', '🛬', '🚨', '⚠️', '⚠', '⚡', '🎯', '📘', '🔥', '🧭', '▶', '✈️', '✈', '🔍',
+)
+
+
+def strip_item_prefix(text):
+    text = re.sub(r'^\s*[-*+]\s*', '', text)
+    text = re.sub(r'^\s*\[(?: |x|X)\]\s*', '', text)
+    for marker in sorted(LEADING_MARKERS, key=len, reverse=True):
+        if text.startswith(marker):
+            return text[len(marker):].lstrip()
+    return text.strip()
+
+
+def is_plain_item_line(text):
+    return bool(re.match(r'^[A-Za-z0-9(*\[]', text))
+
+
+PAGE2_START_TITLES = (
+    'clear runway',
+    'shutdown',
+    'critical memory items',
+    'preflight',
+    'safety checklist',
+    'engine start',
+    'ground check',
+    'run up',
+    'engine failure in flight',
+    'engine restart in flight po h',
+    'forced landing',
+    'engine fire in flight',
+    'electrical fire smoke po h aligned',
+    'alternator failure no charge',
+    'ifr acronyms mnemonics',
+)
+
+
+def normalize_text(s):
+    return ' '.join(re.findall(r'\w+', (s or '').lower()))
+
+
+def is_title_heading(text):
+    norm = normalize_text(text)
+    return 'flow verify checklist' in norm
+
+
+def page_for_heading(title):
+    norm = normalize_text(title)
+    if any(k in norm for k in (
+        'takeoff',
+        'ifr departure enroute',
+        'ifr approach configuration',
+        'ifr performance profiles',
+        'v speeds',
+        'landing go around',
+        'clear runway',
+        'shutdown',
+        'missed approach',
+        'critical memory items',
+    )):
+        return 1
+    if any(k in norm for k in (
+        'preflight',
+        'safety checklist',
+        'engine start',
+        'ground check',
+        'run up',
+    )):
+        return 2
+    if any(k in norm for k in (
+        'ifr acronyms mnemonics',
+        'engine failure in flight',
+        'engine restart in flight',
+        'forced landing',
+        'engine fire in flight',
+        'electrical fire smoke',
+        'alternator failure no charge',
+    )):
+        return 3
+    return 2
+
 
 def replace_icons(text):
     for k, (svg, desc) in ICON_MAP.items():
@@ -56,6 +138,8 @@ def md_to_html(md):
 
 def infer_category(title):
     t = (title or '').lower()
+    if 'missed approach' in t:
+        return 'green'
     # Emergency keywords (broadened)
     EMERGENCY_KW = [
         'emerg', 'critical', 'missed', 'engine failure', 'fire', 'immediate',
@@ -92,7 +176,8 @@ def parse_markdown(md_path):
         if m:
             level = len(m.group(1))
             text = m.group(2).strip()
-            tokens.append({'type': 'heading', 'level': level, 'text': text, 'line': i + 1})
+            if text:
+                tokens.append({'type': 'heading', 'level': level, 'text': text, 'line': i + 1})
             i += 1
             continue
         # Markdown table: line that starts with | and the next line is a separator |---|
@@ -107,6 +192,10 @@ def parse_markdown(md_path):
         if s.startswith('✅') and re.search(r'\*[^*]+\*', s) and not s.startswith('✅ ☐'):
             txt = s.lstrip('✅').strip()
             tokens.append({'type': 'note', 'text': txt, 'line': i + 1})
+            i += 1
+            continue
+        if re.fullmatch(r'\*\([^*]+\)\*', s):
+            tokens.append({'type': 'note', 'text': s, 'line': i + 1})
             i += 1
             continue
         # ⛔ bold sub-header: ONLY when the entire content after ⛔ is wrapped in **...**
@@ -129,10 +218,12 @@ def parse_markdown(md_path):
             i += 1
             continue
         # Checklist items: list markers or leading checkbox glyph
-        if re.match(r'^[-*+]\s+', s) or s.startswith(tuple('☐☑✅✔')):
-            t = re.sub(r'^[-*+]\s*', '', s)
-            t = re.sub(r'^[\u2600-\u27BF\u1F300-\u1F6FF]\s*', '', t)
-            tokens.append({'type': 'item', 'text': t.strip(), 'line': i + 1})
+        if re.match(r'^[-*+]\s+', s) or s.startswith(tuple(LEADING_MARKERS)):
+            tokens.append({'type': 'item', 'text': strip_item_prefix(s), 'line': i + 1})
+            i += 1
+            continue
+        if is_plain_item_line(s):
+            tokens.append({'type': 'item', 'text': s.strip(), 'line': i + 1})
             i += 1
             continue
         i += 1
@@ -251,10 +342,11 @@ def render_h2_block(h2, children_tokens):
         parts.extend(render_token_list(grp['items'], indent='      '))
         parts.append("    </div>")
 
-    # Suppress entirely-empty H2 cards
+    # Preserve structural headings even when they don't own checklist lines.
+    # This keeps parent section titles like PREFLIGHT visible in the output.
     body = '\n'.join(parts[2:])  # everything after the opening tags + h2
     if not body.strip():
-        return ''  # drop empty card
+        parts.append("    <ul class='checklist'></ul>")
     parts.append("  </section>")
     return '\n'.join(parts)
 
@@ -264,9 +356,11 @@ def build_html_from_tokens(tokens):
     When an 'emergency' H1 is encountered, emit a sentinel that splits the
     output into a second <main> container so a page break can be forced.
     """
-    out = []
+    page1 = []
+    page2 = []
+    page3 = []
     seen_first_h1 = False
-    page_split_done = False
+    suppress_preamble = True
     i = 0
     n = len(tokens)
     while i < n:
@@ -276,17 +370,14 @@ def build_html_from_tokens(tokens):
                 seen_first_h1 = True
                 i += 1
                 continue
-            cat = infer_category(tok['text'])
-            # Emergency H1 starts a new physical kneeboard page
-            if cat == 'emergency' and not page_split_done:
-                out.append('__PAGE_SPLIT__')
-                page_split_done = True
-            title_html = replace_icons(html.escape(tok['text']))
-            out.append(f"  <div class='page-divider' data-category=\"{cat}\"><h1>{title_html}</h1></div>")
             i += 1
             continue
         if tok['type'] == 'heading' and tok['level'] == 2:
             h2 = tok
+            if suppress_preamble and is_title_heading(h2['text']):
+                i += 1
+                continue
+            suppress_preamble = False
             j = i + 1
             children = []
             while j < n and not (tokens[j]['type'] == 'heading' and tokens[j]['level'] in (1, 2)):
@@ -294,10 +385,19 @@ def build_html_from_tokens(tokens):
                 j += 1
             block = render_h2_block(h2, children)
             if block:
-                out.append(block)
+                page = page_for_heading(h2['text'])
+                if page == 1:
+                    page1.append(block)
+                elif page == 2:
+                    page2.append(block)
+                else:
+                    page3.append(block)
             i = j
             continue
         if tok['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
+            if suppress_preamble:
+                i += 1
+                continue
             j = i
             children = []
             while j < n and tokens[j]['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
@@ -305,20 +405,26 @@ def build_html_from_tokens(tokens):
                 j += 1
             block = render_h2_block({'text': 'General', 'level': 2}, children)
             if block:
-                out.append(block)
+                page2.append(block)
             i = j
             continue
         i += 1
-    body = '\n'.join(out)
-    # Replace sentinel with main container split. Emergency page gets its own
-    # <main class="columns emergency-page"> and a small page header band.
-    split_marker = (
-        '</main>\n'
-        '    <main class="columns emergency-page" data-category="emergency">\n'
-        '      <div class="page-edge" aria-hidden="true"></div>\n'
+
+    page1_html = '\n'.join(page1)
+    page2_html = '\n'.join(page2)
+    page3_html = '\n'.join(page3)
+    return (
+        '<div class="page page-1">\n'
+        f'{page1_html}\n'
+        '</div>\n'
+        '<div class="page page-2">\n'
+        f'{page2_html}\n'
+        '</div>\n'
+        '<div class="page page-3 emergency-page">\n'
+        '<div class="page-edge" aria-hidden="true"></div>\n'
+        f'{page3_html}\n'
+        '</div>'
     )
-    body = body.replace('__PAGE_SPLIT__', split_marker)
-    return body
 
 
 # --- main --------------------------------------------------------------------
