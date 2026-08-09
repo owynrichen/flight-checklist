@@ -24,6 +24,20 @@ import html as htmllib
 
 ALLOWED_CATEGORIES = set(['emergency', 'grey', 'blue', 'green'])
 
+LEADING_MARKERS = (
+    '☐', '☑', '✅', '✔', '⛔', '➡', '🟥', '🟩', '🟫', '🔁', '🔄',
+    '🛫', '🛬', '🚨', '⚠️', '⚠', '⚡', '🎯', '📘', '🔥', '🧭', '▶', '✈️', '✈', '🔍',
+)
+
+
+def strip_item_prefix(text):
+    text = re.sub(r'^\s*[-*+]\s*', '', text)
+    text = re.sub(r'^\s*\[(?: |x|X)\]\s*', '', text)
+    for marker in sorted(LEADING_MARKERS, key=len, reverse=True):
+        if text.startswith(marker):
+            return text[len(marker):].lstrip()
+    return text.strip()
+
 # Normalization: keep word characters and digits, join with spaces, lower-case
 def normalize_text(s):
     if s is None:
@@ -49,19 +63,22 @@ def parse_md(md_path):
         # headings like '#', '##'
         m = re.match(r'^(?P<prefix>\s*#+)\s*(?P<text>.+?)\s*$', stripped)
         if m:
-            level = len(m.group('prefix').strip())
             text = m.group('text').strip()
+            if not text:
+                continue
+            level = len(m.group('prefix').strip())
             headings.append({'level': level, 'text': text, 'line': i})
             continue
         # item detection: list markers or leading emoji macros or leading emoji characters
         if re.match(r'^\s*[-*+]\s+', stripped) or '\\emoji{' in stripped or stripped.strip().startswith(tuple('☐☑✅⛔✔🔁🔄')):
-            t = re.sub(r'^\s*[-*+]\s*', '', stripped)
+            t = strip_item_prefix(stripped)
             t = re.sub(r'\\emoji\{.*?\}\s*', '', t)
-            t = re.sub(r'^[\u2600-\u27BF\u1F300-\u1F6FF]\s*', '', t)
             # unescape common markdown escapes (underscore) so normalization matches rendered HTML
             t = t.replace('\\_', '_')
             if t.strip():
                 items.append({'text': t.strip(), 'line': i})
+        elif re.match(r'^[A-Za-z0-9]', stripped):
+            items.append({'text': stripped, 'line': i})
     return headings, items
 
 # Parse generated HTML to extract headings, sections (with data-category) and items
@@ -158,9 +175,8 @@ def parse_latex_md(md_path):
                 headings.append({'level': level, 'text': text, 'line': i+1})
         if re.match(r'^\s*[-*+]\s+', line) or '\\emoji{' in line or line.strip().startswith(tuple('☐☑✅⛔✔')):
             t = line.strip()
-            t = re.sub(r'^\s*[-*+]\s*', '', t)
+            t = strip_item_prefix(t)
             t = re.sub(r'\\emoji\{.*?\}\s*', '', t)
-            t = re.sub(r'^[\u2600-\u27BF\u1F300-\u1F6FF]\s*', '', t)
             # unescape backslash-escaped underscores to match HTML rendering
             t = t.replace('\\_', '_')
             if t.strip():

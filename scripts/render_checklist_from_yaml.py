@@ -52,6 +52,8 @@ def build_html(checklist):
 
     def infer_category(title):
         t = title.lower()
+        if 'missed approach' in t:
+            return 'green'
         # emergency keywords
         if any(k in t for k in ['emerg', 'critical', 'missed', 'engine failure', 'fire', 'immediate', 'memory']):
             return 'emergency'
@@ -104,10 +106,9 @@ def load_markdown_entries(md_path):
                     current_section = m.group(2).strip()
                 continue
             if re.match(r'^\s*[-*+]\s+', raw) or '\\emoji{' in raw or raw.strip().startswith(tuple('☐☑✅⛔✔')):
-                t = re.sub(r'^\s*[-*+]\s*', '', raw)
+                t = strip_item_prefix(raw)
                 # unwrap \emoji{...} -> the inner glyph if present
                 t = re.sub(r'\\emoji\{(.*?)\}', r'\1', t)
-                t = re.sub(r'^[\u2600-\u27BF\u1F300-\u1F6FF]\s*', '', t)
                 entries.append({'section': current_section, 'item': t.strip()})
     return entries
 
@@ -153,3 +154,16 @@ def main():
 
 if __name__ == '__main__':
     main()
+LEADING_MARKERS = (
+    '☐', '☑', '✅', '✔', '⛔', '➡', '🟥', '🟩', '🟫', '🔁', '🔄',
+    '🛫', '🛬', '🚨', '⚠️', '⚠', '⚡', '🎯', '📘', '🔥', '🧭', '▶', '✈️', '✈', '🔍',
+)
+
+
+def strip_item_prefix(text):
+    text = re.sub(r'^\s*[-*+]\s*', '', text)
+    text = re.sub(r'^\s*\[(?: |x|X)\]\s*', '', text)
+    for marker in sorted(LEADING_MARKERS, key=len, reverse=True):
+        if text.startswith(marker):
+            return text[len(marker):].lstrip()
+    return text.strip()
