@@ -9,7 +9,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
-DOCX_PATH="${1:-}"
+DOCX_PATH=""
 # Optional flags: --page-size half|letter, --columns N
 PAGE_SIZE="half"
 COLUMNS=2
@@ -19,7 +19,9 @@ while [ "$#" -gt 0 ]; do
       PAGE_SIZE="$2"; shift 2;;
     --columns)
       COLUMNS="$2"; shift 2;;
-    *) shift;;
+    *)
+      # treat any other positional arg as the optional DOCX path
+      DOCX_PATH="$1"; shift;;
   esac
 done
 
