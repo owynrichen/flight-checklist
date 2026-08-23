@@ -406,6 +406,12 @@ def build_html_from_tokens(tokens):
 # --- main --------------------------------------------------------------------
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description='Render checklist to HTML with optional layout overrides')
+    parser.add_argument('--columns', type=int, choices=(2,3,4), help='Override column-count for main.columns')
+    parser.add_argument('--page-size', choices=('half','letter'), help='Override CSS @page size (half=5.5x8.5, letter=8.5x11)')
+    args = parser.parse_args()
+
     if not os.path.exists(MD_PATH):
         # fall back to YAML if markdown missing
         if not os.path.exists(YAML_PATH):
@@ -438,11 +444,32 @@ def main():
                     title_text = line.lstrip('#').strip()
                     break
 
+    # Build optional layout override CSS that will be inserted after the
+    # checklist.css link in the template. build.sh will inline checklist.css,
+    # and this override will follow it so it can tweak column-count and @page
+    # sizing for manual proofs.
+    override_css = ''
+    if args.columns or args.page_size:
+        parts = []
+        if args.page_size:
+            if args.page_size == 'half':
+                parts.append('@page { size: 5.5in 8.5in; }')
+            else:
+                parts.append('@page { size: 8.5in 11in; }')
+        if args.columns:
+            parts.append(f'main.columns {{ column-count: {args.columns}; column-gap: 12px; }}')
+            parts.append('section.card { break-inside: avoid; -webkit-column-break-inside: avoid; }')
+        override_css = '\n'.join(parts)
+
     with open(TEMPLATE, encoding='utf-8') as ft, open(OUT, 'w', encoding='utf-8') as fo:
         tpl = ft.read()
         if title_text:
             tpl = tpl.replace('<h1>CHECKLIST</h1>', f'<h1>{html.escape(title_text)}</h1>')
+        # Insert generated HTML block
         tpl = tpl.replace('<!-- Replace with generated HTML from checklist_source.yaml -->', html_block)
+        # If override CSS was requested, place it immediately after the checklist.css link
+        if override_css:
+            tpl = tpl.replace('<link rel="stylesheet" href="checklist.css">', '<link rel="stylesheet" href="checklist.css">\n<style>' + override_css + '</style>')
         fo.write(tpl)
 
     print('Wrote', OUT)
