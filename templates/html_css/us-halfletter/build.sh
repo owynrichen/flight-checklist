@@ -69,9 +69,9 @@ if [ -x "$(command -v python3)" ]; then
   echo "Rendering HTML using scripts/render_checklist_v2.py (markdown, hierarchical)..."
   # Run the renderer under the project environment via uv run if available
   if command -v uv >/dev/null 2>&1; then
-    uv run python3 "$REPO_ROOT/scripts/render_checklist_v2.py"
+    uv run python3 "$REPO_ROOT/scripts/render_checklist_v2.py" --columns "$COLUMNS" --page-size "$PAGE_SIZE"
   else
-    python3 "$REPO_ROOT/scripts/render_checklist_v2.py"
+    python3 "$REPO_ROOT/scripts/render_checklist_v2.py" --columns "$COLUMNS" --page-size "$PAGE_SIZE"
   fi
   # ensure output filename matches expected
   if [ -f "$REPO_ROOT/output/checklist_from_yaml.html" ]; then
