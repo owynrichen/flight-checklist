@@ -96,3 +96,51 @@ Quick build (HTML -> PDF using Playwright):
 ```
 
 Outputs will be written to `output/`.
+
+Heading / Page-break conventions
+===============================
+
+This project relies on a simple, well-defined mapping between Markdown
+heading levels and the printed kneeboard layout. Keep these rules in mind
+when editing the source Markdown (Combined_VFR_IFR_Ch1.md):
+
+- Use H1 (#) once at the top of the document for the overall checklist
+  title. The renderer will use the first H1 as the printed title band.
+- Use H2 (##) to define top-level procedure groups that should appear as
+  separate cards within a single kneeboard page segment. Each H2 becomes
+  a <section class="card"> in the output HTML.
+- Use H3 (###) for logical subsections that must stay visually grouped
+  inside their parent H2 card (they render as .subsection inside the
+  H2 card). The renderer hides H3 text in print but keeps the item
+  groups together for layout safety.
+- Use the explicit page break marker <!-- PAGE_BREAK --> on a line by
+  itself to force a new kneeboard card. The renderer will partition the
+  Markdown at these markers: everything between markers becomes one
+  printed <main class="columns"> card (two-column layout). Place the
+  marker on the line immediately before the H2 that should start the
+  next card (no blank line between marker and the heading).
+
+Automatic hierarchy normalization
+--------------------------------
+
+To reduce accidental layout drift (for example, many H2s in the same
+segment causing them to render as separate cards within one printed
+page), we provide a helper script `scripts/normalize_hierarchy.py`.
+
+- Behavior: for each PAGE_BREAK-delimited segment the script keeps the
+  first H2 as a top-level card and converts subsequent H2 headings to
+  H3. This preserves author intent: sections that belong on the same
+  physical card remain grouped under the first H2.
+- Usage examples:
+
+```bash
+# produce a normalized copy (does not modify original)
+python3 scripts/normalize_hierarchy.py Combined_VFR_IFR_Ch1.md
+
+# apply in-place (will overwrite Combined_VFR_IFR_Ch1.md)
+python3 scripts/normalize_hierarchy.py --inplace Combined_VFR_IFR_Ch1.md
+```
+
+If you prefer manual control, do not run the script and instead ensure
+you use H2/H3 intentionally per the rules above. The validator will
+still check that <!-- PAGE_BREAK --> markers exist where required.

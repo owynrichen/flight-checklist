@@ -8,7 +8,7 @@
 
 **Engine:** **Lycoming O‑540‑E4B5**
 
-## 🛫 TAKEOFF
+### 🛫 TAKEOFF
 
 Fuel Pump — ON
 
@@ -26,7 +26,7 @@ Rotate — **65-70 MPH**
 
 Climb — **Vy 105 MPH / Vx 95 MPH**
 
-## 🛫 CLIMB TO CRUSE - ~500 FT AGL
+### 🛫 CLIMB TO CRUISE - ~500 FT AGL
 
 Flaps - UP
 
@@ -397,7 +397,9 @@ Vne - never exceed - 212 MPH (184kts)
 
 <!-- PAGE_BREAK -->
 
-## 🔥 ENGINE FAILURE — IN FLIGHT
+## EMERGENCY PROCEDURES
+
+### 🔥 ENGINE FAILURE — IN FLIGHT
 
 ☐ Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
 
