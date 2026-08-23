@@ -122,30 +122,6 @@ GUMPSF - VERIFY
 | **Approach Level 2** | ~17 MP/FULL     | 0°        | 33°        | 104 MPH   | −800     |
 | **Missed**           | FULL            | +7°       | Clean      | 97 MPH    | +800     |
 
-## V SPEEDS
-
-V1 - Abort Takeoff - 46 MPH (50% RWY)
-
-Vs0 - stall w/ flaps - 63 MPH (55kts)
-
-Vs1 - stall clean - 71 MPH (62kts)
-
-Vr - rotate - 65 MPH (56kts)
-
-Vy - best rate - 105 MPH (91kts)
-
-Vx - best angle - 95 MPH (83kts)
-
-BEST GLIDE - 100 MPH (87kts)
-
-Vfe - flaps extend - 125 MPH (109kts)
-
-Va - maneuvering - 149 MPH (129kts)
-
-Vno - max cruise - 168 MPH (146kts)
-
-Vne - never exceed - 212 MPH (184kts)
-
 ## 🛬 LANDING / GO‑AROUND
 
 ### Landing — FLOW
@@ -177,9 +153,6 @@ Flaps — AS REQUIRED (10° REC)
 
 **Call** - APPROACH
 
-
-<!-- PAGE_BREAK -->
-🟥 EMERGENCY & ABNORMAL OPERATIONS
 
 ## CLEAR RUNWAY
 
@@ -226,7 +199,6 @@ Flaps — AS REQUIRED (10° REC)
 ⛔ Electrical Fire / Smoke — **MASTER OFF**
 
 <!-- PAGE_BREAK -->
-🟩 NORMAL OPERATIONS
 
 ## 🧭 PREFLIGHT
 
@@ -392,13 +364,38 @@ Departure Procedures - BRIEF
 
 Comms and Nav Radios - SET
 
-### ✔ VERIFY
-
 ✔ Stable RPM
 
 ✔ No abnormal vibration
 
 - Engine indications normal
+
+## V SPEEDS
+
+V1 - Abort Takeoff - 46 MPH (50% RWY)
+
+Vs0 - stall w/ flaps - 63 MPH (55kts)
+
+Vs1 - stall clean - 71 MPH (62kts)
+
+Vr - rotate - 65 MPH (56kts)
+
+Vy - best rate - 105 MPH (91kts)
+
+Vx - best angle - 95 MPH (83kts)
+
+BEST GLIDE - 100 MPH (87kts)
+
+Vfe - flaps extend - 125 MPH (109kts)
+
+Va - maneuvering - 149 MPH (129kts)
+
+Vno - max cruise - 168 MPH (146kts)
+
+Vne - never exceed - 212 MPH (184kts)
+
+
+<!-- PAGE_BREAK -->
 
 ## 🔥 ENGINE FAILURE — IN FLIGHT
 

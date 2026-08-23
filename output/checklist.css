@@ -157,7 +157,9 @@ section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
 /* ---------- Emergency as a second kneeboard card ---------- */
 /* Each <main class="columns"> is one physical kneeboard card. A break before
    the emergency main forces wkhtmltopdf to start a new sheet. */
-main.columns { display: block; }
+/* Each <main class="columns"> is one physical kneeboard card. Use two
+   columns per card so content flows into a left/right kneeboard layout. */
+main.columns { display: block; column-count: 2; column-gap: 8px; page-break-after: always; break-after: page; }
 main.emergency-page {
   page-break-before: always;
   break-before: page;

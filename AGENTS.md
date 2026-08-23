@@ -52,6 +52,17 @@ Validation reporting and failure behaviour
   failures in any of the three expectations should return a non-zero exit
   status so the pipeline can fail fast.
 
+- All commands invoked by automated agents (builds, renderers, validators,
+  and any helper scripts) MUST be executed via `uv run ...` so execution is
+  consistent with the repository's virtual environment and task runner.
+  Examples:
+  - `uv run ./templates/html_css/us-halfletter/build.sh`
+  - `uv run python3 scripts/validate_checklist_outputs.py --source Combined_VFR_IFR_Ch1.md`
+  - `uv run python3 scripts/check_page_fit.py --html output/checklist_print_ready.html`
+
+  This ensures the correct Python interpreter, packages, and environment are
+  used across developer machines and CI runners.
+
 Implementation notes
 
 - Suggested checks: parse Markdown headings, parse HTML/PDF text (or HTML),

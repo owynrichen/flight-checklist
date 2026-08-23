@@ -125,7 +125,6 @@ with sync_playwright() as p:
     page.emulate_media(media="print")
     page.pdf(
         path=str(pdf_path),
-        format="Letter",
         print_background=True,
         prefer_css_page_size=True,
         margin={"top": "0in", "right": "0in", "bottom": "0in", "left": "0in"},
@@ -149,7 +148,6 @@ with sync_playwright() as p:
     page.emulate_media(media="print")
     page.pdf(
         path=str(pdf_path),
-        format="Letter",
         print_background=True,
         prefer_css_page_size=True,
         margin={"top": "0in", "right": "0in", "bottom": "0in", "left": "0in"},

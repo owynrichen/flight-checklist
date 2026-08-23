@@ -339,9 +339,11 @@ def build_html_from_tokens(tokens):
     while i < n:
         tok = tokens[i]
         if tok.get('type') == 'page_break':
-            # Advance page offset so subsequent H2 blocks are pushed to the next
-            # physical page. This lets authors place <!-- PAGE_BREAK --> in the
-            # markdown to control printed page grouping.
+            # Immediate page break: force the next emitted H2 block to go to the
+            # following page. Implemented by incrementing page_offset so the
+            # next H2 is emitted to the subsequent page. This is immediate
+            # (not a deferred sentinel); multiple consecutive markers advance
+            # further pages.
             page_offset += 1
             i += 1
             continue
@@ -374,6 +376,11 @@ def build_html_from_tokens(tokens):
                 # Apply any explicit page-break offsets; cap to 3 pages.
                 page = min(3, page + page_offset)
                 pages.setdefault(page, []).append(block)
+                # Once an explicit offset has been consumed by assigning a
+                # block to a later page, reset the page_offset so further
+                # H2s are not unintentionally pushed further unless more
+                # explicit markers are present.
+                page_offset = 0
             i = j
             continue
         if tok['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):

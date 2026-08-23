@@ -163,7 +163,9 @@ section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
 /* ---------- Emergency as a second kneeboard card ---------- */
 /* Each <main class="columns"> is one physical kneeboard card. A break before
    the emergency main forces wkhtmltopdf to start a new sheet. */
-main.columns { display: block; }
+/* Each <main class="columns"> is one physical kneeboard card. Use two
+   columns per card so content flows into a left/right kneeboard layout. */
+main.columns { display: block; column-count: 2; column-gap: 8px; page-break-after: always; break-after: page; }
 main.emergency-page {
   page-break-before: always;
   break-before: page;
@@ -273,8 +275,8 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       <p class="sub">Double‑sided — US half‑letter (5.5"×8.5")</p>
     </header>
 
+    <!-- Renderer will emit one or more <main class="columns"> blocks. -->
     <main class="columns">
-      <div class="page page-1">
   <section class='card' data-category="blue">
     <h2>🛫 TAKEOFF</h2>
       <ul class='checklist'>
@@ -378,7 +380,7 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       <h3>Landing — FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Downwind — 110 MPH</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GGUMPS</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPSF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Abeam - 90-95 MPH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Over the #s - 80 MPH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps — AS REQUIRED (10° REC)</li>
@@ -432,9 +434,8 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Electrical Fire / Smoke — <strong>MASTER OFF</strong></li>
       </ul>
   </section>
-</div>
-<div class="page-break" aria-hidden="true"></div>
-<div class="page page-2">
+</main>
+<main class="columns">
   <section class='card' data-category="blue">
     <h2>🛫 CLIMB TO CRUSE - ~500 FT AGL</h2>
       <ul class='checklist'>
@@ -473,12 +474,13 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS - CHECK every 1 NM or 500 FT</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts - APPLY / REVIEW</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Pump - ON</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPSF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Gas - FULLEST TANK</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Undercarriage - GEAR DOWN</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Mixture - RICH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Prop - FULL FORWARD</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Switches - LANDING LIGHT</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps - SET</li>
       </ul>
   </section>
   <section class='card' data-category="blue">
@@ -486,7 +488,8 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - VERIFY</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6Ts - VERIFY</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS - VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Configuration - APPROACH 2</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPSF - VERIFY</li>
       </ul>
   </section>
   <section class='card' data-category="grey">
@@ -577,8 +580,6 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
   </section>
   <section class='card' data-category="grey">
     <h2>🔍 RUN‑UP</h2>
-    <div class='subsection' data-category="grey">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Brake — SET</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Throttle — 2000 RPM</li>
@@ -595,7 +596,6 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Departure Procedures - BRIEF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Comms and Nav Radios - SET</li>
       </ul>
-    </div>
     <div class='subsection' data-category="grey">
       <h3>✔ VERIFY</h3>
       <ul class='checklist'>
@@ -605,14 +605,10 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       </ul>
     </div>
   </section>
-</div>
-<div class="page-break" aria-hidden="true"></div>
-<div class="page page-3 emergency-page">
-<div class="page-edge" aria-hidden="true"></div>
+</main>
+<main class="columns emergency-page">
   <section class='card' data-category="emergency">
     <h2>🔥 ENGINE FAILURE — IN FLIGHT</h2>
-    <div class='subsection' data-category="emergency">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — 7700</li>
@@ -622,19 +618,11 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Mixture — FULL RICH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Carb Heat — ON</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Throttle — OPEN</li>
-      </ul>
-    </div>
-    <div class='subsection' data-category="emergency">
-      <h3>✔ VERIFY</h3>
-      <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power restored → Resume normal operations</li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="blue">
     <h2>🔁 ENGINE RESTART — IN FLIGHT (POH)</h2>
-    <div class='subsection' data-category="blue">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Selector — FULLEST</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Pump — ON</li>
@@ -645,12 +633,9 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Primer — AS REQUIRED</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Engine Gauges — CHECK</li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="emergency">
     <h2>🟫 FORCED LANDING</h2>
-    <div class='subsection' data-category="emergency">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Airspeed — <strong>100 MPH</strong></li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Landing Site — SELECT</li>
@@ -663,12 +648,9 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Door — UNLATCH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps — AS REQUIRED</li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="emergency">
     <h2>🔥 ENGINE FIRE — IN FLIGHT</h2>
-    <div class='subsection' data-category="emergency">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — 7700</li>
@@ -679,12 +661,9 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Cabin Heat / Air — OFF</li>
         <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Airspeed — <strong>125 MPH (TOP WHITE ARC)</strong> <span class='arrow' aria-hidden='true'>➡</span> <span class='consequence-inline'>Proceed to <strong>Engine Failure / Forced Landing</strong></span></li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="emergency">
     <h2>⚡ ELECTRICAL FIRE / SMOKE (POH‑ALIGNED)</h2>
-    <div class='subsection' data-category="emergency">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — MAYDAY or PAN-PAN on 121.5</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — 7600 if comms fail; otherwise 7700</li>
@@ -692,14 +671,8 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> All Electrical Switches — OFF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Cabin Heat — OFF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Air / Vents — OPEN (ventilate)</li>
-      </ul>
-    </div>
-    <div class='subsection' data-category="emergency">
-      <h3>✔ VERIFY</h3>
-      <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Smoke dissipating</li>
       </ul>
-    </div>
     <div class='subsection' data-category="emergency">
       <h3>🔄 IF ELECTRICAL POWER REQUIRED</h3>
       <ul class='checklist'>
@@ -711,8 +684,6 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
   </section>
   <section class='card' data-category="emergency">
     <h2>⚠️ ALTERNATOR FAILURE / NO CHARGE</h2>
-    <div class='subsection' data-category="emergency">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Radio call — advise ATC / request assistance and vectors</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Squawk — as assigned; 7600 if radios fail</li>
@@ -720,16 +691,10 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Alternator Field CB — CHECK / RESET</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Alternator Output CB — CHECK / RESET</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Alternator — OFF (30 sec) → ON</li>
-      </ul>
-    </div>
-    <div class='subsection' data-category="emergency">
-      <h3>✔ VERIFY</h3>
-      <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Ammeter shows system load</li>
         <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> If no output <span class='arrow' aria-hidden='true'>➡</span> <span class='consequence-inline'>Alternator OFF → Minimal load → <strong>Land ASAP /
 Practical</strong></span></li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="blue">
     <h2>IFR ACRONYMS / MNEMONICS</h2>
@@ -753,8 +718,8 @@ Practical</strong></span></li>
 500</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> FT.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPSF - Gas, Undercarriage, Mixture, Propeller, Switches/Seatbelts,
+Flaps.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CRAFT - Clearance, Route, Altitude, Frequency, Transponder.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> PAVE - Pilot, Aircraft, enVironment, External pressures.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> IMSAFE - Illness, Medication, Stress, Alcohol, Fatigue, Emotion.</li>
@@ -763,10 +728,12 @@ Practical</strong></span></li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ATOMATOFLAMES - Common required instruments and equipment.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 3 Ps - Perceive, Process, Perform.</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 5 Ps - Plane, Pilot, Passengers, Programming, Plan.</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> VDP - Visual Descent Point</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> VCOA - Visual Climb Over Airport (Mountainous regions)</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> ODP - Obstical Departure Procedure</li>
       </ul>
   </section>
-</div>
-    </main>
+</main>
 
   </div>
 </body>

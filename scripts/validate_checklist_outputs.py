@@ -115,6 +115,47 @@ def main():
     src_headings, src_items = parse_md(args.source)
     html_headings, html_sections, html_all_items = parse_html(args.html)
 
+    # Collect generic issues early so page-break checks can add to them
+    issues = []
+
+    # --- New checks for page-break markers from AGENTS.md
+    page_break_expectations = [
+        # (marker text to find, human label to report)
+        ('EMERGENCY & ABNORMAL OPERATIONS', 'before_emergency'),
+        ('NORMAL OPERATIONS', 'before_normal_ops'),
+    ]
+    with open(args.source, encoding='utf-8') as f:
+        md_text = f.read()
+    md_lines = md_text.splitlines()
+    # ensure explicit markers appear immediately prior to expected headings
+    missing_page_markers = []
+    for label_text, label in page_break_expectations:
+        # find the heading occurrence (first match)
+        pattern = rf'^\s*#+\s*{re.escape(label_text)}\s*$'
+        heading_line_idx = None
+        for idx, line in enumerate(md_lines):
+            if re.match(pattern, line, flags=re.I):
+                heading_line_idx = idx
+                break
+        if heading_line_idx is None:
+            # can't find the heading; defer to existing heading checks
+            continue
+        # walk backwards from the heading line to the previous non-blank line
+        j = heading_line_idx - 1
+        while j >= 0 and md_lines[j].strip() == '':
+            j -= 1
+        if j < 0 or md_lines[j].strip() != '<!-- PAGE_BREAK -->':
+            # record the heading line number for reporting (1-indexed)
+            line_no = heading_line_idx + 1
+            missing_page_markers.append((label_text, line_no))
+    if missing_page_markers:
+        print('\nPage break marker issues:')
+        for t, ln in missing_page_markers:
+            print(f'  Missing <!-- PAGE_BREAK --> before heading "{t}" (around line {ln})')
+        # treat missing page markers as issues
+        html_issues = [f'Missing page break before: {t} (line {ln})' for t, ln in missing_page_markers]
+        issues.extend(html_issues)
+
     src_head_norm = [normalize_text(h['text']) for h in src_headings]
     src_item_norm = [normalize_text(it['text']) for it in src_items]
     html_head_norm = [normalize_text(h['text']) for h in html_headings]
