@@ -23,6 +23,7 @@ YAML_PATH = os.path.join(ROOT, 'checklist_source.yaml')
 TEMPLATE = os.path.join(ROOT, 'templates', 'html_css', 'us-halfletter', 'checklist.html')
 OUT = os.path.join(ROOT, 'output', 'checklist_from_yaml.html')
 MD_PATH = os.path.join(ROOT, 'Combined_VFR_IFR_Ch1.md')
+PAGE_BREAK_MARKER = '<!-- PAGE_BREAK -->'
 
 ICON_MAP = {
     '✅': ("<svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><path fill='currentColor' d='M6.173 11.414 2.76 8l-1.06 1.06L6.173 13.53l9.127-9.127L14.24 3.47z'/></svg>", 'OK'),
@@ -143,6 +144,11 @@ def parse_markdown(md_path):
         raw = lines[i].rstrip('\n')
         s = raw.strip()
         if not s:
+            i += 1
+            continue
+        # explicit page break marker
+        if s == PAGE_BREAK_MARKER:
+            tokens.append({'type': 'page_break', 'line': i + 1})
             i += 1
             continue
         # Heading
@@ -325,14 +331,20 @@ def build_html_from_tokens(tokens):
     When an 'emergency' H1 is encountered, emit a sentinel that splits the
     output into a second <main> container so a page break can be forced.
     """
-    page1 = []
-    page2 = []
-    page3 = []
+    pages = {1: [], 2: [], 3: []}
     seen_first_h1 = False
+    page_offset = 0
     i = 0
     n = len(tokens)
     while i < n:
         tok = tokens[i]
+        if tok.get('type') == 'page_break':
+            # Advance page offset so subsequent H2 blocks are pushed to the next
+            # physical page. This lets authors place <!-- PAGE_BREAK --> in the
+            # markdown to control printed page grouping.
+            page_offset += 1
+            i += 1
+            continue
         if tok['type'] == 'heading' and tok['level'] == 1:
             if not seen_first_h1:
                 seen_first_h1 = True
@@ -359,32 +371,29 @@ def build_html_from_tokens(tokens):
             block = render_h2_block(h2, children)
             if block:
                 page = page_for_heading(h2['text'])
-                if page == 1:
-                    page1.append(block)
-                elif page == 2:
-                    page2.append(block)
-                else:
-                    page3.append(block)
+                # Apply any explicit page-break offsets; cap to 3 pages.
+                page = min(3, page + page_offset)
+                pages.setdefault(page, []).append(block)
             i = j
             continue
         if tok['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
             i += 1
             continue
         i += 1
-    return (
-        '<div class="page page-1">\n'
-        f"{chr(10).join(page1)}\n"
-        '</div>\n'
-        '<div class="page-break" aria-hidden="true"></div>\n'
-        '<div class="page page-2">\n'
-        f"{chr(10).join(page2)}\n"
-        '</div>\n'
-        '<div class="page-break" aria-hidden="true"></div>\n'
-        '<div class="page page-3 emergency-page">\n'
-        '<div class="page-edge" aria-hidden="true"></div>\n'
-        f"{chr(10).join(page3)}\n"
-        '</div>'
-    )
+    # Build a flexible sequence of <main class="columns"> containers. Pages
+    # will be emitted in order 1,2,3 if they contain content. Emergency pages
+    # get the emergency-page class which applies the red card styling.
+    out_parts = []
+    for idx in (1, 2, 3):
+        items = pages.get(idx, [])
+        if not items:
+            continue
+        # emergency-page class if any section is emergency (page 3 is intended for emergencies)
+        main_cls = 'columns emergency-page' if idx == 3 else 'columns'
+        out_parts.append(f'<main class="{main_cls}">')
+        out_parts.append('\n'.join(items))
+        out_parts.append('</main>')
+    return '\n'.join(out_parts)
 
 
 # --- main --------------------------------------------------------------------

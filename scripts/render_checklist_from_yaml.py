@@ -13,23 +13,16 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 YAML_PATH = os.path.join(ROOT, 'checklist_source.yaml')
 TEMPLATE = os.path.join(ROOT, 'templates', 'html_css', 'us-halfletter', 'checklist.html')
 OUT = os.path.join(ROOT, 'output', 'checklist_from_yaml.html')
+PAGE_BREAK_MARKER = '<!-- PAGE_BREAK -->'
 
 def load_yaml(path):
     with open(path, encoding='utf-8') as f:
         return yaml.safe_load(f)
 
-def build_html(checklist):
-    # Group by section preserving order
-    sections = []
-    idx = {}
-    for entry in checklist:
-        sec = entry.get('section', 'General')
-        itm = entry.get('item', '')
-        if sec not in idx:
-            idx[sec] = len(sections)
-            sections.append({'section': sec, 'items': []})
-        sections[idx[sec]]['items'].append(itm)
-
+def build_html(pages):
+    """Build HTML grouped into pages. `pages` is a list where each page is a
+    list of {'section':..., 'item':...} entries.
+    """
     parts = []
     # simple SVG icon map for common symbols
     ICON_MAP = {
@@ -77,28 +70,56 @@ def build_html(checklist):
         except Exception:
             return html.escape(md)
 
-    for s in sections:
-        raw_title = s['section']
-        sec_title = replace_icons(raw_title)
-        category = infer_category(raw_title)
-        parts.append(f"  <section data-category=\"{category}\">\n    <h2>{sec_title}</h2>\n    <ul class='checklist'>")
-        for it in s['items']:
-            item_html = md_to_html(it)
-            item_html = replace_icons(item_html)
-            parts.append(f"      <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> {item_html}</li>")
-        parts.append('    </ul>\n  </section>')
+    # pages -> each page becomes a <main class="columns">...</main>
+    for page in pages:
+        # group entries in this page by section preserving order
+        sections = []
+        idx = {}
+        for entry in page:
+            sec = entry.get('section', 'General')
+            itm = entry.get('item', '')
+            if sec not in idx:
+                idx[sec] = len(sections)
+                sections.append({'section': sec, 'items': []})
+            sections[idx[sec]]['items'].append(itm)
+
+        # decide if this page should use the emergency-page variant
+        is_emergency_page = any(infer_category(s['section']) == 'emergency' for s in sections)
+        main_class = 'columns emergency-page' if is_emergency_page else 'columns'
+        parts.append(f'<main class="{main_class}">')
+
+        for s in sections:
+            raw_title = s['section']
+            sec_title = replace_icons(raw_title)
+            category = infer_category(raw_title)
+            parts.append(f"  <section data-category=\"{category}\">\n    <h2>{sec_title}</h2>\n    <ul class='checklist'>")
+            for it in s['items']:
+                item_html = md_to_html(it)
+                item_html = replace_icons(item_html)
+                parts.append(f"      <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> {item_html}</li>")
+            parts.append('    </ul>\n  </section>')
+
+        parts.append('</main>')
+
     return '\n'.join(parts)
 
 def load_markdown_entries(md_path):
-    """Parse a simple flat markdown checklist into a list of {section, item} entries.
-    Heuristic: headings (#, ##, ###) start new sections; list lines (-, +, *, or leading emoji macro) are items.
+    """Parse a simple flat markdown checklist into pages.
+    Returns a list of pages; each page is a list of {section, item} entries.
+    Use <!-- PAGE_BREAK --> to start a new page.
     """
-    entries = []
+    pages = [[]]
     current_section = 'General'
     with open(md_path, encoding='utf-8') as f:
         for line in f:
             raw = line.rstrip('\n')
             if not raw.strip():
+                continue
+            # explicit page break marker
+            if raw.strip() == PAGE_BREAK_MARKER:
+                # start a new page
+                pages.append([])
+                current_section = 'General'
                 continue
             if raw.lstrip().startswith('#'):
                 m = re.match(r'^(#+)\s*(.*)$', raw.lstrip())
@@ -109,25 +130,29 @@ def load_markdown_entries(md_path):
                 t = strip_item_prefix(raw)
                 # unwrap \emoji{...} -> the inner glyph if present
                 t = re.sub(r'\\emoji\{(.*?)\}', r'\1', t)
-                entries.append({'section': current_section, 'item': t.strip()})
-    return entries
+                pages[-1].append({'section': current_section, 'item': t.strip()})
+    # remove any trailing empty pages
+    pages = [p for p in pages if p]
+    return pages
 
 
 def main():
     # Prefer YAML if explicitly intended, otherwise fall back to parsing the canonical markdown
-    checklist = None
+    pages = None
     if os.path.exists(YAML_PATH):
         checklist = load_yaml(YAML_PATH)
+        # treat the YAML as a single page
+        pages = [checklist]
     else:
         md_path = os.path.join(ROOT, 'Combined_VFR_IFR_Ch1.md')
         if os.path.exists(md_path):
             print('No YAML found — parsing markdown source for checklist entries...')
-            checklist = load_markdown_entries(md_path)
+            pages = load_markdown_entries(md_path)
         else:
             print('Missing both', YAML_PATH, 'and Combined_VFR_IFR_Ch1.md')
             return
 
-    html_block = build_html(checklist)
+    html_block = build_html(pages)
 
     # try to read the markdown source title (first H1) to use as page header
     title_text = None

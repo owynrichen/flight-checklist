@@ -32,6 +32,19 @@ and validate the checklist outputs in this repository.
   validation can assert the correct color mapping rather than relying on
   pixel-color sampling.
 
+4) Page break markers
+
+- The canonical Markdown source MAY include explicit page break markers to
+  express physical page grouping in the printed checklist: use <!-- PAGE_BREAK -->
+  on a line by itself. The renderer MUST honor these markers and emit separate
+  page containers in the HTML output (one or more <main class="columns"> blocks)
+  so CSS can control physical page breaks for PDF generation.
+- Validation MUST check for the presence of expected page break markers at
+  agreed locations when the source intends a specific page layout (for example
+  a page break before "NORMAL OPERATIONS" and before "EMERGENCY & ABNORMAL
+  OPERATIONS"). If the markers are missing, the validator should report the
+  Markdown file and line numbers where markers are expected.
+
 Validation reporting and failure behaviour
 
 - Agents MUST emit a concise validation report when builds run. The report

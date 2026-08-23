@@ -96,19 +96,20 @@ CDI - CHECK / SET
 DADS - CHECK every 1 NM or 500 FT
 6 Ts - APPLY / REVIEW
 Fuel Pump - ON
-GUMPS
+GUMPSF
 Gas - FULLEST TANK
 Undercarriage - GEAR DOWN
 Mixture - RICH
 Prop - FULL FORWARD
 Switches - LANDING LIGHT
+Flaps - SET
 
 ## 🎯 IFR — FAF
 
 CDI - VERIFY
 6Ts - VERIFY
-GUMPS - VERIFY
-
+Configuration - APPROACH 2
+GUMPSF - VERIFY
 
 ## 📘 IFR PERFORMANCE PROFILES
 
@@ -150,7 +151,7 @@ Vne - never exceed - 212 MPH (184kts)
 ### Landing — FLOW
 
 Downwind — 110 MPH
-GGUMPS
+GUMPSF
 
 Abeam - 90-95 MPH
 
@@ -177,6 +178,7 @@ Flaps — AS REQUIRED (10° REC)
 **Call** - APPROACH
 
 
+<!-- PAGE_BREAK -->
 🟥 EMERGENCY & ABNORMAL OPERATIONS
 
 ## CLEAR RUNWAY
@@ -223,6 +225,7 @@ Flaps — AS REQUIRED (10° REC)
 
 ⛔ Electrical Fire / Smoke — **MASTER OFF**
 
+<!-- PAGE_BREAK -->
 🟩 NORMAL OPERATIONS
 
 ## 🧭 PREFLIGHT
@@ -361,8 +364,6 @@ Fuel Pump - OFF
 
 ## 🔍 RUN‑UP
 
-### ▶ FLOW
-
 ☐ Brake — SET
 
 ☐ Throttle — 2000 RPM
@@ -401,8 +402,6 @@ Comms and Nav Radios - SET
 
 ## 🔥 ENGINE FAILURE — IN FLIGHT
 
-### ▶ FLOW
-
 ☐ Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
 
 ☐ Squawk — 7700
@@ -419,13 +418,9 @@ Comms and Nav Radios - SET
 
 ☐ Throttle — OPEN
 
-### ✔ VERIFY
-
 ✔ Power restored → Resume normal operations
 
 ## 🔁 ENGINE RESTART — IN FLIGHT (POH)
-
-### ▶ FLOW
 
 ☐ Fuel Selector — FULLEST
 
@@ -444,8 +439,6 @@ Comms and Nav Radios - SET
 ☐ Engine Gauges — CHECK
 
 ## 🟫 FORCED LANDING
-
-### ▶ FLOW
 
 ⛔ Airspeed — **100 MPH**
 
@@ -469,8 +462,6 @@ Comms and Nav Radios - SET
 
 ## 🔥 ENGINE FIRE — IN FLIGHT
 
-### ▶ FLOW
-
 ☐ Radio call — MAYDAY, MAYDAY, MAYDAY on 121.5
 
 ☐ Squawk — 7700
@@ -491,8 +482,6 @@ Comms and Nav Radios - SET
 
 ## ⚡ ELECTRICAL FIRE / SMOKE (POH‑ALIGNED)
 
-### ▶ FLOW
-
 ☐ Radio call — MAYDAY or PAN-PAN on 121.5
 
 ☐ Squawk — 7600 if comms fail; otherwise 7700
@@ -504,8 +493,6 @@ Comms and Nav Radios - SET
 ☐ Cabin Heat — OFF
 
 ☐ Air / Vents — OPEN (ventilate)
-
-### ✔ VERIFY
 
 ✔ Smoke dissipating
 
@@ -521,8 +508,6 @@ Comms and Nav Radios - SET
 
 ## ⚠️ ALTERNATOR FAILURE / NO CHARGE
 
-### ▶ FLOW
-
 ☐ Radio call — advise ATC / request assistance and vectors
 
 ☐ Squawk — as assigned; 7600 if radios fail
@@ -534,8 +519,6 @@ Comms and Nav Radios - SET
 ☐ Alternator Output CB — CHECK / RESET
 
 ☐ Alternator — OFF (30 sec) → ON
-
-### ✔ VERIFY
 
 ✔ Ammeter shows system load
 
@@ -580,9 +563,7 @@ FT.
 
 ☐ 6 Ts - Turn, Time, Twist, Throttle, Talk, Track.
 
-☐ GUMPF - Gas, Undercarriage, Mixture, Propeller, Flaps.
-
-☐ GUMPS - Gas, Undercarriage, Mixture, Propeller, Seatbelts.
+☐ GUMPSF - Gas, Undercarriage, Mixture, Propeller, Switches/Seatbelts, Flaps.
 
 ☐ CRAFT - Clearance, Route, Altitude, Frequency, Transponder.
 
@@ -598,3 +579,9 @@ Operating handbook, Weight and balance.
 ☐ 3 Ps - Perceive, Process, Perform.
 
 ☐ 5 Ps - Plane, Pilot, Passengers, Programming, Plan.
+
+- VDP - Visual Descent Point
+
+- VCOA - Visual Climb Over Airport (Mountainous regions)
+
+- ODP - Obstical Departure Procedure
