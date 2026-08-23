@@ -23,17 +23,29 @@ import re
 DEFAULT_HTML = 'output/checklist_print_ready.html'
 
 
-async def run(html_path: str):
-    # Target page size from CSS: US half-letter 5.5" x 8.5". Use 96 DPI for px->in
+async def run(html_path: str, page_size: str = 'half', columns: int = 2):
+    # Page size mapping in inches
+    sizes = {
+        'half': (5.5, 8.5),
+        'letter': (8.5, 11.0),
+    }
+    if page_size not in sizes:
+        raise ValueError('unknown page_size')
+
     DPI = 96
-    page_w_in = 5.5
-    page_h_in = 8.5
+    page_w_in, page_h_in = sizes[page_size]
     page_w_px = int(page_w_in * DPI)
     page_h_px = int(page_h_in * DPI)
 
-    report = {'pages': [], 'page_size_px': {'w': page_w_px, 'h': page_h_px}, 'method': None}
+    report = {'pages': [], 'page_size': page_size, 'columns': columns, 'page_size_px': {'w': page_w_px, 'h': page_h_px}, 'method': None}
 
-    # Try Playwright first; if unavailable, fall back to a conservative HTML-based estimator
+    # CSS override to set page size and columns
+    override_css = f"""
+      @page {{ size: {page_w_in}in {page_h_in}in; margin: 0.5in; }}
+      main.columns {{ column-count: {columns}; column-gap: 12px; }}
+      section.card {{ break-inside: avoid; -webkit-column-break-inside: avoid; }}
+    """
+
     try:
         from playwright.async_api import async_playwright
         report['method'] = 'playwright'
@@ -41,8 +53,8 @@ async def run(html_path: str):
             browser = await p.chromium.launch()
             page = await browser.new_page(viewport={'width': page_w_px, 'height': page_h_px})
             await page.goto('file://' + os.path.abspath(html_path))
-            # ensure layout complete
-            await page.wait_for_timeout(250)
+            await page.add_style_tag(content=override_css)
+            await page.wait_for_timeout(300)
 
             mains = await page.query_selector_all('main.columns')
             for idx, m in enumerate(mains, start=1):
@@ -50,7 +62,6 @@ async def run(html_path: str):
                 h = math.ceil(box['height']) if box else 0
                 w = math.ceil(box['width']) if box else 0
                 overflow = h > page_h_px
-                # measure each H2 inside this main
                 sections = []
                 for s_el in await m.query_selector_all('section.card'):
                     sb = await s_el.bounding_box()
@@ -62,11 +73,9 @@ async def run(html_path: str):
 
             await browser.close()
     except Exception as e:
-        # Playwright not available or failed; use a conservative fallback estimator.
         report['method'] = f'fallback-estimator ({type(e).__name__})'
         with open(html_path, 'r', encoding='utf-8') as f:
             html = f.read()
-        # Split mains by <main ...> ... </main>
         mains_raw = []
         for m in re.finditer(r'<main[^>]*class=["\']?[^"\']*columns[^"\']*["\']?[^>]*>(.*?)</main>', html, flags=re.S|re.I):
             mains_raw.append(m.group(1))
@@ -74,25 +83,16 @@ async def run(html_path: str):
             print('No <main class="columns"> containers found in HTML')
             return 2
         for idx, m_html in enumerate(mains_raw, start=1):
-            # Count H2s, LIs, paragraphs, tables.
             h2_titles = [t.strip() for t in re.findall(r'<h2[^>]*>(.*?)</h2>', m_html, flags=re.S|re.I)]
             li_count = len(re.findall(r'<li\b', m_html, flags=re.I))
             p_count = len(re.findall(r'<p\b', m_html, flags=re.I))
             table_rows = len(re.findall(r'<tr\b', m_html, flags=re.I))
-            # Heuristic pixel heights
             header_h = 28
             li_h = 18
             p_h = 20
             tr_h = 18
-            sections = []
-            for title in h2_titles:
-                # approximate section height proportionally by finding its segment
-                # naive: split by <section class='card'>
-                sections_raw = re.split(r'<section\b', m_html, flags=re.I)
-                # count subsections roughly equal share
             est_height = header_h + li_count * li_h + p_count * p_h + table_rows * tr_h
             overflow = est_height > page_h_px
-            # Map section titles to approximate shares based on equal split
             sec_list = []
             if h2_titles:
                 share = max(1, math.ceil(est_height / len(h2_titles)))
@@ -126,8 +126,10 @@ async def run(html_path: str):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--html', default=DEFAULT_HTML)
+    parser.add_argument('--page-size', default='half', choices=['half', 'letter'])
+    parser.add_argument('--columns', default=2, type=int, choices=[2,3,4])
     args = parser.parse_args()
-    code = asyncio.run(run(args.html))
+    code = asyncio.run(run(args.html, page_size=args.page_size, columns=args.columns))
     sys.exit(code)
 
 
