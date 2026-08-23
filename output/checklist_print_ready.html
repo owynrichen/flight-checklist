@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Checklist — US half‑letter</title>
-  <style>@page { size: 8.5in 11in; margin: 0.20in; }
+  <style>/* Use US half-letter (5.5" x 8.5") as the physical page size for the kneeboard cards. */
+@page { size: 5.5in 8.5in; margin: 0.20in; }
 body { font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; color: #111; line-height: 1.05; }
 .sheet { width: 100%; height: 100%; box-sizing: border-box; }
 header { text-align: center; margin-bottom: 3px; padding-bottom: 2px; border-bottom: 1px solid #eee; }
@@ -42,7 +43,8 @@ section[data-category="emergency"] .checklist { break-inside: avoid-column; }
 /* Section color mapping (semantic) */
 section[data-category="emergency"] { color: #b30000; font-weight: 700; border-left: 4px solid #b30000; padding-left: 6px; background: linear-gradient(90deg, rgba(179,0,0,0.12), rgba(179,0,0,0.04)); }
 section[data-category="grey"] { color: #666; background: linear-gradient(90deg, rgba(120,120,120,0.10), rgba(120,120,120,0.04)); }
-section[data-category="blue"] { color: #0b63b8; background: linear-gradient(90deg, rgba(27,122,27,0.10), rgba(27,122,27,0.04)); }
+/* Blue sections should use blue tones (was incorrectly using green shades). */
+section[data-category="blue"] { color: #0b63b8; background: linear-gradient(90deg, rgba(11,99,184,0.10), rgba(11,99,184,0.04)); }
 section[data-category="green"] { color: #1b7a1b; }
 
 /* Visual enhancements: make sections feel like cards and add a color badge */
@@ -155,7 +157,7 @@ section[data-category] table th, section[data-category] table td { padding: 3px 
 
 /* Section fills */
 section[data-category="grey"] { background-color: rgba(120,120,120,0.07); }
-section[data-category="blue"] { background-color: rgba(27,122,27,0.08); }
+section[data-category="blue"] { background-color: rgba(11,99,184,0.08); }
 section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
 
 /* ---------- Emergency as a second kneeboard card ---------- */
@@ -267,7 +269,7 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
 <body>
   <div class="sheet">
     <header>
-      <h1>FLOW + VERIFY CHECKLIST (POH‑ALIGNED)</h1>
+      <h1>✅ PA‑32‑260 CHEROKEE SIX</h1>
       <p class="sub">Double‑sided — US half‑letter (5.5"×8.5")</p>
     </header>
 
@@ -275,8 +277,6 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       <div class="page page-1">
   <section class='card' data-category="blue">
     <h2>🛫 TAKEOFF</h2>
-    <div class='subsection' data-category="blue">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Pump — ON</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Tank - FULLEST TANK</li>
@@ -287,12 +287,9 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Rotate — <strong>65-70 MPH</strong></li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Climb — <strong>Vy 105 MPH / Vx 95 MPH</strong></li>
       </ul>
-    </div>
   </section>
   <section class='card' data-category="blue">
     <h2>✈️ IFR — DEPARTURE / ENROUTE</h2>
-    <div class='subsection' data-category="blue">
-      <h3>▶ FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Clearance — REVIEW (route / altitude / frequencies)</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Bugs — HDG / ALT / MINs SET</li>
@@ -300,71 +297,55 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Instruments — CHECK (gyro / CDI sensing)</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Pump — ON</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Lights — AS REQUIRED</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power/Prop - DESCENT</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Departure Procedure - BRIEF</li>
       </ul>
-    </div>
-  </section>
-  <section class='card' data-category="blue">
-    <h2>🎯 IFR — APPROACH CONFIGURATION</h2>
-    <div class='subsection' data-category="blue">
-      <h3>▶ FLOW</h3>
-      <ul class='checklist'>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power — SET</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Pitch — SET</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Configuration — FLAPS 10°</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Airspeed — 110 MPH</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Sink Rate — 500 FPM</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Garmin 530W approach activation — LOAD / VERIFY</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS — CHECK every 1 NM or 500 FT</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts — APPLY / REVIEW on change</li>
-      </ul>
-      <p class='note'><em>Goal: Stabilized by FAF</em></p>
-    </div>
   </section>
   <section class='card' data-category="blue">
     <h2>📘 IFR PERFORMANCE PROFILES</h2>
       <table>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Phase</strong></td>
-<td><strong>Power</strong></td>
+<td><strong>Power/Prop</strong></td>
 <td><strong>Pitch</strong></td>
 <td><strong>Config</strong></td>
 <td><strong>Speed</strong></td>
 <td><strong>V/S</strong></td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Cruise</strong></td>
-<td>~15 in MP</td>
+<td>~25 MP/25 RPM</td>
 <td>0°</td>
 <td>Clean</td>
 <td>—</td>
 <td>—</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Descent</strong></td>
-<td>Low / Idle</td>
+<td>~20 MP/25 RPM</td>
 <td>−2 to −3°</td>
 <td>Clean</td>
 <td>138 MPH</td>
 <td>−500 fpm</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Approach Level 1</strong></td>
-<td>~15 in MP</td>
+<td>~15 MP/25 RPM</td>
 <td>0 to −1°</td>
 <td>25°</td>
 <td>104 MPH</td>
 <td>−500</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Approach Level 2</strong></td>
-<td>~17 in MP</td>
+<td>~17 MP/FULL</td>
 <td>0°</td>
 <td>33°</td>
 <td>104 MPH</td>
 <td>−800</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Missed</strong></td>
 <td>FULL</td>
 <td>+7°</td>
@@ -397,30 +378,24 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
       <h3>Landing — FLOW</h3>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Downwind — 110 MPH</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GGUMPS</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Abeam - 90-95 MPH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Over the #s - 80 MPH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps — AS REQUIRED (10° REC)</li>
       </ul>
     </div>
-    <div class='subsection' data-category="blue">
-      <h3>Go‑Around — FLOW</h3>
-      <ul class='checklist'>
-        <li class='critical'><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power — FULL</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Carb Heat — OFF</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps — RETRACT IN STAGES</li>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Airspeed — ≥95 MPH</li>
-      </ul>
-    </div>
   </section>
   <section class='card' data-category="emergency">
-    <h2><span class="icon" aria-hidden="true"><svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='6' fill='currentColor'/></svg></span><span class="sr-only">Alert</span> MISSED APPROACH</h2>
-      <p class='subheader'><strong>IMMEDIATE ACTIONS</strong></p>
+    <h2><span class="icon" aria-hidden="true"><svg viewBox='0 0 16 16' width='12' height='12' xmlns='http://www.w3.org/2000/svg'><circle cx='8' cy='8' r='6' fill='currentColor'/></svg></span><span class="sr-only">Alert</span> GO-AROUND / MISSED APPROACH</h2>
       <ul class='checklist'>
-        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Power</strong> — FULL</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Power/Prop</strong> — FULL</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Pitch</strong> — +7°</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Configuration</strong> — CLEAN</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Airspeed</strong> — 97 MPH</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Climb</strong> — +800 fpm</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>CDI</strong> - CHECK/SET</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Course</strong> - VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> <strong>Call</strong> - APPROACH</li>
       </ul>
   </section>
   <section class='card' data-category="green">
@@ -460,12 +435,66 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
 </div>
 <div class="page-break" aria-hidden="true"></div>
 <div class="page page-2">
+  <section class='card' data-category="blue">
+    <h2>🛫 CLIMB TO CRUSE - ~500 FT AGL</h2>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flaps - UP</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Landing Light - OFF</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Prop - CRUISE</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power - CRUISE</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Mixture - LEAN</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Climb - <strong>Vy 105 MPH / Vx 95 MPH</strong> - VERIFY</li>
+      </ul>
+  </section>
+  <section class='card' data-category="blue">
+    <h2>🎯 IFR — APPROACH IN-RANGE</h2>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Approach Plate - BRIEF</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Weather - BRIEF</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - CHECK / SET</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Power — SET</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Pitch — SET</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Configuration — APPROACH 1</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Garmin 530W — LOAD APPOACH / VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Comm 1 - Approach / Tower</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Comm 2 - ATIS</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Nav 1 - VOR/ILS/LOC</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Nav 2 - Backup/Missed VOR</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS — CHECK every 1 NM or 500 FT</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts — APPLY / REVIEW on change</li>
+      </ul>
+  </section>
+  <section class='card' data-category="blue">
+    <h2>🎯 IFR — IAF</h2>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Garmin 530W - ACTIVATE APPROACH</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Configuration - APPROACH 1</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - CHECK / SET</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> DADS - CHECK every 1 NM or 500 FT</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6 Ts - APPLY / REVIEW</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Fuel Pump - ON</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Gas - FULLEST TANK</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Undercarriage - GEAR DOWN</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Mixture - RICH</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Prop - FULL FORWARD</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Switches - LANDING LIGHT</li>
+      </ul>
+  </section>
+  <section class='card' data-category="blue">
+    <h2>🎯 IFR — FAF</h2>
+      <ul class='checklist'>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> CDI - VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> 6Ts - VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> GUMPS - VERIFY</li>
+      </ul>
+  </section>
   <section class='card' data-category="grey">
     <h2>🧭 PREFLIGHT</h2>
     <ul class='checklist'></ul>
   </section>
   <section class='card' data-category="green">
-    <h2>▶ FLOW</h2>
+    <h2>Walk</h2>
       <ul class='checklist'>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Covers &amp; Wheel Chalks - REMOVE</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Paperwork - ARROW-AV1ATE</li>
@@ -498,6 +527,7 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> First Aid &amp; Fire Extinguisher - LOCATE</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Exits - EXPLAIN &amp; LOCK</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Talking - ASSIST TRAFFIC</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Your Feelings - SHARE</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Your Questions - ASK</li>
       </ul>
   </section>
@@ -534,12 +564,15 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Trim - TAKEOFF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Airspeed Indicator - READS 0</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Attitude Indicator - &lt;5° BANK AND WINGS LEVEL</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Set Clock - ZULU TIME</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Altimeter - FIELD ELEVATION</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> VSI - Zero</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Turn &amp; Slip Indicator - FLAGS OFF, WINGS LEVEL, FULL FLUID</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Heading Indicator - SET TO COMPASS HEADING</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Garmin 530W database — CHECK / UPDATE</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Garmin 530W instrument check — VERIFY</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Get Weather - BRIEF</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Open Airport Diagram - BRIEF</li>
       </ul>
   </section>
   <section class='card' data-category="grey">
@@ -559,6 +592,8 @@ section.card > table th { background: #f0f0f0; font-weight: 700; }
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Carburetor Heat - OFF</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Throttle - 800-1000 RPM</li>
         <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Flight Plan - ACTIVATE</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Departure Procedures - BRIEF</li>
+        <li><span class='box' role='checkbox' aria-checked='false' tabindex='0' aria-label='Checklist checkbox'></span> Comms and Nav Radios - SET</li>
       </ul>
     </div>
     <div class='subsection' data-category="grey">

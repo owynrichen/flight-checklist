@@ -1,4 +1,4 @@
-✅ PA‑32‑260 CHEROKEE SIX
+# ✅ PA‑32‑260 CHEROKEE SIX
 
 ## FLOW + VERIFY CHECKLIST (POH‑ALIGNED)
 
@@ -10,8 +10,6 @@
 
 ## 🛫 TAKEOFF
 
-### ▶ FLOW
-
 Fuel Pump — ON
 
 Fuel Tank - FULLEST TANK
@@ -22,64 +20,106 @@ Flaps — SET 10° (25° SHORT/SOFT)
 
 Fuel/Oil Gauges - GREEN
 
-☐ Airspeed Alive — CHECK
+Airspeed Alive — CHECK
 
-☐ Rotate — **65-70 MPH**
+Rotate — **65-70 MPH**
 
-☐ Climb — **Vy 105 MPH / Vx 95 MPH**
+Climb — **Vy 105 MPH / Vx 95 MPH**
+
+## 🛫 CLIMB TO CRUSE - ~500 FT AGL
+
+Flaps - UP
+
+Landing Light - OFF
+
+Prop - CRUISE
+
+Power - CRUISE
+
+Mixture - LEAN
+
+Climb - **Vy 105 MPH / Vx 95 MPH** - VERIFY
 
 🔵 INSTRUMENT FLIGHT RULES (IFR)
 
 ## ✈️ IFR — DEPARTURE / ENROUTE
 
-### ▶ FLOW
+Clearance — REVIEW (route / altitude / frequencies)
 
-☐ Clearance — REVIEW (route / altitude / frequencies)
+Bugs — HDG / ALT / MINs SET
 
-☐ Bugs — HDG / ALT / MINs SET
+Navigation Source — CONFIRM
 
-☐ Navigation Source — CONFIRM
+Instruments — CHECK (gyro / CDI sensing)
 
-☐ Instruments — CHECK (gyro / CDI sensing)
+Fuel Pump — ON
 
-☐ Fuel Pump — ON
+Lights — AS REQUIRED
 
-☐ Lights — AS REQUIRED
+Power/Prop - DESCENT
 
-## 🎯 IFR — APPROACH CONFIGURATION
+Departure Procedure - BRIEF
 
-### ▶ FLOW
+## 🎯 IFR — APPROACH IN-RANGE
 
-☐ Power — SET
+Approach Plate - BRIEF
 
-☐ Pitch — SET
+Weather - BRIEF
 
-☐ Configuration — FLAPS 10°
+CDI - CHECK / SET
 
-☐ Airspeed — 110 MPH
+Power — SET
 
-☐ Sink Rate — 500 FPM
+Pitch — SET
 
-☐ Garmin 530W approach activation — LOAD / VERIFY
+Configuration — APPROACH 1
 
-☐ DADS — CHECK every 1 NM or 500 FT
+Garmin 530W — LOAD APPOACH / VERIFY
 
-☐ 6 Ts — APPLY / REVIEW on change
+Comm 1 - Approach / Tower
 
-✅ *Goal: Stabilized by FAF*
+Comm 2 - ATIS
+
+Nav 1 - VOR/ILS/LOC
+
+Nav 2 - Backup/Missed VOR
+
+DADS — CHECK every 1 NM or 500 FT
+
+6 Ts — APPLY / REVIEW on change
+
+## 🎯 IFR — IAF
+
+Garmin 530W - ACTIVATE APPROACH
+Configuration - APPROACH 1
+CDI - CHECK / SET
+DADS - CHECK every 1 NM or 500 FT
+6 Ts - APPLY / REVIEW
+Fuel Pump - ON
+GUMPS
+Gas - FULLEST TANK
+Undercarriage - GEAR DOWN
+Mixture - RICH
+Prop - FULL FORWARD
+Switches - LANDING LIGHT
+
+## 🎯 IFR — FAF
+
+CDI - VERIFY
+6Ts - VERIFY
+GUMPS - VERIFY
+
 
 ## 📘 IFR PERFORMANCE PROFILES
 
-|                      |            |           |            |           |          |
-|----------------------|------------|-----------|------------|-----------|----------|
-| **Phase**            | **Power**  | **Pitch** | **Config** | **Speed** | **V/S**  |
-| **Cruise**           | ~15 in MP  | 0°        | Clean      | —         | —        |
-| **Descent**          | Low / Idle | −2 to −3° | Clean      | 138 MPH   | −500 fpm |
-| **Approach Level 1** | ~15 in MP  | 0 to −1°  | 25°        | 104 MPH   | −500     |
-| **Approach Level 2** | ~17 in MP  | 0°        | 33°        | 104 MPH   | −800     |
-| **Missed**           | FULL       | +7°       | Clean      | 97 MPH    | +800     |
-
-##
+|                      |                 |           |            |           |          |
+|----------------------|-----------------|-----------|------------|-----------|----------|
+| **Phase**            | **Power/Prop**  | **Pitch** | **Config** | **Speed** | **V/S**  |
+| **Cruise**           | ~25 MP/25 RPM   | 0°        | Clean      | —         | —        |
+| **Descent**          | ~20 MP/25 RPM   | −2 to −3° | Clean      | 138 MPH   | −500 fpm |
+| **Approach Level 1** | ~15 MP/25 RPM   | 0 to −1°  | 25°        | 104 MPH   | −500     |
+| **Approach Level 2** | ~17 MP/FULL     | 0°        | 33°        | 104 MPH   | −800     |
+| **Missed**           | FULL            | +7°       | Clean      | 97 MPH    | +800     |
 
 ## V SPEEDS
 
@@ -110,28 +150,17 @@ Vne - never exceed - 212 MPH (184kts)
 ### Landing — FLOW
 
 Downwind — 110 MPH
+GGUMPS
 
 Abeam - 90-95 MPH
 
 Over the \#s - 80 MPH
 
-☐ Flaps — AS REQUIRED (10° REC)
+Flaps — AS REQUIRED (10° REC)
 
-### Go‑Around — FLOW
+## 🚨 GO-AROUND / MISSED APPROACH
 
-⛔ Power — FULL
-
-☐ Carb Heat — OFF
-
-☐ Flaps — RETRACT IN STAGES
-
-☐ Airspeed — ≥95 MPH
-
-## 🚨 MISSED APPROACH
-
-⛔ **IMMEDIATE ACTIONS**
-
-**Power** — FULL
+**Power/Prop** — FULL
 
 **Pitch** — +7°
 
@@ -140,6 +169,13 @@ Over the \#s - 80 MPH
 **Airspeed** — 97 MPH
 
 **Climb** — +800 fpm
+
+**CDI** - CHECK/SET
+
+**Course** - VERIFY
+
+**Call** - APPROACH
+
 
 🟥 EMERGENCY & ABNORMAL OPERATIONS
 
@@ -191,7 +227,7 @@ Over the \#s - 80 MPH
 
 ## 🧭 PREFLIGHT
 
-## ▶ FLOW
+## Walk
 
 Covers & Wheel Chalks - REMOVE
 
@@ -246,6 +282,8 @@ Baggage - SECURE
 - Exits - EXPLAIN & LOCK
 
 - Talking - ASSIST TRAFFIC
+
+- Your Feelings - SHARE
 
 - Your Questions - ASK
 
@@ -303,6 +341,8 @@ Fuel Pump - OFF
 
 - Attitude Indicator - \<5° BANK AND WINGS LEVEL
 
+- Set Clock - ZULU TIME
+
 - Altimeter - FIELD ELEVATION
 
 - VSI - Zero
@@ -314,6 +354,10 @@ Fuel Pump - OFF
 ☐ Garmin 530W database — CHECK / UPDATE
 
 ☐ Garmin 530W instrument check — VERIFY
+
+- Get Weather - BRIEF
+
+- Open Airport Diagram - BRIEF
 
 ## 🔍 RUN‑UP
 
@@ -342,6 +386,10 @@ Carburetor Heat - OFF
 Throttle - 800-1000 RPM
 
 Flight Plan - ACTIVATE
+
+Departure Procedures - BRIEF
+
+Comms and Nav Radios - SET
 
 ### ✔ VERIFY
 

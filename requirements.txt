@@ -1,4 +1,5 @@
-python-docx
+# Required runtime Python packages (install via `uv` or pip inside your env):
+# - PyYAML: parsing / writing checklist YAML
+# - playwright: required for HTML→PDF rendering (Chromium)
 PyYAML
-weasyprint
 playwright

@@ -35,7 +35,6 @@ Thumbs.db
 output/*
 !output/.gitkeep
 docx_images/
-Combined_VFR_IFR_Ch1.md
-Combined_VFR_IFR_Ch1_latex.md
+# Keep the canonical markdown in repo, do not ignore Combined_VFR_IFR_Ch1.md
 checklist_source.yaml
 *.log

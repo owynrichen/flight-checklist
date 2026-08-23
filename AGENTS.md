@@ -6,9 +6,9 @@ and validate the checklist outputs in this repository.
 1) Content parity validation
 
 - The agent MUST verify that all content used to produce the checklist (source
-  `Combined_VFR_IFR_Ch1.md` or the DOCX it was extracted from) appears in both
+  `Combined_VFR_IFR_Ch1.md` or the DOCX it was extracted from) appears in the
   generated visual outputs: the HTML (`output/checklist_print_ready.html`) and
-  the LaTeX/PDF build (`output/checklist_print_ready.pdf`).
+  the PDF build (`output/checklist_print_ready.pdf`).
 - Validation checks should include: heading presence, checklist item counts,
   and sampling of checklist lines (normalized text matching). Any missing
   items must be reported with file/line references.
@@ -42,9 +42,9 @@ Validation reporting and failure behaviour
 Implementation notes
 
 - Suggested checks: parse Markdown headings, parse HTML/PDF text (or HTML),
-  normalize whitespace/punctuation, and perform substring matching. For LaTeX
-  builds prefer using the generated LaTeX-markdown (`Combined_VFR_IFR_Ch1_latex.md`)
-  as an intermediate source for easier comparisons.
+  normalize whitespace/punctuation, and perform substring matching. Use the
+  generated HTML/PDF as the canonical rendered source for parity checks; the
+  LaTeX pipeline has been removed from the recommended toolchain.
 
 Additions or changes to these expectations must be reviewed and agreed before
 agents are updated to follow them.

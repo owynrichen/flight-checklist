@@ -1,0 +1,12 @@
+{
+  "name": "flight-checklist",
+  "version": "1.0.0",
+  "description": "UV-managed Python dependencies for flight-checklist",
+  "dependencies": {
+    "PyYAML": "*",
+    "playwright": "*"
+  },
+  "scripts": {
+    "postinstall": "python -m playwright install chromium"
+  }
+}

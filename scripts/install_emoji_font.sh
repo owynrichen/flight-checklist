@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Download Noto Color Emoji into output/fonts/ for local LaTeX builds
-# This script requires curl or wget and unzip (the release may be a zip).
+# Download Noto Color Emoji into output/fonts/ (may be useful for rendering emoji in
+# HTML/PDF outputs). This script requires curl or wget and unzip (the release may be a zip).
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUTDIR="$REPO_ROOT/output/fonts"
@@ -29,4 +29,4 @@ else
   exit 1
 fi
 
-echo "You can now re-run the LaTeX build: templates/latex/us-halfletter/build.sh /path/to/docx"
+echo "Downloaded emoji font. You can use it for rendering HTML/PDF outputs if needed."
