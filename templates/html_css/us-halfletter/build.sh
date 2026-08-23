@@ -10,6 +10,18 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
 
 DOCX_PATH="${1:-}"
+# Optional flags: --page-size half|letter, --columns N
+PAGE_SIZE="half"
+COLUMNS=2
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --page-size)
+      PAGE_SIZE="$2"; shift 2;;
+    --columns)
+      COLUMNS="$2"; shift 2;;
+    *) shift;;
+  esac
+done
 
 OUTDIR="$REPO_ROOT/output"
 mkdir -p "$OUTDIR"
@@ -22,7 +34,8 @@ else
 fi
 
 # Clear only artifacts this build owns so HTML/PDF can coexist for validation
-rm -f "$OUTDIR/checklist_print_ready.html" "$OUTDIR/checklist_print_ready.pdf" "$OUTDIR/checklist_from_yaml.html" || true
+SUFFIX="${PAGE_SIZE}_${COLUMNS}c"
+rm -f "$OUTDIR/checklist_print_ready_${SUFFIX}.html" "$OUTDIR/checklist_print_ready_${SUFFIX}.pdf" "$OUTDIR/checklist_from_yaml.html" || true
 
 # Step 1: optionally extract markdown and images using the repo script
   if [ -n "$DOCX_PATH" ]; then
@@ -60,15 +73,15 @@ if [ -x "$(command -v python3)" ]; then
   fi
   # ensure output filename matches expected
   if [ -f "$REPO_ROOT/output/checklist_from_yaml.html" ]; then
-    mv "$REPO_ROOT/output/checklist_from_yaml.html" "$OUTDIR/checklist_print_ready.html"
+    mv "$REPO_ROOT/output/checklist_from_yaml.html" "$OUTDIR/checklist_print_ready_${SUFFIX}.html"
   fi
   # Inline critical stylesheet into generated HTML for portability
-  if [ -f "$OUTDIR/checklist_print_ready.html" ] && [ -f "$OUTDIR/checklist.css" ]; then
+  if [ -f "$OUTDIR/checklist_print_ready_${SUFFIX}.html" ] && [ -f "$OUTDIR/checklist.css" ]; then
     # Inline CSS into the generated HTML in a portable way using Python
     if command -v uv >/dev/null 2>&1; then
       uv run python3 - <<PY
 from pathlib import Path
-f=Path('$OUTDIR/checklist_print_ready.html')
+f=Path('$OUTDIR/checklist_print_ready_${SUFFIX}.html')
 css=Path('$OUTDIR/checklist.css').read_text(encoding='utf-8')
 html=f.read_text(encoding='utf-8')
 html=html.replace('<link rel="stylesheet" href="checklist.css">', f'<style>{css}</style>')
@@ -78,7 +91,7 @@ PY
     else
       python3 - <<PY
 from pathlib import Path
-f=Path('$OUTDIR/checklist_print_ready.html')
+f=Path('$OUTDIR/checklist_print_ready_${SUFFIX}.html')
 css=Path('$OUTDIR/checklist.css').read_text(encoding='utf-8')
 html=f.read_text(encoding='utf-8')
 html=html.replace('<link rel="stylesheet" href="checklist.css">', f'<style>{css}</style>')
@@ -105,7 +118,7 @@ else
 fi
 
 # Convert to PDF using Playwright so the browser and PDF use the same layout engine.
-PDF_HTML="$OUTDIR/checklist_print_ready.html"
+PDF_HTML="$OUTDIR/checklist_print_ready_${SUFFIX}.html"
 # Use Playwright (Chromium) to render HTML -> PDF. Playwright must be installed
 # in the project environment (uv or .venv) and browser binaries must be installed
 # via: python -m playwright install chromium
@@ -116,11 +129,17 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 html_path = Path(r"$PDF_HTML").resolve()
-pdf_path = Path(r"$OUTDIR/checklist_print_ready.pdf").resolve()
+pdf_path = Path(r"$OUTDIR/checklist_print_ready_${SUFFIX}.pdf").resolve()
+
+# Determine viewport from page size (use 96 DPI)
+page_sizes = {'half': (5.5,8.5), 'letter': (8.5,11.0)}
+pw, ph = page_sizes.get('$PAGE_SIZE', (5.5,8.5))
+vw = int(pw * 96)
+vh = int(ph * 96)
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
-    page = browser.new_page(viewport={"width": 1400, "height": 1800})
+    page = browser.new_page(viewport={"width": vw, "height": vh})
     page.goto(html_path.as_uri(), wait_until="networkidle")
     page.emulate_media(media="print")
     page.pdf(
@@ -139,11 +158,16 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 html_path = Path(r"$PDF_HTML").resolve()
-pdf_path = Path(r"$OUTDIR/checklist_print_ready.pdf").resolve()
+pdf_path = Path(r"$OUTDIR/checklist_print_ready_${SUFFIX}.pdf").resolve()
+
+page_sizes = {'half': (5.5,8.5), 'letter': (8.5,11.0)}
+pw, ph = page_sizes.get('$PAGE_SIZE', (5.5,8.5))
+vw = int(pw * 96)
+vh = int(ph * 96)
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
-    page = browser.new_page(viewport={"width": 1400, "height": 1800})
+    page = browser.new_page(viewport={"width": vw, "height": vh})
     page.goto(html_path.as_uri(), wait_until="networkidle")
     page.emulate_media(media="print")
     page.pdf(
@@ -163,10 +187,10 @@ fi
 # end Playwright PDF rendering
 
 # Capture screenshots after PDF generation so page images are available too.
-if [ -x "$REPO_ROOT/.venv/bin/python" ] && [ -f "$OUTDIR/checklist_print_ready.html" ]; then
-  "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/scripts/capture_html_screenshot.py" --html "$OUTDIR/checklist_print_ready.html" --out "$OUTDIR/checklist-html-screenshot.png" --pdf "$OUTDIR/checklist_print_ready.pdf" || true
+if [ -x "$REPO_ROOT/.venv/bin/python" ] && [ -f "$OUTDIR/checklist_print_ready_${SUFFIX}.html" ]; then
+  "$REPO_ROOT/.venv/bin/python" "$REPO_ROOT/scripts/capture_html_screenshot.py" --html "$OUTDIR/checklist_print_ready_${SUFFIX}.html" --out "$OUTDIR/checklist-html-screenshot_${SUFFIX}.png" --pdf "$OUTDIR/checklist_print_ready_${SUFFIX}.pdf" || true
 fi
 
-if [ -f "$OUTDIR/checklist-html-screenshot.png" ]; then
-  echo "Screenshot written to $OUTDIR/checklist-html-screenshot.png"
+if [ -f "$OUTDIR/checklist-html-screenshot_${SUFFIX}.png" ]; then
+  echo "Screenshot written to $OUTDIR/checklist-html-screenshot_${SUFFIX}.png"
 fi
