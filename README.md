@@ -144,3 +144,53 @@ python3 scripts/normalize_hierarchy.py --inplace Combined_VFR_IFR_Ch1.md
 If you prefer manual control, do not run the script and instead ensure
 you use H2/H3 intentionally per the rules above. The validator will
 still check that <!-- PAGE_BREAK --> markers exist where required.
+
+Future session notes
+--------------------
+
+These are actionable ideas and decisions to pick up in future work:
+
+1) Allow selective section spanning across columns
+   - Goal: let specific sections (e.g. IFR Performance table, V SPEEDS,
+     and overall page headings) span the full width of the card instead
+     of being constrained to one column. This improves readability for
+     wide tables and compact numeric blocks.
+   - Implementation ideas:
+     - Introduce an explicit block marker in Markdown (e.g. <!-- SPAN:full -->)
+       that the renderer recognizes and emits as a full-width <div class="span-full">.
+     - Alternate: allow H2 metadata (front-matter style) such as
+       `## 📘 IFR PERFORMANCE PROFILES {span="full"}` and parse with the
+       renderer to set a data attribute.
+     - CSS: a .span-full rule that uses column-span: all or places the
+       block outside the column flow so it occupies the whole card.
+
+2) Column breaks and tall mnemonic sections
+   - Problem: the IFR ACRONYMS / MNEMONICS block is too tall to fit.
+   - Options:
+     - Allow explicit <!-- PAGE_BREAK --> markers as already in use to
+       split long lists into multiple cards; provide guidance to authors
+       recommending a page break before very long enumerations.
+     - Support a finer-grained marker <!-- COLUMN_BREAK --> to force a
+       column break inside a card when appropriate (renderer emits a
+       <span class="col-break"></span> that CSS targets with
+       break-after: column).
+     - Provide a preprocessor script that detects long list blocks and
+       suggests sensible split points (based on item count or visual
+       table height). We already have check_page_fit.py which can be
+       extended to suggest exact insertion lines.
+
+3) Design improvements & agentic design process
+   - Goal: improve visual clarity and make the kneeboard more modern.
+   - Steps:
+     - Run a design spike: create 2–3 alternate visual themes (compact,
+       high-contrast, soft) and produce HTML proofs for stakeholder review.
+     - Use small A/B tests with screenshots to pick typography, color,
+       and spacing; automate screenshot generation per theme.
+     - Add a design token file (JSON) and a small script to generate
+       checklist.css from tokens; allows programmatic theming.
+     - Establish a short PR template for visual changes requiring
+       screenshots and a screenshot-based regression check in CI.
+
+These notes should be the starting point for scoped follow-ups. If you
+want, I can convert these into issues/todos and/or implement the CSS
+support for full-width blocks and a column-break token as a next PR.
