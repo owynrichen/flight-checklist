@@ -29,7 +29,7 @@ async def run_matrix():
         out = p.stdout
         err = p.stderr
         # load the JSON report written by the script
-        rpt_path = 'output/page_fit_report.json'
+        rpt_path = f'output/page_fit_report_{page}_{cols}.json'
         rpt = None
         if os.path.exists(rpt_path):
             with open(rpt_path, 'r', encoding='utf-8') as f:

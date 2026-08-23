@@ -102,23 +102,32 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
                 sec_list = [{'title': '(no h2)', 'height': est_height}]
             report['pages'].append({'index': idx, 'width': page_w_px, 'height': est_height, 'overflow': overflow, 'sections': sec_list})
 
-    # Write report
-    out_json = 'output/page_fit_report.json'
+    # Write report files with layout-specific names so reviewers can inspect them
+    out_dir = 'output'
+    os.makedirs(out_dir, exist_ok=True)
+    out_json = os.path.join(out_dir, f'page_fit_report_{report["page_size"]}_{report["columns"]}.json')
+    out_txt = os.path.join(out_dir, f'page_fit_report_{report["page_size"]}_{report["columns"]}.txt')
     with open(out_json, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2)
 
-    # Print human summary
-    print('Page fit report saved to', out_json)
+    # human summary text
+    lines = [f'Page fit report for page_size={report["page_size"]} columns={report["columns"]}']
     for p_r in report['pages']:
         s = f"Page {p_r['index']}: {p_r['height']}px tall (limit {report['page_size_px']['h']}px)"
         if p_r['overflow']:
-            print(s + ' -> OVERFLOW')
-            # list largest sections contributing
+            lines.append(s + ' -> OVERFLOW')
             sorted_secs = sorted(p_r['sections'], key=lambda x: x['height'], reverse=True)
-            for sec in sorted_secs[:5]:
-                print(f"  - {sec['height']:4d}px  {sec['title'][:80]}")
+            for sec in sorted_secs[:10]:
+                lines.append(f"  - {sec['height']:4d}px  {sec['title'][:200]}")
         else:
-            print(s + ' OK')
+            lines.append(s + ' OK')
+    with open(out_txt, 'w', encoding='utf-8') as f:
+        f.write('\n'.join(lines))
+
+    print('Page fit report saved to', out_json)
+    print('Summary saved to', out_txt)
+    for l in lines:
+        print(l)
 
     return 0
 
