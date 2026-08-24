@@ -40,6 +40,11 @@ section.card.span-full { /* take the section out of the column flow */
   break-inside: avoid;
 }
 
+/* Allow authors to request top/bottom pinned span-full blocks. Renderer
+   will annotate the section with data-span-position="top" or "bottom". */
+section.card[data-span-position="top"] { margin-top: 0; }
+section.card[data-span-position="bottom"] { margin-bottom: 0; }
+
 /* Checkbox alignment */
 .box { display: inline-block; width: 10px; height: 10px; border: 1px solid #555; margin-right: 6px; flex: 0 0 10px; background: #fff; vertical-align: top; }
 .box:focus { outline: 2px solid #66a; outline-offset: 2px; }
@@ -172,7 +177,13 @@ section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
    the emergency main forces wkhtmltopdf to start a new sheet. */
 /* Each <main class="columns"> is one physical kneeboard card. Use two
    columns per card so content flows into a left/right kneeboard layout. */
-main.columns { display: block; column-count: 2; column-gap: 8px; page-break-after: always; break-after: page; }
+/* main.columns is the authoritative container for multi-column layout. */
+main.columns { display: block; page-break-after: always; break-after: page; column-count: 2; column-gap: 12px; }
+/* Wrapper that contains the main column flow. We remove nested column-count
+   from .columns-inner to avoid duplicate/misaligned column contexts; the
+   column-count above (main.columns) controls the layout. */
+.columns-inner { display: block; }
+.columns-inner > section.card.span-full { /* compatibility placeholder; no nested columns */ }
 main.emergency-page {
   page-break-before: always;
   break-before: page;

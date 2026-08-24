@@ -159,18 +159,16 @@ def parse_markdown(md_path):
             tokens.append({'type': 'column_break', 'line': i + 1})
             i += 1
             continue
-        # span marker to allow the next block to span all columns (value e.g. full)
-        mspan = re.match(r'^<!--\s*SPAN:(\w+)\s*-->$', s)
-        if mspan:
-            tokens.append({'type': 'span', 'value': mspan.group(1).lower(), 'line': i + 1})
-            i += 1
-            continue
+        # NOTE: SPAN markers were intentionally disabled. They are recognized
+        # in the source for author intent, but we ignore them here to keep the
+        # output free of span-derived classes/ordering.
         # Heading
         m = re.match(r'^(#+)\s*(.*)$', s)
         if m:
             level = len(m.group(1))
             text = m.group(2).strip()
-            tokens.append({'type': 'heading', 'level': level, 'text': text, 'line': i + 1})
+            heading = {'type': 'heading', 'level': level, 'text': text, 'line': i + 1}
+            tokens.append(heading)
             i += 1
             continue
         # Markdown table: line that starts with | and the next line is a separator |---|
@@ -246,13 +244,13 @@ def build_table(md_table):
     return md_to_html(md_table)
 
 
-def render_h2_block(h2, children_tokens, span=None):
+def render_h2_block(h2, children_tokens):
     """children_tokens: tokens until the next H1/H2 (items, notes, subheaders, h3 groups, tables)."""
     cat = infer_category(h2['text'])
     title_html = replace_icons(html.escape(h2['text']).replace('&amp;', '&'))
-    span_cls = ' span-full' if span == 'full' else ''
-    parts = [f"  <section class='card{span_cls}' data-category=\"{cat}\">",
-             f"    <h2>{title_html}</h2>"]
+    # SPAN handling disabled: do not emit span-full classes or data-span-position
+    parts = [f"  <section class='card' data-category=\"{cat}\">",
+              f"    <h2>{title_html}</h2>"]
 
     # Walk children: collect direct items/notes/tables, then group h3 subsections
     direct = []         # tokens belonging directly to this H2 (before any H3)
@@ -375,6 +373,18 @@ def build_html_from_tokens(tokens):
             seen_first_h1 = False
             while i < n:
                 tok = seg[i]
+                # If a span token immediately precedes an H2, capture it and
+                # advance so the H2 is processed with the span attribute.
+                # The span token may include an optional position ('top'|'bottom')
+                # which we'll surface to the block so CSS/JS can place it relative
+                # to the containing <main> (e.g. pin to the top or bottom column.
+                span_val = None
+                span_pos = None
+                if tok.get('type') == 'span' and i + 1 < n and seg[i+1]['type'] == 'heading' and seg[i+1].get('level') == 2:
+                    span_val = tok.get('value')
+                    span_pos = tok.get('position')
+                    i += 1
+                    tok = seg[i]
                 if tok['type'] == 'heading' and tok['level'] == 1:
                     if not seen_first_h1:
                         seen_first_h1 = True
@@ -402,6 +412,7 @@ def build_html_from_tokens(tokens):
 
             if not blocks:
                 continue
+            # SPAN positioning disabled: preserve original block order
             # determine if this segment contains any emergency sections
             emergency = any('data-category="emergency"' in b for b in blocks)
             main_cls = 'columns emergency-page' if emergency else 'columns'
@@ -418,6 +429,13 @@ def build_html_from_tokens(tokens):
     n = len(tokens)
     while i < n:
         tok = tokens[i]
+        # Capture a span token placed immediately before an H2 in the
+        # fallback/heuristic path as well.
+        span_val = None
+        if tok.get('type') == 'span' and i + 1 < n and tokens[i+1]['type'] == 'heading' and tokens[i+1].get('level') == 2:
+            span_val = tok.get('value')
+            i += 1
+            tok = tokens[i]
         if tok['type'] == 'heading' and tok['level'] == 1:
             if not seen_first_h1:
                 seen_first_h1 = True
@@ -453,6 +471,7 @@ def build_html_from_tokens(tokens):
         items = pages.get(idx, [])
         if not items:
             continue
+        # SPAN positioning disabled: preserve original items order
         main_cls = 'columns emergency-page' if idx == 3 else 'columns'
         out_parts.append(f'<main class="{main_cls}">')
         out_parts.append('\n'.join(items))

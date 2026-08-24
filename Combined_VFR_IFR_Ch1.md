@@ -1,6 +1,5 @@
+<!-- SPAN:full-top -->
 # ✅ PA‑32‑260 CHEROKEE SIX
-
-## FLOW + VERIFY CHECKLIST (POH‑ALIGNED)
 
 **Aircraft:** PA‑32‑260 Cherokee Six
 
@@ -111,6 +110,7 @@ CDI - VERIFY
 Configuration - APPROACH 2
 GUMPSF - VERIFY
 
+<!-- SPAN:full-bottom -->
 ## 📘 IFR PERFORMANCE PROFILES
 
 |                      |                 |           |            |           |          |
@@ -376,7 +376,7 @@ Flight Plan/IFR Clearance - ACTIVATE / CALL
 
 - Engine indications normal
 
-<!-- SPAN:full -->
+<!-- SPAN:full-bottom -->
 ## V SPEEDS
 
 V1 - Abort Takeoff - 46 MPH (50% RWY)
