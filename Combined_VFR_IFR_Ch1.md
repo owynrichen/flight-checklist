@@ -298,7 +298,11 @@ Starter - CRANK ENGINE
 
 Throttle - 1000 RPM
 
+Gauges - CHECK
+
 Avionics Master - ON
+
+Headset ADR - ON
 
 Fuel Pump - OFF
 
@@ -322,9 +326,11 @@ Fuel Pump - OFF
 
 - VSI - Zero
 
-- Turn & Slip Indicator - FLAGS OFF, WINGS LEVEL, FULL FLUID
+- Turn Coordinator - FLAGS OFF, WINGS LEVEL, FULL FLUID
 
 - Heading Indicator - SET TO COMPASS HEADING
+
+- Fuel Flow - SET
 
 ☐ Garmin 530W database — CHECK / UPDATE
 
@@ -335,6 +341,10 @@ Fuel Pump - OFF
 - Open Airport Diagram - BRIEF
 
 ## 🔍 RUN‑UP
+
+Departure Procedures - BRIEF
+
+Comms and Nav Radios - SET
 
 ☐ Brake — SET
 
@@ -358,11 +368,7 @@ Carburetor Heat - OFF
 
 Throttle - 800-1000 RPM
 
-Flight Plan - ACTIVATE
-
-Departure Procedures - BRIEF
-
-Comms and Nav Radios - SET
+Flight Plan/IFR Clearance - ACTIVATE / CALL
 
 ✔ Stable RPM
 
@@ -370,6 +376,7 @@ Comms and Nav Radios - SET
 
 - Engine indications normal
 
+<!-- SPAN:full -->
 ## V SPEEDS
 
 V1 - Abort Takeoff - 46 MPH (50% RWY)
@@ -525,6 +532,7 @@ Vne - never exceed - 212 MPH (184kts)
 
 ➡ Alternator OFF → Minimal load → **Land ASAP / Practical**
 
+<!-- COLUMN_BREAK -->
 ## IFR ACRONYMS / MNEMONICS
 
 ☐ IFR - Instrument Flight Rules

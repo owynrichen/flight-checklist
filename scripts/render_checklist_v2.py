@@ -246,11 +246,12 @@ def build_table(md_table):
     return md_to_html(md_table)
 
 
-def render_h2_block(h2, children_tokens):
+def render_h2_block(h2, children_tokens, span=None):
     """children_tokens: tokens until the next H1/H2 (items, notes, subheaders, h3 groups, tables)."""
     cat = infer_category(h2['text'])
     title_html = replace_icons(html.escape(h2['text']).replace('&amp;', '&'))
-    parts = [f"  <section class='card' data-category=\"{cat}\">",
+    span_cls = ' span-full' if span == 'full' else ''
+    parts = [f"  <section class='card{span_cls}' data-category=\"{cat}\">",
              f"    <h2>{title_html}</h2>"]
 
     # Walk children: collect direct items/notes/tables, then group h3 subsections
@@ -313,6 +314,10 @@ def render_h2_block(h2, children_tokens):
             elif t['type'] == 'consequence':
                 flush()
                 out.append(indent + build_consequence(t['text']).lstrip())
+            elif t['type'] == 'column_break':
+                # force a column break marker in the output; flush lists first
+                flush()
+                out.append(indent + "<div class='col-break' aria-hidden='true'></div>")
             elif t['type'] == 'table':
                 flush()
                 out.append(indent + build_table(t['text']))
