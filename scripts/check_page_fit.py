@@ -52,55 +52,56 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
     # Use the same renderer as build.sh to produce an HTML proof that includes
     # the same inline overrides. This prevents us from duplicating CSS logic
     # here and keeps the measurement faithful to the rendered outputs.
-    from playwright.async_api import async_playwright
-    report['method'] = 'playwright'
-    async with async_playwright() as p:
-        browser = await p.chromium.launch()
-        page = await browser.new_page(viewport={'width': page_w_px, 'height': page_h_px})
+    try:
+        from playwright.async_api import async_playwright
+        report['method'] = 'playwright'
+        async with async_playwright() as p:
+            browser = await p.chromium.launch()
+            page = await browser.new_page(viewport={'width': page_w_px, 'height': page_h_px})
 
-        # Run the renderer to produce output/checklist_from_yaml.html which the
-        # build script normally moves; renderer accepts --columns and --page-size
-        renderer = os.path.join(os.path.dirname(__file__), 'render_checklist_v2.py')
-        cmd = ['python3', renderer, '--columns', str(columns), '--page-size', page_size]
-        if shutil.which('uv'):
-            cmd = ['uv', 'run'] + cmd
-        subprocess.run(cmd, check=True)
+            # Run the renderer to produce output/checklist_from_yaml.html which the
+            # build script normally moves; renderer accepts --columns and --page-size
+            renderer = os.path.join(os.path.dirname(__file__), 'render_checklist_v2.py')
+            cmd = ['python3', renderer, '--columns', str(columns), '--page-size', page_size]
+            if shutil.which('uv'):
+                cmd = ['uv', 'run'] + cmd
+            subprocess.run(cmd, check=True)
 
-        # Prefer the build-style named output if present, else fall back to the
-        # renderer's default output file
-        candidate = os.path.join(os.path.dirname(__file__), '..', 'output', f'checklist_print_ready_{page_size}_{columns}c.html')
-        if os.path.exists(candidate):
-            html_path_to_load = candidate
-        else:
-            renderer_out = os.path.join(os.path.dirname(__file__), '..', 'output', 'checklist_from_yaml.html')
-            if os.path.exists(renderer_out):
-                # copy to temp file to avoid concurrent edits
-                tmpf = tempfile.NamedTemporaryFile(prefix='check_page_fit_', suffix='.html', delete=False)
-                tmpf.close()
-                shutil.copy(renderer_out, tmpf.name)
-                html_path_to_load = tmpf.name
+            # Prefer the build-style named output if present, else fall back to the
+            # renderer's default output file
+            candidate = os.path.join(os.path.dirname(__file__), '..', 'output', f'checklist_print_ready_{page_size}_{columns}c.html')
+            if os.path.exists(candidate):
+                html_path_to_load = candidate
             else:
-                html_path_to_load = html_path
+                renderer_out = os.path.join(os.path.dirname(__file__), '..', 'output', 'checklist_from_yaml.html')
+                if os.path.exists(renderer_out):
+                    # copy to temp file to avoid concurrent edits
+                    tmpf = tempfile.NamedTemporaryFile(prefix='check_page_fit_', suffix='.html', delete=False)
+                    tmpf.close()
+                    shutil.copy(renderer_out, tmpf.name)
+                    html_path_to_load = tmpf.name
+                else:
+                    html_path_to_load = html_path
 
-        await page.goto('file://' + os.path.abspath(html_path_to_load))
-        await page.wait_for_timeout(300)
+            await page.goto('file://' + os.path.abspath(html_path_to_load))
+            await page.wait_for_timeout(300)
 
-        mains = await page.query_selector_all('main.columns')
-        for idx, m in enumerate(mains, start=1):
-            box = await m.bounding_box()
-            h = math.ceil(box['height']) if box else 0
-            w = math.ceil(box['width']) if box else 0
-            overflow = h > page_h_px
-            sections = []
-            for s_el in await m.query_selector_all('section.card'):
-                sb = await s_el.bounding_box()
-                title_el = await s_el.query_selector('h2')
-                title = await (await title_el.get_property('innerText')).json_value() if title_el else ''
-                sections.append({'title': title.strip(), 'height': math.ceil(sb['height']) if sb else 0})
+            mains = await page.query_selector_all('main.columns')
+            for idx, m in enumerate(mains, start=1):
+                box = await m.bounding_box()
+                h = math.ceil(box['height']) if box else 0
+                w = math.ceil(box['width']) if box else 0
+                overflow = h > page_h_px
+                sections = []
+                for s_el in await m.query_selector_all('section.card'):
+                    sb = await s_el.bounding_box()
+                    title_el = await s_el.query_selector('h2')
+                    title = await (await title_el.get_property('innerText')).json_value() if title_el else ''
+                    sections.append({'title': title.strip(), 'height': math.ceil(sb['height']) if sb else 0})
 
-            report['pages'].append({'index': idx, 'width': w, 'height': h, 'overflow': overflow, 'sections': sections})
+                report['pages'].append({'index': idx, 'width': w, 'height': h, 'overflow': overflow, 'sections': sections})
 
-        await browser.close()
+            await browser.close()
     except Exception as e:
         report['method'] = f'fallback-estimator ({type(e).__name__})'
         with open(html_path, 'r', encoding='utf-8') as f:
