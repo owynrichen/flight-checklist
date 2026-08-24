@@ -14,7 +14,10 @@ Improvements over previous version:
 """
 import os
 import re
-import yaml
+try:
+    import yaml
+except Exception:
+    yaml = None
 import subprocess
 import html
 
@@ -149,6 +152,17 @@ def parse_markdown(md_path):
         # explicit page break marker
         if s == PAGE_BREAK_MARKER:
             tokens.append({'type': 'page_break', 'line': i + 1})
+            i += 1
+            continue
+        # column break marker (force column break inside a card)
+        if s == '<!-- COLUMN_BREAK -->':
+            tokens.append({'type': 'column_break', 'line': i + 1})
+            i += 1
+            continue
+        # span marker to allow the next block to span all columns (value e.g. full)
+        mspan = re.match(r'^<!--\s*SPAN:(\w+)\s*-->$', s)
+        if mspan:
+            tokens.append({'type': 'span', 'value': mspan.group(1).lower(), 'line': i + 1})
             i += 1
             continue
         # Heading
@@ -331,6 +345,67 @@ def build_html_from_tokens(tokens):
     When an 'emergency' H1 is encountered, emit a sentinel that splits the
     output into a second <main> container so a page break can be forced.
     """
+    # If explicit page break markers are present, honor them by partitioning
+    # the token stream into segments. Each segment becomes a separate
+    # <main class="columns"> container so printed pages follow author intent.
+    if any(tok.get('type') == 'page_break' for tok in tokens):
+        segments = []
+        current = []
+        for tok in tokens:
+            if tok.get('type') == 'page_break':
+                # start a new segment
+                segments.append(current)
+                current = []
+            else:
+                current.append(tok)
+        # append last
+        segments.append(current)
+
+        out_parts = []
+        for seg in segments:
+            # render H2 blocks found in this segment, preserving order
+            blocks = []
+            i = 0
+            n = len(seg)
+            seen_first_h1 = False
+            while i < n:
+                tok = seg[i]
+                if tok['type'] == 'heading' and tok['level'] == 1:
+                    if not seen_first_h1:
+                        seen_first_h1 = True
+                        i += 1
+                        continue
+                    i += 1
+                    continue
+                if tok['type'] == 'heading' and tok['level'] == 2:
+                    h2 = tok
+                    norm_h2 = normalize_text(h2['text'])
+                    if not norm_h2:
+                        i += 1
+                        continue
+                    j = i + 1
+                    children = []
+                    while j < n and not (seg[j]['type'] == 'heading' and seg[j]['level'] in (1, 2)):
+                        children.append(seg[j])
+                        j += 1
+                    block = render_h2_block(h2, children)
+                    if block:
+                        blocks.append(block)
+                    i = j
+                    continue
+                i += 1
+
+            if not blocks:
+                continue
+            # determine if this segment contains any emergency sections
+            emergency = any('data-category="emergency"' in b for b in blocks)
+            main_cls = 'columns emergency-page' if emergency else 'columns'
+            out_parts.append(f'<main class="{main_cls}">')
+            out_parts.append('\n'.join(blocks))
+            out_parts.append('</main>')
+        return '\n'.join(out_parts)
+
+    # Fallback: no explicit markers present — use the heuristic page_for_heading
     pages = {1: [], 2: [], 3: []}
     seen_first_h1 = False
     page_offset = 0
@@ -338,22 +413,11 @@ def build_html_from_tokens(tokens):
     n = len(tokens)
     while i < n:
         tok = tokens[i]
-        if tok.get('type') == 'page_break':
-            # Immediate page break: force the next emitted H2 block to go to the
-            # following page. Implemented by incrementing page_offset so the
-            # next H2 is emitted to the subsequent page. This is immediate
-            # (not a deferred sentinel); multiple consecutive markers advance
-            # further pages.
-            page_offset += 1
-            i += 1
-            continue
         if tok['type'] == 'heading' and tok['level'] == 1:
             if not seen_first_h1:
                 seen_first_h1 = True
                 i += 1
                 continue
-            # Do not emit the top-level title or later H1 labels as cards; they
-            # are structural markers only.
             i += 1
             continue
         if tok['type'] == 'heading' and tok['level'] == 2:
@@ -373,29 +437,17 @@ def build_html_from_tokens(tokens):
             block = render_h2_block(h2, children)
             if block:
                 page = page_for_heading(h2['text'])
-                # Apply any explicit page-break offsets; cap to 3 pages.
                 page = min(3, page + page_offset)
                 pages.setdefault(page, []).append(block)
-                # Once an explicit offset has been consumed by assigning a
-                # block to a later page, reset the page_offset so further
-                # H2s are not unintentionally pushed further unless more
-                # explicit markers are present.
                 page_offset = 0
             i = j
             continue
-        if tok['type'] in ('item', 'note', 'subheader', 'consequence', 'table'):
-            i += 1
-            continue
         i += 1
-    # Build a flexible sequence of <main class="columns"> containers. Pages
-    # will be emitted in order 1,2,3 if they contain content. Emergency pages
-    # get the emergency-page class which applies the red card styling.
     out_parts = []
     for idx in (1, 2, 3):
         items = pages.get(idx, [])
         if not items:
             continue
-        # emergency-page class if any section is emergency (page 3 is intended for emergencies)
         main_cls = 'columns emergency-page' if idx == 3 else 'columns'
         out_parts.append(f'<main class="{main_cls}">')
         out_parts.append('\n'.join(items))
@@ -410,9 +462,14 @@ def main():
     parser = argparse.ArgumentParser(description='Render checklist to HTML with optional layout overrides')
     parser.add_argument('--columns', type=int, choices=(2,3,4), help='Override column-count for main.columns')
     parser.add_argument('--page-size', choices=('half','letter'), help='Override CSS @page size (half=5.5x8.5, letter=8.5x11)')
+    parser.add_argument('--source', help='Path to markdown source file (overrides default Combined_VFR_IFR_Ch1.md)')
     args = parser.parse_args()
 
-    if not os.path.exists(MD_PATH):
+    md_path = MD_PATH
+    if args.source:
+        md_path = args.source
+
+    if not os.path.exists(md_path):
         # fall back to YAML if markdown missing
         if not os.path.exists(YAML_PATH):
             print('No source (markdown or YAML) found.')
@@ -430,15 +487,15 @@ def main():
                 last = sec
             tokens.append({'type': 'item', 'text': e.get('item', '')})
     else:
-        print('Rendering HTML from markdown source...')
-        tokens = parse_markdown(MD_PATH)
+        print('Rendering HTML from markdown source...', md_path)
+        tokens = parse_markdown(md_path)
 
     html_block = build_html_from_tokens(tokens)
 
     # Title from first H1 of markdown
     title_text = None
-    if os.path.exists(MD_PATH):
-        with open(MD_PATH, encoding='utf-8') as fm:
+    if os.path.exists(md_path):
+        with open(md_path, encoding='utf-8') as fm:
             for line in fm:
                 if line.startswith('#'):
                     title_text = line.lstrip('#').strip()
