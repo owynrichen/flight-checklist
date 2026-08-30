@@ -185,8 +185,9 @@ main.columns { display: block; page-break-after: always; break-after: page; colu
 .columns-inner { display: block; }
 .columns-inner > section.card.span-full { /* compatibility placeholder; no nested columns */ }
 main.emergency-page {
-  page-break-before: always;
-  break-before: page;
+  /* Do not force a page break before emergency pages; allow the print
+     engine to place this main inline so full-width top spans and the
+     following column flow can appear on the same physical page. */
   border-top: 6px solid #b30000;        /* red identifier edge for the card */
   padding-top: 6px;
   margin-top: 0;
