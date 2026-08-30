@@ -177,13 +177,13 @@ section[data-category="emergency"] { background-color: rgba(179,0,0,0.08); }
    the emergency main forces wkhtmltopdf to start a new sheet. */
 /* Each <main class="columns"> is one physical kneeboard card. Use two
    columns per card so content flows into a left/right kneeboard layout. */
-main.columns { display: block; page-break-after: always; break-after: page; }
-/* Wrapper that contains the main column flow. When the renderer needs to
-   pin full-width (span-full) blocks to the top or bottom of the page it
-   will place the mid content inside this .columns-inner element so the
-   pinned blocks do not affect column balancing. */
-.columns-inner { display: block; column-count: 2; column-gap: 8px; }
-.columns-inner > section.card.span-full { -webkit-column-span: all; column-span: all; }
+/* main.columns is the authoritative container for multi-column layout. */
+main.columns { display: block; page-break-after: always; break-after: page; column-count: 2; column-gap: 12px; }
+/* Wrapper that contains the main column flow. We remove nested column-count
+   from .columns-inner to avoid duplicate/misaligned column contexts; the
+   column-count above (main.columns) controls the layout. */
+.columns-inner { display: block; }
+.columns-inner > section.card.span-full { /* compatibility placeholder; no nested columns */ }
 main.emergency-page {
   page-break-before: always;
   break-before: page;
