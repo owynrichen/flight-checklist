@@ -143,6 +143,7 @@ def parse_markdown(md_path):
         lines = f.readlines()
     i = 0
     n = len(lines)
+    pending_span = None
     while i < n:
         raw = lines[i].rstrip('\n')
         s = raw.strip()
@@ -159,15 +160,28 @@ def parse_markdown(md_path):
             tokens.append({'type': 'column_break', 'line': i + 1})
             i += 1
             continue
-        # NOTE: SPAN markers were intentionally disabled. They are recognized
-        # in the source for author intent, but we ignore them here to keep the
-        # output free of span-derived classes/ordering.
+        # span marker to allow the next block to be emitted as a full-width
+        # sibling outside the column flow. Optional position can be specified
+        # using a hyphen: <!-- SPAN:full-top --> or <!-- SPAN:full-bottom -->
+        mspan = re.match(r'^<!--\s*SPAN:(\w+)(?:-(top|bottom))?\s*-->$', s)
+        if mspan:
+            pending_span = {'value': mspan.group(1).lower(), 'position': (mspan.group(2) or None), 'line': i + 1}
+            i += 1
+            continue
         # Heading
         m = re.match(r'^(#+)\s*(.*)$', s)
         if m:
             level = len(m.group(1))
             text = m.group(2).strip()
             heading = {'type': 'heading', 'level': level, 'text': text, 'line': i + 1}
+            # If a span marker was immediately before this H2, attach the
+            # span metadata so the higher-level builder can emit the H2 as a
+            # full-width sibling (top/mid/bottom) outside the main.columns
+            # multi-column flow.
+            if pending_span and level == 2:
+                heading['span'] = pending_span['value']
+                heading['span_pos'] = pending_span['position']
+                pending_span = None
             tokens.append(heading)
             i += 1
             continue
@@ -404,21 +418,38 @@ def build_html_from_tokens(tokens):
                         children.append(seg[j])
                         j += 1
                     block = render_h2_block(h2, children)
-                    if block:
-                        blocks.append(block)
+                    # If this H2 has attached span metadata, we emit it as a
+                    # full-width sibling outside the column flow. We'll store
+                    # such blocks using a tuple so we can reconstruct top/mid/
+                    # bottom ordering without creating nested column contexts.
+                    if h2.get('span') == 'full':
+                        # store as ('span', position, html)
+                        blocks.append(('span', h2.get('span_pos'), block))
+                    else:
+                        blocks.append(('card', None, block))
                     i = j
                     continue
                 i += 1
 
             if not blocks:
                 continue
-            # SPAN positioning disabled: preserve original block order
+            # Reconstruct output: emit top-pinned span-full blocks first,
+            # then the cards in a single main.columns, then bottom-pinned spans.
+            top_spans = [html for t,pos,html in blocks if t == 'span' and pos == 'top']
+            mid_cards = [html for t,pos,html in blocks if t == 'card']
+            mid_spans = [html for t,pos,html in blocks if t == 'span' and not pos]
+            bottom_spans = [html for t,pos,html in blocks if t == 'span' and pos == 'bottom']
+
+            out_parts.extend(top_spans)
             # determine if this segment contains any emergency sections
-            emergency = any('data-category="emergency"' in b for b in blocks)
+            emergency = any('data-category="emergency"' in h for h in mid_cards)
             main_cls = 'columns emergency-page' if emergency else 'columns'
-            out_parts.append(f'<main class="{main_cls}">')
-            out_parts.append('\n'.join(blocks))
-            out_parts.append('</main>')
+            if mid_cards:
+                out_parts.append(f'<main class="{main_cls}">')
+                out_parts.append('\n'.join(mid_cards))
+                out_parts.append('</main>')
+            out_parts.extend(mid_spans)
+            out_parts.extend(bottom_spans)
         return '\n'.join(out_parts)
 
     # Fallback: no explicit markers present — use the heuristic page_for_heading
