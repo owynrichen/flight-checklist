@@ -426,21 +426,10 @@ def build_html_from_tokens(tokens):
                     while j < n and not (seg[j]['type'] == 'heading' and seg[j]['level'] in (1, 2)):
                         children.append(seg[j])
                         j += 1
-                    # Special-case ordering/behavior for a few large blocks so
-                    # printed columns fit predictably:
-                    norm = normalize_text(h2['text'])
-                    # Ensure the departure/enroute block is treated as a normal
-                    # card (one column) — do not allow it to be emitted as a
-                    # full-width span.
-                    if 'ifr departure enroute' in norm or 'departure enroute' in norm:
-                        h2.pop('span', None)
-                        h2.pop('span_pos', None)
-                    # Prefer to keep IFR PERFORMANCE PROFILES on the first page
-                    # by emitting it as a top full-width band so it won't be
-                    # pushed to a later column/page by balancing.
-                    if 'ifr performance profiles' in norm:
-                        h2['span'] = 'full'
-                        h2['span_pos'] = 'top'
+                    # No hard-coded heading-specific layout logic here.
+                    # Span metadata (if any) attached during parsing will be
+                    # respected by the downstream layout reconstruction, but
+                    # we avoid special-casing individual headings in code.
 
                     block = render_h2_block(h2, children)
                     # If this H2 has attached span metadata, we emit it as a
