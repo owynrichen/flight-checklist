@@ -416,6 +416,11 @@ def build_html_from_tokens(tokens):
                     span_pos = tok.get('position')
                     i += 1
                     tok = seg[i]
+                    # attach span metadata to the following heading so downstream
+                    # logic can treat the H2 as span-full with a position
+                    if isinstance(tok, dict) and tok.get('type') == 'heading':
+                        tok['span'] = span_val
+                        tok['span_pos'] = span_pos
                 if tok['type'] == 'heading' and tok['level'] == 1:
                     if not seen_first_h1:
                         seen_first_h1 = True
@@ -501,6 +506,9 @@ def build_html_from_tokens(tokens):
             span_val = tok.get('value')
             i += 1
             tok = tokens[i]
+            if isinstance(tok, dict) and tok.get('type') == 'heading':
+                tok['span'] = span_val
+                tok['span_pos'] = tok.get('position')
         if tok['type'] == 'heading' and tok['level'] == 1:
             if not seen_first_h1:
                 seen_first_h1 = True
