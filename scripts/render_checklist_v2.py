@@ -445,6 +445,20 @@ def build_html_from_tokens(tokens):
                     # we avoid special-casing individual headings in code.
 
                     block = render_h2_block(h2, children)
+                    # If heading requested a span, ensure the emitted HTML
+                    # section includes the correct class and data attributes
+                    # even if render_h2_block was called without the metadata
+                    # present on the heading object.
+                    if h2.get('span'):
+                        span = html.escape(h2.get('span'))
+                        span_pos = html.escape(h2.get('span_pos') or '')
+                        # inject class span-full and data attributes into the
+                        # opening section tag. We only replace the first occurrence.
+                        replace_target = "<section class='card'"
+                        insert_attrs = f"<section class='card span-full' data-span=\"{span}\""
+                        if span_pos:
+                            insert_attrs += f" data-span-position=\"{span_pos}\""
+                        block = block.replace(replace_target, insert_attrs, 1)
                     # If this H2 has attached span metadata, we emit it as a
                     # full-width sibling outside the column flow. We'll store
                     # such blocks using a tuple so we can reconstruct top/mid/
