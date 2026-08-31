@@ -271,11 +271,16 @@ def render_h2_block(h2, children_tokens):
     # If this heading requested a full-span band, emit semantic attributes
     # so styles and validators can detect and position it.
     span_attr = ''
+    class_attr = ''
     if h2.get('span'):
+        # add semantic attributes and class so CSS can style span-full blocks
         span_attr = f" data-span=\"{html.escape(h2.get('span'))}\""
+        # use data-span-position to match CSS selectors
         if h2.get('span_pos'):
-            span_attr += f" data-span-pos=\"{html.escape(h2.get('span_pos'))}\""
-    parts = [f"  <section class='card'{span_attr} data-category=\"{cat}\">",
+            span_attr += f" data-span-position=\"{html.escape(h2.get('span_pos'))}\""
+        if h2.get('span') == 'full':
+            class_attr = ' span-full'
+    parts = [f"  <section class='card{class_attr}'{span_attr} data-category=\"{cat}\">",
               f"    <h2>{title_html}</h2>"]
 
     # Walk children: collect direct items/notes/tables, then group h3 subsections
