@@ -397,6 +397,21 @@ def build_html_from_tokens(tokens):
 
         out_parts = []
         for seg in segments:
+            # Preprocess span tokens: attach any explicit <!-- SPAN:... -->
+            # markers to the following H2 heading so downstream logic can
+            # treat the heading as a span-full block. Remove the span tokens
+            # after pairing to simplify the main loop.
+            to_remove = []
+            for si in range(len(seg) - 1):
+                s_tok = seg[si]
+                n_tok = seg[si + 1]
+                if s_tok.get('type') == 'span' and n_tok.get('type') == 'heading' and n_tok.get('level') == 2:
+                    n_tok['span'] = s_tok.get('value')
+                    n_tok['span_pos'] = s_tok.get('position')
+                    to_remove.append(si)
+            # remove span tokens in reverse order
+            for idx in reversed(to_remove):
+                seg.pop(idx)
             # render H2 blocks found in this segment, preserving order
             blocks = []
             i = 0
