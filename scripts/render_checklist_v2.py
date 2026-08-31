@@ -143,7 +143,6 @@ def parse_markdown(md_path):
         lines = f.readlines()
     i = 0
     n = len(lines)
-    pending_span = None
     last_h2_seen = False
     while i < n:
         raw = lines[i].rstrip('\n')
@@ -166,7 +165,10 @@ def parse_markdown(md_path):
         # using a hyphen: <!-- SPAN:full-top --> or <!-- SPAN:full-bottom -->
         mspan = re.match(r'^<!--\s*SPAN:(\w+)(?:-(top|bottom))?\s*-->$', s)
         if mspan:
-            pending_span = {'value': mspan.group(1).lower(), 'position': (mspan.group(2) or None), 'line': i + 1}
+            # Emit an explicit span token into the stream. The builder will
+            # detect a span token immediately preceding an H2 and use it to
+            # render a full-width sibling band (top/mid/bottom).
+            tokens.append({'type': 'span', 'value': mspan.group(1).lower(), 'position': (mspan.group(2) or None), 'line': i + 1})
             i += 1
             continue
         # Heading
@@ -181,14 +183,9 @@ def parse_markdown(md_path):
             if level == 3 and not last_h2_seen:
                 level = 2
             heading = {'type': 'heading', 'level': level, 'text': text, 'line': i + 1}
-            # If a span marker was immediately before this H2, attach the
-            # span metadata so the higher-level builder can emit the H2 as a
-            # full-width sibling (top/mid/bottom) outside the main.columns
-            # multi-column flow.
-            if pending_span and level == 2:
-                heading['span'] = pending_span['value']
-                heading['span_pos'] = pending_span['position']
-                pending_span = None
+            # Note: span markers are emitted as explicit 'span' tokens in the
+            # token stream; the layout builder will pair a span token with the
+            # following H2 when reconstructing full-width bands.
             if level == 2:
                 last_h2_seen = True
             tokens.append(heading)
