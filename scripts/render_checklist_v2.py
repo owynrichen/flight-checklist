@@ -423,8 +423,19 @@ def build_html_from_tokens(tokens):
                     # such blocks using a tuple so we can reconstruct top/mid/
                     # bottom ordering without creating nested column contexts.
                     if h2.get('span') == 'full':
-                        # store as ('span', position, html)
-                        blocks.append(('span', h2.get('span_pos'), block))
+                        # Heuristics to avoid unwanted full-page bands:
+                        # - If the span requests 'bottom', prefer to keep it as a
+                        #   normal card so it participates in the column flow.
+                        # - If the span requests 'top' but this is the first
+                        #   block in the segment, emit it as a regular card
+                        #   (covers the common case where a leading <!-- SPAN:full-top -->
+                        #   was intended for the H1/header band, not the first H2).
+                        span_pos = h2.get('span_pos')
+                        if span_pos == 'bottom' or (span_pos == 'top' and len(blocks) == 0):
+                            blocks.append(('card', None, block))
+                        else:
+                            # store as ('span', position, html)
+                            blocks.append(('span', span_pos, block))
                     else:
                         blocks.append(('card', None, block))
                     i = j
