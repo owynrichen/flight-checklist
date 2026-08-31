@@ -508,16 +508,23 @@ def build_html_from_tokens(tokens):
             mid_spans = [html for t,pos,html in blocks if t == 'span' and not pos]
             bottom_spans = [html for t,pos,html in blocks if t == 'span' and pos == 'bottom']
 
-            out_parts.extend(top_spans)
-            # determine if this segment contains any emergency sections
+            # place top/mid/bottom spans inside the same main so the print
+            # engine treats them as part of the same page container. This
+            # prevents the browser from promoting standalone span-full
+            # siblings into separate PDF pages and keeps pagination
+            # deterministic between HTML measurement and PDF render.
             emergency = any('data-category="emergency"' in h for h in mid_cards)
             main_cls = 'columns emergency-page' if emergency else 'columns'
-            if mid_cards:
+            # build the ordered block: top spans, mid cards, mid spans, bottom spans
+            ordered = []
+            ordered.extend(top_spans)
+            ordered.extend(mid_cards)
+            ordered.extend(mid_spans)
+            ordered.extend(bottom_spans)
+            if ordered:
                 out_parts.append(f'<main class="{main_cls}">')
-                out_parts.append('\n'.join(mid_cards))
+                out_parts.append('\n'.join(ordered))
                 out_parts.append('</main>')
-            out_parts.extend(mid_spans)
-            out_parts.extend(bottom_spans)
         return '\n'.join(out_parts)
 
     # Fallback: no explicit markers present — use the heuristic page_for_heading

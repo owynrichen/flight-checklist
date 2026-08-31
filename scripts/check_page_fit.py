@@ -84,6 +84,8 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
                     html_path_to_load = html_path
 
             await page.goto('file://' + os.path.abspath(html_path_to_load))
+            # Ensure print media rules are applied so measurements match PDF output
+            await page.emulate_media(media='print')
             await page.wait_for_timeout(300)
 
             mains = await page.query_selector_all('main.columns')
@@ -102,6 +104,72 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
                 report['pages'].append({'index': idx, 'width': w, 'height': h, 'overflow': overflow, 'sections': sections})
 
             await browser.close()
+            # Also capture any top-level <section.card> that are not inside a main.columns
+            # These often represent full-width span blocks that become their own PDF pages.
+            # We'll open the same page again (fresh) to measure them outside the main loop.
+            # Create a second browser instance properly (async API) to measure
+            browser2 = await p.chromium.launch()
+            try:
+                page2 = await browser2.new_page(viewport={'width': page_w_px, 'height': page_h_px})
+                await page2.goto('file://' + os.path.abspath(html_path_to_load))
+                await page2.emulate_media(media='print')
+                await page2.wait_for_timeout(200)
+                # find all section.card elements and pick those not contained in a main.columns
+                extra_sections = []
+                all_sections = await page2.query_selector_all('section.card')
+                for s in all_sections:
+                    # determine if this section has a main.columns ancestor
+                    has_main = await s.evaluate('el => !!el.closest("main.columns")')
+                    if not has_main:
+                        sb = await s.bounding_box()
+                        title_el = await s.query_selector('h2')
+                        title = await (await title_el.get_property('innerText')).json_value() if title_el else ''
+                        extra_sections.append({'title': title.strip(), 'height': math.ceil(sb['height']) if sb else 0})
+                # append each extra section as its own "page" in the report
+                for ex in extra_sections:
+                    report['pages'].append({'index': len(report['pages']) + 1, 'width': page_w_px, 'height': ex['height'], 'overflow': ex['height'] > page_h_px, 'sections': [ex]})
+
+                # Render an actual PDF of the page and count pages by scanning for PDF page markers
+                out_pdf = os.path.join(os.path.dirname(__file__), '..', 'output', f'check_page_fit_render_{page_size}_{columns}.pdf')
+                # produce a PDF using the same options as the build script
+                try:
+                    await page2.pdf(path=out_pdf, print_background=True, prefer_css_page_size=True, margin={"top": "0in", "right": "0in", "bottom": "0in", "left": "0in"})
+                except TypeError:
+                    # older playwright versions may not accept prefer_css_page_size; fallback
+                    await page2.pdf(path=out_pdf, print_background=True)
+                with open(out_pdf, 'rb') as pf:
+                    pdf_bytes = pf.read()
+                # crude page count: count occurrences of '/Type /Page'
+                pdf_page_count = pdf_bytes.count(b'/Type /Page')
+                report['pdf_page_count'] = pdf_page_count
+
+                # Map section positions to PDF pages using document coordinates so the
+                # report matches how the PDF was paginated. Use offsetTop walk to get
+                # absolute top in document layout, then divide by page pixel height.
+                page_sections = await page2.evaluate(f'''
+                () => {{
+                    const page_h = {page_h_px};
+                    function absTop(el) {{
+                        let t = 0;
+                        let e = el;
+                        while (e) {{ t += e.offsetTop || 0; e = e.offsetParent; }}
+                        return t;
+                    }}
+                    const out = [];
+                    document.querySelectorAll('section.card').forEach(s => {{
+                        let h2 = s.querySelector('h2');
+                        let title = h2 ? h2.innerText.trim() : '(no title)';
+                        let top = absTop(s);
+                        let h = s.offsetHeight || s.getBoundingClientRect().height || 0;
+                        let page_index = Math.floor(top / page_h) + 1;
+                        out.push({{title, top, height: Math.ceil(h), page: page_index}});
+                    }});
+                    return out;
+                }}
+                ''')
+                report['pdf_section_map'] = page_sections
+            finally:
+                await browser2.close()
     except Exception as e:
         report['method'] = f'fallback-estimator ({type(e).__name__})'
         with open(html_path, 'r', encoding='utf-8') as f:
@@ -151,6 +219,25 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
                 lines.append(f"  - {sec['height']:4d}px  {sec['title'][:200]}")
         else:
             lines.append(s + ' OK')
+
+    # PDF diagnostics if available
+    if 'pdf_page_count' in report:
+        lines.append(f"\nPDF page count (rendered): {report['pdf_page_count']}")
+        # Compare PDF page count to measured HTML pages
+        measured_pages = len(report['pages'])
+        if report['pdf_page_count'] != measured_pages:
+            lines.append(f"WARNING: PDF page count ({report['pdf_page_count']}) != measured HTML page containers ({measured_pages})")
+        # If we mapped sections to PDF pages, show a concise mapping and flag sections landing on later pages
+        if 'pdf_section_map' in report:
+            lines.append('\nSection -> PDF page mapping:')
+            for s in report['pdf_section_map']:
+                lines.append(f"  Page {s['page']:2d}: {s['title'][:60]:60s}  (top={s['top']} h={s['height']})")
+            # Find sections that end up on a PDF page beyond the last measured page
+            overflow_sections = [s for s in report['pdf_section_map'] if s['page'] > measured_pages]
+            if overflow_sections:
+                lines.append('\nSections placed on PDF pages beyond measured HTML containers:')
+                for s in overflow_sections:
+                    lines.append(f"  - {s['title'][:120]} -> PDF page {s['page']}")
     with open(out_txt, 'w', encoding='utf-8') as f:
         f.write('\n'.join(lines))
 
@@ -159,6 +246,11 @@ async def run(html_path: str, page_size: str = 'half', columns: int = 2):
     for l in lines:
         print(l)
 
+    # Return non-zero if any overflow detected or PDF page count mismatches measured pages
+    any_overflow = any(p.get('overflow') for p in report['pages'])
+    mismatch = ('pdf_page_count' in report) and (report['pdf_page_count'] != len(report['pages']))
+    if any_overflow or mismatch:
+        return 2
     return 0
 
 

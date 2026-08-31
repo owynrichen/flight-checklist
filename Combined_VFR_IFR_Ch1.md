@@ -7,7 +7,7 @@
 
 **Engine:** **Lycoming O‑540‑E4B5**
 
-### 🛫 TAKEOFF
+## 🛫 TAKEOFF
 
 Fuel Pump — ON
 
@@ -25,7 +25,7 @@ Rotate — **65-70 MPH**
 
 Climb — **Vy 105 MPH / Vx 95 MPH**
 
-### 🛫 CLIMB TO CRUISE - ~500 FT AGL
+## 🛫 CLIMB TO CRUISE - ~500 FT AGL
 
 Flaps - UP
 
@@ -110,18 +110,6 @@ CDI - VERIFY
 Configuration - APPROACH 2
 GUMPSF - VERIFY
 
-<!-- SPAN:full-bottom -->
-## 📘 IFR PERFORMANCE PROFILES
-
-|                      |                 |           |            |           |          |
-|----------------------|-----------------|-----------|------------|-----------|----------|
-| **Phase**            | **Power/Prop**  | **Pitch** | **Config** | **Speed** | **V/S**  |
-| **Cruise**           | ~25 MP/25 RPM   | 0°        | Clean      | —         | —        |
-| **Descent**          | ~20 MP/25 RPM   | −2 to −3° | Clean      | 138 MPH   | −500 fpm |
-| **Approach Level 1** | ~15 MP/25 RPM   | 0 to −1°  | 25°        | 104 MPH   | −500     |
-| **Approach Level 2** | ~17 MP/FULL     | 0°        | 33°        | 104 MPH   | −800     |
-| **Missed**           | FULL            | +7°       | Clean      | 97 MPH    | +800     |
-
 ## 🛬 LANDING / GO‑AROUND
 
 ### Landing — FLOW
@@ -184,6 +172,19 @@ Flaps — AS REQUIRED (10° REC)
 
 - Flight Plan - CLOSED
 
+<!-- SPAN:full-bottom-->
+## 📘 IFR PERFORMANCE PROFILES
+
+|                      |                 |           |            |           |          |
+|----------------------|-----------------|-----------|------------|-----------|----------|
+| **Phase**            | **Power/Prop**  | **Pitch** | **Config** | **Speed** | **V/S**  |
+| **Cruise**           | ~25 MP/25 RPM   | 0°        | Clean      | —         | —        |
+| **Descent**          | ~20 MP/25 RPM   | −2 to −3° | Clean      | 138 MPH   | −500 fpm |
+| **Approach Level 1** | ~15 MP/25 RPM   | 0 to −1°  | 25°        | 104 MPH   | −500     |
+| **Approach Level 2** | ~17 MP/FULL     | 0°        | 33°        | 104 MPH   | −800     |
+| **Missed**           | FULL            | +7°       | Clean      | 97 MPH    | +800     |
+
+<!-- SPAN:full-bottom -->
 ## 🚨 CRITICAL MEMORY ITEMS
 
 *(Always accessible)*
@@ -263,8 +264,6 @@ Baggage - SECURE
 - Your Questions - ASK
 
 ## ENGINE START
-
-<!-- PAGE_BREAK -->
 
 Brakes - SET
 
@@ -536,8 +535,6 @@ Vne - never exceed - 212 MPH (184kts)
 
 <!-- COLUMN_BREAK -->
 ## IFR ACRONYMS / MNEMONICS
-
-<!-- PAGE_BREAK -->
 
 ☐ IFR - Instrument Flight Rules
 
