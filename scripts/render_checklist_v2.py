@@ -144,6 +144,7 @@ def parse_markdown(md_path):
     i = 0
     n = len(lines)
     pending_span = None
+    last_h2_seen = False
     while i < n:
         raw = lines[i].rstrip('\n')
         s = raw.strip()
@@ -173,6 +174,12 @@ def parse_markdown(md_path):
         if m:
             level = len(m.group(1))
             text = m.group(2).strip()
+            # Promote top-level H3 (###) to H2 when no H2 has been seen yet.
+            # This preserves author intent when authors use H3 under the H1
+            # for initial sections (e.g. TAKEOFF / CLIMB) so they are not
+            # dropped by the H2-focused renderer.
+            if level == 3 and not last_h2_seen:
+                level = 2
             heading = {'type': 'heading', 'level': level, 'text': text, 'line': i + 1}
             # If a span marker was immediately before this H2, attach the
             # span metadata so the higher-level builder can emit the H2 as a
@@ -182,6 +189,8 @@ def parse_markdown(md_path):
                 heading['span'] = pending_span['value']
                 heading['span_pos'] = pending_span['position']
                 pending_span = None
+            if level == 2:
+                last_h2_seen = True
             tokens.append(heading)
             i += 1
             continue
