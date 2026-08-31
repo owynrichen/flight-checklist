@@ -271,8 +271,14 @@ def render_h2_block(h2, children_tokens):
     """children_tokens: tokens until the next H1/H2 (items, notes, subheaders, h3 groups, tables)."""
     cat = infer_category(h2['text'])
     title_html = replace_icons(html.escape(h2['text']).replace('&amp;', '&'))
-    # SPAN handling disabled: do not emit span-full classes or data-span-position
-    parts = [f"  <section class='card' data-category=\"{cat}\">",
+    # If this heading requested a full-span band, emit semantic attributes
+    # so styles and validators can detect and position it.
+    span_attr = ''
+    if h2.get('span'):
+        span_attr = f" data-span=\"{html.escape(h2.get('span'))}\""
+        if h2.get('span_pos'):
+            span_attr += f" data-span-pos=\"{html.escape(h2.get('span_pos'))}\""
+    parts = [f"  <section class='card'{span_attr} data-category=\"{cat}\">",
               f"    <h2>{title_html}</h2>"]
 
     # Walk children: collect direct items/notes/tables, then group h3 subsections
